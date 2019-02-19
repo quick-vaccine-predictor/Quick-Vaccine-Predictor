@@ -1,35 +1,10 @@
-<!DOCTYPE html>
-<html lang="en"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="Quick Vaccine Predictor" content="">
-    <meta name="QVP" content="">
-    <link rel="icon" href="">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    <title><?php if (isset($_GET["idEpitope"])){echo $_GET['idEpitope'];}?></title>
-    <!-- Minified Bootstrap 3 CSS-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <!--Minified jQuery 3 JS-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--Latest Bootstrap 3 JS-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src=https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
-  </head>
-
 <?php
-if (isset($_GET["idEpitope"])){
-$servername = "localhost";
-$username = "qvp";
-$password = "qvp";
-$dbname = "qvp";
+include("globals.inc.php");
 $idEpitope = $_GET["idEpitope"];
-
+print headerDBW("$idEpitope");
+if (isset($idEpitope)){
+$conn = connectSQL();
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -60,7 +35,6 @@ else{
   header('Location: error.php');
 }
 ?>
-  <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -115,9 +89,8 @@ else{
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Antigen Id</th>
-                  <?php $idAntigen = $epTable['idAntigen'];
-                  echo "<td class='text-left'>$idAntigen</td>"
-                  ?>
+                  <td class='text-left'><?php $idAntigen = $epTable['idAntigen'];
+                    echo "<a href='antigen.php?idAntigen=$idAntigen' target='_blank'>$idAntigen</a>"?></td>
                 </tr>
                 
                 <tr>
@@ -128,7 +101,8 @@ else{
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Protein Id</th>
-                    <td class='text-left'><?php echo $epTable['idProtein']?></td>
+                    <td class='text-left'><?php $idProtein = $epTable['idProtein'];
+                    echo "<a href='protein.php?idProtein=$idProtein' target='_blank'>$idProtein</a>"?></td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Protein name</th>
@@ -140,7 +114,7 @@ else{
                   <td class="text-left">
                     <?php $idOrganism = $epTable['idOrganism'];
                           $nameOrganism = $epTable['nameOrganism'];
-                        echo "<a href='https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=$idOrganism' target='_blank'>$nameOrganism</a>"
+                        echo "<a href='organism.php?idOrganism=$idOrganism' target='_blank'>$nameOrganism</a>"
                   ?>
                   </td>
                 </tr>
