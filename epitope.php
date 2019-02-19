@@ -1,8 +1,9 @@
 <?php
-include("globals.inc.php");
 $idEpitope = $_GET["idEpitope"];
-print headerDBW("$idEpitope");
 if (isset($idEpitope)){
+include("globals.inc.php");
+
+print headerDBW($idEpitope);
 $conn = connectSQL();
 // Create connection
 // Check connection
@@ -13,7 +14,7 @@ $sql = "SELECT idEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN H
 $affTable = $conn->query($sql);
 #print_r(mysqli_fetch_all($affTable));
 $affdata = mysqli_fetch_all($conn->query($sql));
-$sql = "SELECT idEpitope, seqEpitope, Immunogenecity_score, Antigen.idAntigen, nameAntigen, start,end, Antigen.idProtein, nameProtein, Antigen.idOrganism, nameOrganism from Epitope JOIN Antigen ON Epitope.idAntigen = Antigen.idAntigen JOIN Protein ON Antigen.idProtein = Protein.idProtein JOIN Organism ON Antigen.idOrganism = Organism.idOrganism  WHERE idEPitope = $idEpitope";
+$sql = "SELECT idEpitope, seqEpitope, scoreImmunogenecity, Antigen.idAntigen, nameAntigen, start,end, Antigen.idProtein, nameProtein, Antigen.idOrganism, nameOrganism from Epitope JOIN Antigen ON Epitope.idAntigen = Antigen.idAntigen JOIN Protein ON Antigen.idProtein = Protein.idProtein JOIN Organism ON Antigen.idOrganism = Organism.idOrganism  WHERE idEPitope = $idEpitope";
 $epTable = mysqli_fetch_array($conn->query($sql));
 #print_r($epTable);
 
@@ -24,6 +25,7 @@ foreach ($affdata as $r){
   array_push($nm_data, $r[3]);
   array_push($log_data, $r[2]);
 }
+print navbar('Epitope');
 
 if (mysqli_num_rows($affTable) == 0) {
   header('Location: error.php');
@@ -35,29 +37,6 @@ else{
   header('Location: error.php');
 }
 ?>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>                        
-          </button>
-          <a class="navbar-brand" href="#">QVP</a>
-        </div>
-        <div id="myNavbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="myvaccine.html">MyVaccine</a></li>
-            <li><a href="queries.php">Queries</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="signin.html"> Sign Up</a></li>
-            <li><a href="login.html"> Login</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
     <div class="container">
 
       <!-- Main component for a primary marketing message or call to action -->
@@ -65,7 +44,9 @@ else{
       <div class="col-md-5">
         <table class="table table-striped table-sm table-responsive">
               <thead>
-                <th scope="col"><h2>Epitope</h2></th>
+                <tr>
+                  <th scope="col"><h2>Epitope</h2></th>
+                </tr>
               </thead>
               <tbody>
                 <tr>
@@ -85,7 +66,7 @@ else{
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Immunogenicity score:</th>
-                  <td class="text-left"><?php echo $epTable['Immunogenecity_score'] ?></td>
+                  <td class="text-left"><?php echo $epTable['scoreImmunogenecity'] ?></td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Antigen Id</th>
@@ -119,15 +100,11 @@ else{
                   </td>
                 </tr>
                 <tr>
-                  <table>
-                  <tbody>
-                    <tr>
-                      <div class="chart-container " style="height: 300px; width: auto; text-align:center">
-                      <canvas id="Polarity"></canvas>
-                      </div>
-                    <tr>
-                  </tbody>
-                  </table>
+                  <th colspan="2">
+                  <div class="chart-container" style='height: 300px; width: auto; text-align:center'>
+                    <canvas id="Polarity"></canvas>
+                  </div>
+                  </th>
                 </tr>
               </tbody>
             </table>
@@ -154,10 +131,7 @@ else{
           <tr>
             <th scope='row' id="idEpitope"><?php $idEptiope = $epTable['idEpitope'];
                         echo "<a href='epitope.php?idEpitope=$idEpitope'>$idEpitope</a>"?></th>
-            <td class='text-center' id="hla"><a href=
-              <?php $idHLA=$row['idHLA']; echo "hla.php?idHLA=$idHLA target='_blank'" ?>>
-              <?php echo $row['nameHLA'] ?></td>
-
+            <td class='text-center' id="hla"><a href=<?php $idHLA=$row['idHLA']; echo "'hla.php?idHLA=$idHLA' target='_blank'" ?>><?php echo $row['nameHLA'] ?></a></td>
             <td class='text-center' id="log"><?php echo $row['logAff'] ?></td>
             <td class='text-center' id="nM"><?php echo $row['nMAff'] ?></td>
           </tr>
@@ -253,5 +227,4 @@ else{
       
 
     </script>
-
-</html>
+<?php print footerDBW(); ?>

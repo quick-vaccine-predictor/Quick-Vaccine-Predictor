@@ -2,9 +2,9 @@
 
 function connectSQL() {
 	$servername = "localhost";
-	$dbname = "qvp";
-	$username = "qvp";
-	$password = "qvp";
+	$dbname = "qvvp";
+	$username = "qvvp";
+	$password = "Qvvp_121327";
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	return $conn;
 }
@@ -25,7 +25,7 @@ function headerDBW($title) {
       <script src=\"https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js\"></script>
       <script src=\"https://oss.maxcdn.com/respond/1.4.2/respond.min.js\"></script>
     <![endif]--> 
-        <link rel=\"stylesheet\" href=\"DataTable/jquery.dataTables.min.css\"/>
+        <link rel=\"stylesheet\" href=\"https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap.min.css\"/>
         <script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script>
         <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>
         <script type=\"text/javascript\" src=\"https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js\"></script>
@@ -46,5 +46,47 @@ function footerDBW() {
 </body>
 </html>';
 }
+
+function navbar($page){
+  $navbar = '<nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">QVP</a>
+          </div>
+          <div id="myNavbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">';
+  if ($page == "Home"){
+    $navbar .= '            <li class="active"><a href="index.html">Home</a></li>';
+  }
+  else {
+    $navbar .= '            <li><a href="index.html">Home</a></li>';
+  }
+  if ($page == "MyVaccine"){
+    $navbar .= '            <li class="active"><a href="myvaccine.html">MyVaccine</a></li>';
+  }
+  else {
+    $navbar .= '            <li><a href="myvaccine.html">MyVaccine</a></li>';
+  }
+  if ($page == "Queries"){
+    $navbar .= '            <li class="active"><a href="queries.php">Queries</a></li>';
+  }
+  else {
+    $navbar .= '            <li><a href="queries.php">Queries</a></li>';
+  }
+  $navbar .= '          </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="signin.html"> Sign Up</a></li>
+              <li><a href="login.html"> Login</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>';
+  return $navbar;
+  }
 
 ?>
