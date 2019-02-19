@@ -22,10 +22,10 @@
 
 <?php
 if (isset($_GET["idAntigen"])){
-$servername = "localhost";
-$username = "qvp";
-$password = "qvp";
-$dbname = "qvp";
+$servername = "frmc.mmb.pcb.ub.es";
+$username = "Qvvp";
+$password = "Qvvp_121327";
+$dbname = "qvvp";
 $idAntigen = $_GET["idAntigen"];
 
 // Create connection
@@ -90,17 +90,24 @@ else{
                 <tr>
                   <th scope="row" class="text-right">Id</th>
                   <td class="text-left">
-                  <?php $idEptiope = $idAntigen;
-                        echo "<a href='https://www.ncbi.nlm.nih.gov/protein/$idAntigen' target='_blank'>$idAntigen</a>"
+                  <?php echo "<a href='https://www.ncbi.nlm.nih.gov/protein/$idAntigen' target='_blank'>$idAntigen</a>"
                   ?></td>
                 </tr>
                 <tr>
-                  <th scope="row" class="text-right">Name</th>
-                  <td class="text-left" id="sequence"><?php echo $nameAntigen ?></td>
+                  <th scope="row" class="text-right">Name Antigen</th>
+                  <td class="text-left" id="sequence"><?php echo $AntTable['nameAntigen'] ?></td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Organism</th>
-                  <td class="text-left"><?php echo $nameAntigen ?></td>
+                  <td class="text-left"><?php $idOrganism = $AntTable['idOrganism']; $nameOrganism = $AntTable['nameOrganism']
+                        echo "<a href='organism.php?idOrganism=$idOrganism' target='_blank'>$nameOrgansim</a>"
+                  ?></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-right">Protein</th>
+                  <td class="text-left"><?php $idProtein = $AntTable['idProtein']; $nameProtein = $AntTable['nameProtein']
+                        echo "<a href='protein.php?idProtein=$idProtein' target='_blank'>$nameProtein</a>"
+                  ?></td>
                 </tr>
               </tbody>
             </table>
@@ -108,24 +115,26 @@ else{
   </div>
       <div class="row">
         <h2>Antigens</h2>
-        <table class="table table-striped table-sm table-responsive" id="affTable">
+        <table class="table table-striped table-sm table-responsive">
           <thead>
             <tr>
-              <th>id Antigen</th>
-              <th>Name Antigen</th>
-              <th>id Organism</th>
+              <th>id Epitope</th>
+              <th>Sequence</th>
+              <th>Immunogenecity Score</th>
+              <th>Start</th>
+              <th>End</th>
             </tr>
           </thead>
       <tbody>
-        <?php foreach ($antTable as $row){ ?>
+        <?php foreach ($affTable as $row){ ?>
           <tr>
-            <th scope='row'><?php $idAntigen = $row['idAntigen'];
-                        echo "<a href='antigen.php?idAntigen=$idAntigen' target='_blank'>$idAntigen</a>"?></th>
-            <td class='text-left'>
-              <?php echo $row['nameAntigen'] ?></td>
-            <td class='text-center'><?php $idOrganism = $row['idOrganism'];
-              echo "<a href='organism.php?idOrganism=$idOrganism'>$idOrganism</a>"
-             ?></td>
+            <th scope='row'><?php $idEpitope = $row['idEpitope'];
+                        echo "<a href='epitope.php?idEpitope=$idEpitope' target='_blank'>$idEpitope</a>"?></th>
+            <td class='text-center'>
+              <?php echo $row['seqEpitope'] ?></td>
+            <td class='text-center'><?php echo $row['scoreImmunogenecity'] ?></td>
+            <td class='text-center'><?php echo $row['start'] ?></td>
+            <td class='text-center'><?php echo $row['end'] ?></td>
           </tr>
         <?php } ?>
       </tbody>
