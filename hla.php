@@ -94,11 +94,6 @@ print navbar('HLA');
       </table>
       </div>
     </div> <!-- /container -->
-    <footer class="text-muted">
-        <div class="container">
-            <p>QVP © 2019 <a href="#">Back to top</a></p>
-         </div>
-    </footer>
     <script type="text/javascript">
       
         $('#affTable').DataTable({

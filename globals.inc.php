@@ -10,7 +10,8 @@ function connectSQL() {
 }
 
 function headerDBW($title) {
-    return "<!DOCTYPE html>
+    return "
+<!DOCTYPE html>
 <html lang=\"en\">
 <head>
 <meta charset=\"utf-8\">
@@ -29,6 +30,7 @@ function headerDBW($title) {
         <script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script>
         <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>
         <script type=\"text/javascript\" src=\"https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js\"></script>
+        <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>
         <script type=\"text/javascript\" src=\"https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js\"></script>
     <style>
 		body {min-height: 2000px;
@@ -42,7 +44,12 @@ function headerDBW($title) {
 
 function footerDBW() {
     return '
-        </div>
+</div>
+  <footer class="text-muted">
+    <div class="container">
+      <p>QVVP © 2019 <a href="#">Back to top</a></p>
+    </div>
+  </footer>
 </body>
 </html>';
 }
@@ -61,10 +68,10 @@ function navbar($page){
           <div id="myNavbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">';
   if ($page == "Home"){
-    $navbar .= '            <li class="active"><a href="index.html">Home</a></li>';
+    $navbar .= '            <li class="active"><a href="index.php">Home</a></li>';
   }
   else {
-    $navbar .= '            <li><a href="index.html">Home</a></li>';
+    $navbar .= '            <li><a href="index.php">Home</a></li>';
   }
   if ($page == "MyVaccine"){
     $navbar .= '            <li class="active"><a href="myvaccine.html">MyVaccine</a></li>';
