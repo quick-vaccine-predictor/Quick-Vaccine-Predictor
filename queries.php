@@ -9,12 +9,12 @@ print navbar('Queries');
       <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#epitopeSearch">Epitope Search</a></li>
           <li><a data-toggle="tab" href="#idSearch">ID Search</a></li>
-          <li><a data-toggle="tab" href="#genomeSearch">Genome</a></li>
+          <li><a data-toggle="tab" href="#proteosome">Proteosome</a></li>
       </ul>
       <div class="tab-content"> 
         <div id="epitopeSearch" class="tab-pane fade in active">      
           <b>EPITOPE SEARCH</b>
-          <form method="GET" name="sequenceForm" action="search.php">
+          <form method="GET" name="sequenceForm" action="queryManager.php">
             <div class="form-group">  
                 <label>Epitope sequence </label>
                 <input type="text" name="sequenceName" value="" size="11" minlength="9" maxlength="10"/> 
@@ -61,7 +61,7 @@ print navbar('Queries');
             <button type="submit" class="btn btn-primary"> Submit </button>
           </form>
           <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET" action="search.php">
+          <form method="GET" action="hla.php">
             <label>HLA ID </label>
             <br>
             <select name="hla" multiple size="8">
@@ -75,7 +75,7 @@ print navbar('Queries');
             <button type="submit" class="btn btn-primary"> Submit </button>      
           </form>
           <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET"  action="search.php">
+          <form method="GET"  action="organism.php">
           <label>Organism </label>
             <div class="form-group">
               <b>ID </b>
@@ -83,7 +83,7 @@ print navbar('Queries');
             </div>
             <button type="submit" class="btn btn-primary"> Submit </button>
           </form> 
-          <form method="GET"  action="search.php">
+          <form method="GET"  action="queryManager.php">
             <div class="form-group">
             <b>Name </b>
               <input type="text" name="nameOrganism" value="" rows="2" size="50" minlength="0" maxlength="100"/> 
@@ -91,7 +91,7 @@ print navbar('Queries');
             <button type="submit" class="btn btn-primary"> Submit </button>
           </form> 
           <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET"  action="search.php">
+          <form method="GET"  action="protein.php">
           <label>Protein</label>
             <div class="form-group">
               <b>ID </b>
@@ -99,7 +99,7 @@ print navbar('Queries');
             </div>
             <button type="submit" class="btn btn-primary"> Submit </button>
           </form> 
-          <form method="GET" action="search.php">
+          <form method="GET" action="queryManager.php">
             <div class="form-group">
               <b>Name </b>
               <input type="text" name="nameProtein" value="" rows="2" size="50" minlength="0" maxlength="100"/> 
@@ -107,7 +107,7 @@ print navbar('Queries');
             <button type="submit" class="btn btn-primary"> Submit </button>
           </form> 
           <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET"  action="search.php">
+          <form method="GET"  action="antigen.php">
           <label>Antigen ID </label>
             <div class="form-group">
               <b>ID </b>
@@ -115,7 +115,7 @@ print navbar('Queries');
             </div>
             <button type="submit" class="btn btn-primary"> Submit </button>
           </form> 
-          <form method="GET"  action="search.php">
+          <form method="GET"  action="queryManager.php">
             <div class="form-group">
             <b>Name </b>
               <input type="text" name="nameAntigen" value="" rows="2" size="50" minlength="0" maxlength="100"/> 
@@ -124,11 +124,11 @@ print navbar('Queries');
           </form> 
         </div> <!--id Search-->
         
-        <div id="genomeSearch" class="tab-pane fade">
-          <b>GENOME</b>
+        <div id="proteosome" class="tab-pane fade">
+          <b>Proteosome</b>
           <form method="POST" name="proteosomeForm" action="proteosome.php">
             <div class="form-group">
-              <label>Whole viral Genome Sequence </label>
+              <label>Proteosome simulator</label>
               <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText"></textarea>
               <input name="uploadFile" type="file"><br>
             </div>
@@ -156,7 +156,7 @@ print navbar('Queries');
               <button type="reset" value="Clear data" class="btn btn-primary">Clear data</button>
             </div>
           </form>
-        </div> <!---genomeSearch-->
+        </div>
       </div> <!--tab-content--->
     </div> <!-- /container -->
     <script type="text/javascript">
