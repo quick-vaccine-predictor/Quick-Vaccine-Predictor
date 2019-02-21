@@ -17,9 +17,9 @@ if(!$conn){
 
 // sql to create table
 $sql = "CREATE TABLE User (
-		idUser INT NOT NULL PRIMARY KEY AUTO_INCREMENT , 
-		mailUser VARCHAR(60) NOT NULL UNIQUE, 
-		Password VARCHAR(45) NOT NULL UNIQUE
+		id_user INT NOT NULL PRIMARY KEY AUTO_INCREMENT , 
+		mail_user VARCHAR(60) NOT NULL UNIQUE, 
+		password VARCHAR(255) NOT NULL UNIQUE
 		)";
 		
 // Check of tabel have been created
