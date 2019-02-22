@@ -26,28 +26,23 @@ $errors = array();
 // Login User
 // Check if imput fields are filled and setting variables
 if(isset($_POST) & !empty($_POST)) {
-	$email = mysqli_real_escape_string($conn, $_POST['email']);
-	$password = mysqli_real_escape_string($conn, $_POST['password']); 
+	$email = mysqli_real_escape_string($conn, check_data($_POST['email']));
+	$password = mysqli_real_escape_string($conn, check_data($_POST['password'])); 
 	//print_r($_POST);
 	//die;
 
 	//Form validation by adding corresponding errors into $errors array
-	if(empty($email)) {
-		array_push($errors, "Email is required");
-	}
-	if (empty($password)) {
-		array_push($errors, "Password is required");
-	}
+	if(empty(check_data($email))) { array_push($errors, "Email is required"); 	}
+	if (empty(check_data($password))) { array_push($errors, "Password is required"); 	}
 
+	// If there are no errors prepare query to start session:
 	if(count($errors) == 0) {
 		$query = "SELECT * FROM User WHERE mail_user = '$email'";
 		$result = mysqli_query($conn, $query);
 		// Fetching a result user as an associative array
 		$user = mysqli_fetch_assoc($result);
-		//printf("%s, \n, (%s)",$user["password"], strlen($user["password"]));
-		//die;
 
-		// Check if username exists, if yes then verify password
+		// Check if emal exists, if yes then verify password
 		if (mysqli_num_rows($result) == 1){	
 			$hash = $user['password'];
 			if(password_verify($password,$hash)) {
@@ -56,7 +51,7 @@ if(isset($_POST) & !empty($_POST)) {
 
 				// Store data in session variables
                 $_SESSION["loggedin"] = true;
-                $_SESSION["id_user"] = $id_user;
+                $_SESSION["id_user"] = $user['id_user'];
                 $_SESSION["email"] = $email;
                 // Redirect user to MyVaccine page
                 header('location: index.php');
@@ -66,19 +61,28 @@ if(isset($_POST) & !empty($_POST)) {
 			}
 		
 		} else {
-		// Display an error message if username doesn't exist
-		array_push($errors, "No account found with that username.");
+		// Display an error message if user doe email doesn't exist
+		array_push($errors, "No account found with that email. Please Sign Up.");
+		
 		}
 
 	} else {
 		array_push($errors, "Oops! Something went wrong. Please try again!");
-		header('location: loginn.php');
+		header('location: login.php');
 
 	}
 	// Close connection
 	mysqli_close($conn);	
 }
-	
+
+function check_data($data) {
+    /* This function checks the data before storing in dtabase */
+  $data = trim($data); //strip spaces, tabs or new lines
+  $data = stripslashes($data); //remove "\" from user input data
+  $data = htmlspecialchars($data); // converts special characters to HTML entities, avoiding user hacking.
+  return $data;
+}
+
 
 ?>
 
@@ -92,7 +96,7 @@ if(isset($_POST) & !empty($_POST)) {
 </head>
 	<body>
 		<div class="container">
-			<form class="form-signin" method="POST"><?php include('errors.php'); ?>
+			<form class="form-signin" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST"><?php include('errors.php'); ?>
 	 			<h2 class="form-signin-heading">Please Login</h2>
 	 			<label for="inputEmail" class="sr-only">Email address</label>
 			    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
