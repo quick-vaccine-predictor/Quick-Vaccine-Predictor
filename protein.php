@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (isset($_GET["idProtein"])){
 include("globals.inc.php");
 $idProtein = $_GET["idProtein"];
