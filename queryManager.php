@@ -15,9 +15,14 @@ elseif (isset($_GET["nameAntigen"])) {
 	$sql = "SELECT nameAntigen, idAntigen FROM Antigen WHERE nameAntigen LIKE '%".$name."%';";
 }
 else {
-	if (strlen($_GET["sequenceName"]) > 0){
 		$hla_arr = $_GET["hla"];
-		$sql = "SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE seqEpitope LIKE '%".$_GET["sequenceName"]."%' AND ";
+		$sql = "SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE ";
+		if (strlen($_GET["sequenceName"]) > 0){
+			$sql .= "seqEpitope LIKE '%".$_GET["sequenceName"]."%' AND ";
+		}
+		elseif (isset($_GET["idEpitope"])){
+			$sql .= "Affinity.idEpitope=".$_GET["idEpitope"]." AND ";
+		}
 		$hla_string = "";
 		foreach ($hla_arr as $hla){
 			if ($hla == $hla_arr[0]){
@@ -32,10 +37,6 @@ else {
 			
 		}
 		$sql .= $hla_string;
-	}
-	elseif (isset($_GET["idEpitope"])){
-		$sql ="SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE Affinity.idEpitope=".$_GET["idEpitope"].";";
-	}
 }
 $nameTable = $conn->query($sql);
 $_SESSION["array"] = mysqli_fetch_all($nameTable);
@@ -64,7 +65,7 @@ print navbar('Epitope');
             	echo "<th>Antigen Name</th><th>Antigen Id</th>";
             }
             else {
-            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th>";
+            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th><th>Binder</th>";
             }
             ?>
             </tr>
@@ -96,6 +97,18 @@ print navbar('Epitope');
 		      			<td class='text-center'><?php echo $row["nameHLA"]?></td>
 		      			<td class='text-center'><?php echo $row["logAff"]?></td>
 		      			<td class='text-center'><?php echo $row["nMAff"]?></td>
+		      			<td class='text-center'><?php 
+		      			$th_nM_SB = floatval($_GET["sbaff"]);
+		      			$th_nM_WB = floatval($_GET["wbaff"]);
+		      			$th_log_SB = floatval($_GET["sblog"]);
+		      			$th_log_WB = floatval($_GET["wblog"]);
+		      			if ($row["nMAff"] <= $th_nM_SB and $row["logAff"] <= $th_log_SB){
+		      				echo "Strong Binder";
+		      			}
+		      			elseif ($row["nMAff"] <= $th_nM_WB and $row["logAff"] <= $th_log_WB) {
+		      				echo "Weak Binder";
+		      			}
+		      			?></td>
 		      			<?php }  
 		      			?>
 		      			
