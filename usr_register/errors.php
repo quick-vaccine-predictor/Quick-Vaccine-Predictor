@@ -1,4 +1,3 @@
-
 <?php 
 // Inside the associative array of errors we print an error when ocurred:
 
