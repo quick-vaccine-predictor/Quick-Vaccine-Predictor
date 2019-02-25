@@ -38,8 +38,15 @@ print navbar('Queries');
               <label>HLA selection:</label> <br>
               <select name="hla" multiple size="8">
                       <?php
-                      foreach (array_keys($hlaTypeArray) as $idHlaType) {?>
-                      <option selected name="idHlaType[<?php print $idHlaType ?>]"><?php print $hlaTypeArray[$idHlaType]. "\n"?></option>
+                      $conn = connectSQL();
+                      $sql = "SELECT idHLA, nameHLA from HLA;";
+                      $hlaTable = $conn->query($sql);
+                      $conn->close();
+                      foreach ($hlaTable as $hlarow) {
+                          $idHLA = $hlarow["idHLA"];
+                          $nameHLA = $hlarow["nameHLA"];
+                        ?>
+                      <option selected name="idHlaType[<?php print $idHLA ?>]"><?php print $nameHLA. "\n"?></option>
                       <?php }
                       ?>
               </select>
@@ -211,5 +218,3 @@ print navbar('Queries');
     </script>
 
 <?php print footerDBW();?>
-
-
