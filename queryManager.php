@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("globals.inc.php");
 //Conection to the DB if needed
 $conn = connectSQL();
