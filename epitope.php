@@ -1,4 +1,5 @@
 <?php
+session_start();
 $idEpitope = $_GET["idEpitope"];
 if (isset($idEpitope)){
 include("globals.inc.php");
@@ -12,6 +13,7 @@ if ($conn->connect_error) {
 }
 $sql = "SELECT idEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA where idEpitope = $idEpitope";
 $affTable = $conn->query($sql);
+$_SESSION["array"] = mysqli_fetch_all($affTable);
 #print_r(mysqli_fetch_all($affTable));
 $affdata = mysqli_fetch_all($conn->query($sql));
 $sql = "SELECT idEpitope, seqEpitope, scoreImmunogenecity, Antigen.idAntigen, nameAntigen, start,end, Antigen.idProtein, nameProtein, Antigen.idOrganism, nameOrganism from Epitope JOIN Antigen ON Epitope.idAntigen = Antigen.idAntigen JOIN Protein ON Antigen.idProtein = Protein.idProtein JOIN Organism ON Antigen.idOrganism = Organism.idOrganism  WHERE idEPitope = $idEpitope";
@@ -116,7 +118,8 @@ else{
       </div>
   </div>
       <div class="row">
-        <h2>Binding Affinities</h2>
+        <h2>Binding Affinities</h2><br>
+        <button id='tabletocsv'> Export to CSV</button><br>
         <table class="table table-striped table-sm table-responsive" id="affTable">
           <thead>
             <tr>
@@ -143,6 +146,9 @@ else{
     <script type="text/javascript">
       $(document).ready(function () {
         $('#affTable').DataTable();
+        document.getElementById("tabletocsv").onclick = function () {
+        location.href = "tabletocsv.php";
+        };
         var seq = document.getElementById("sequence").textContent;
         var polar = (seq.match(/[G,A,V,L,I,M,W,F,P]/g)||[]).length;
         var non_polar = (seq.match(/[S,T,C,Y,N,Q]/g)||[]).length;

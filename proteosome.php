@@ -1,4 +1,5 @@
 <?php
+session_start();
     include("globals.inc.php");
     print headerDBW("Proteosome results");
     $in_dna = $_POST["in_dna"];
@@ -14,13 +15,15 @@
     $query_string = substr($query_string, 0, -2).";";
     $conn = connectSQL();
     $results = $conn->query($query_string);
+    $_SESSION["array"] = mysqli_fetch_all($results);
     $conn->close();
     print navbar('Proteosome');
 ?>
     <div class="container">
       <a class="btn btn-primary btn-lg" href="queries.php#proteosome" role="button">Go back</a>
       <div class="row">
-        <h2>Epitopes</h2>
+        <h2>Epitopes</h2><br>
+        <button id='tabletocsv'> Export to CSV</button><br>
         <table class="table table-striped table-sm table-responsive" id="affTable">
           <thead>
             <tr>
@@ -50,6 +53,8 @@
     <script type="text/javascript">
       $(document).ready(function () {
         $('#affTable').DataTable();
+        document.getElementById("tabletocsv").onclick = function () {
+        location.href = "tabletocsv.php";};
         
       });
     </script>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_GET["idAntigen"])){
 include("globals.inc.php");
 $idAntigen = $_GET["idAntigen"];
@@ -14,6 +15,7 @@ $sql = "SELECT nameAntigen, Antigen.idOrganism, Organism.nameOrganism, Antigen.i
 $AntTable = mysqli_fetch_array($conn->query($sql));
 $sql = "SELECT idEpitope, seqEpitope, scoreImmunogenecity, start, end FROM Epitope WHERE idAntigen = '$idAntigen'";
 $affTable = $conn->query($sql);
+$_SESSION["array"] = mysqli_fetch_all($affTable);
 $conn->close();
 print navbar('Antigen');
 if (mysqli_num_rows($affTable) == 0) {
@@ -63,7 +65,8 @@ else{
       </div>
   </div>
       <div class="row">
-        <h2>Antigens</h2>
+        <h2>Antigens</h2><br>
+        <button id='tabletocsv'> Export to CSV</button><br>
         <table class="table table-striped table-sm table-responsive" id="affTable">
           <thead>
             <tr>
@@ -93,6 +96,9 @@ else{
     <script type="text/javascript">
       $(document).ready(function () {
         $('#affTable').DataTable();
+        document.getElementById("tabletocsv").onclick = function () {
+        location.href = "tabletocsv.php";
+    };
       });
     </script>
 <?php print footerDBW();?>
