@@ -106,7 +106,7 @@ function navbar($page){
     $navbar .= '            <li class="active"><a href="myvaccine.html">MyVaccine</a></li>';
   }
   else {
-    $navbar .= '            <li><a href="myvaccine.html">MyVaccine</a></li>';
+    $navbar .= '            <li><a href="my_vaccine.php">MyVaccine</a></li>';
   }
   if ($page == "Queries"){
     $navbar .= '            <li class="active"><a href="queries.php">Queries</a></li>';
