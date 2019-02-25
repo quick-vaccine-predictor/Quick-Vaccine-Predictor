@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (isset($_GET["idOrganism"])){
 $idOrganism = $_GET["idOrganism"];
 include("globals.inc.php");
