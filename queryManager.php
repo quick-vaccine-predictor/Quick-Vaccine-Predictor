@@ -15,11 +15,26 @@ elseif (isset($_GET["nameAntigen"])) {
 	$sql = "SELECT nameAntigen, idAntigen FROM Antigen WHERE nameAntigen LIKE '%".$name."%';";
 }
 else {
-	if (isset($_GET["sequenceName"])){
-		$sql = "SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE seqEpitope LIKE '%".$_GET["sequenceName"]."%';";
+	if (strlen($_GET["sequenceName"]) > 0){
+		$hla_arr = $_GET["hla"];
+		$sql = "SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE seqEpitope LIKE '%".$_GET["sequenceName"]."%' AND ";
+		$hla_string = "";
+		foreach ($hla_arr as $hla){
+			if ($hla == $hla_arr[0]){
+				$hla_string .= "(HLA.idHLA ='$hla' ";
+			}
+			elseif ($hla == array_values(array_slice($hla_arr, -1))[0]){
+				$hla_string .= "OR HLA.idHLA ='$hla');";
+			}
+			else{
+				$hla_string .= "OR HLA.idHLA ='$hla' ";
+			}
+			
+		}
+		$sql .= $hla_string;
 	}
 	elseif (isset($_GET["idEpitope"])){
-		$sql ="SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE idEpitope=".$_GET["idEpitope"].";";
+		$sql ="SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE Affinity.idEpitope=".$_GET["idEpitope"].";";
 	}
 }
 $nameTable = $conn->query($sql);
@@ -40,16 +55,16 @@ print navbar('Epitope');
             <tr>
             <?php 
             if (isset($_GET["nameOrganism"])){ 
-            	echo "<th>Organism Name</th><br><th>Organism Id</th>";
+            	echo "<th>Organism Name</th><th>Organism Id</th>";
             }
             elseif (isset($_GET["nameProtein"])){
-            	echo "<th>Protein Name</th><br><th>Protein Id</th>";
+            	echo "<th>Protein Name</th><th>Protein Id</th>";
             }
             elseif (isset($_GET["nameAntigen"])){
-            	echo "<th>Antigen Name</th><br><th>Antigen Id</th>";
+            	echo "<th>Antigen Name</th><th>Antigen Id</th>";
             }
-            elseif (isset($_POST["sequenceName"])){
-            	echo "<th>Epitope Id</th><br><th>Sequence</th><br><th>HLA</th><br><th>log</th><br><th>nM</th><br>";
+            else {
+            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th>";
             }
             ?>
             </tr>
@@ -74,8 +89,17 @@ print navbar('Epitope');
 		      			</th>
 		      			<td class='text-center'><?php $id = $row["idAntigen"];
 		      				echo "<a href='antigen.php?idAntigen=$id' target='_blank'>{$id}</a>";
-		      			} ?>
-		      			</td>
+		      			}
+		      			else { ?>
+		      			<th scope='row' class='text-center'><?php echo $row["idEpitope"]?></th>
+		      			<td class='text-center'><?php echo $row["seqEpitope"]?></td>
+		      			<td class='text-center'><?php echo $row["nameHLA"]?></td>
+		      			<td class='text-center'><?php echo $row["logAff"]?></td>
+		      			<td class='text-center'><?php echo $row["nMAff"]?></td>
+		      			<?php }  
+		      			?>
+		      			
+		      			
 		      		</tr>
 		      	<?php } ?>
       		</tbody>
