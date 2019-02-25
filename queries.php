@@ -46,7 +46,7 @@ print navbar('Queries');
                           $idHLA = $hlarow["idHLA"];
                           $nameHLA = $hlarow["nameHLA"];
                         ?>
-                      <option selected name="idHlaType[<?php print $idHLA ?>]"><?php print $nameHLA. "\n"?></option>
+                      <option selected value="<?php print $idHLA ?>"><?php print $nameHLA. "\n"?></option>
                       <?php }
                       ?>
               </select>
