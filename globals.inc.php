@@ -103,7 +103,7 @@ function navbar($page){
     $navbar .= '            <li><a href="index.php">Home</a></li>';
   }
   if ($page == "MyVaccine"){
-    $navbar .= '            <li class="active"><a href="myvaccine.html">MyVaccine</a></li>';
+    $navbar .= '            <li class="active"><a href="my_vaccine.php">MyVaccine</a></li>';
   }
   else {
     $navbar .= '            <li><a href="my_vaccine.php">MyVaccine</a></li>';
@@ -116,8 +116,8 @@ function navbar($page){
   }
   $navbar .= '          </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="./register.php"> Sign Up</a></li>
-              <li><a href="./login.php"> Login</a></li>
+              <li><a href="./usr_register/register.php"> Sign Up</a></li>
+              <li><a href="./usr_register/login.php"> Login</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
