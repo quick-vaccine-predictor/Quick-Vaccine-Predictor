@@ -14,8 +14,13 @@ elseif (isset($_GET["nameAntigen"])) {
 	$name = $_GET["nameAntigen"];
 	$sql = "SELECT nameAntigen, idAntigen FROM Antigen WHERE nameAntigen LIKE '%".$name."%';";
 }
-elseif (isset($_POST["sequenceName"])) {
-	$sql = "";
+else {
+	if (isset($_GET["sequenceName"])){
+		$sql = "SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE seqEpitope LIKE '%".$_GET["sequenceName"]."%';";
+	}
+	elseif (isset($_GET["idEpitope"])){
+		$sql ="SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE idEpitope=".$_GET["idEpitope"].";";
+	}
 }
 $nameTable = $conn->query($sql);
 $_SESSION["array"] = mysqli_fetch_all($nameTable);
