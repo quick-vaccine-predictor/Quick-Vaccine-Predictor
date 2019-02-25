@@ -54,15 +54,15 @@ print navbar('Queries');
             <div class="form-group">
               <p>
                 <label>Threshold for strong binder (nMAff) </label>
-                <input type="text" name="sbaff" value="50" size="5" required/>
+                <input type="text" name="sbaff" value="0.5" size="5" required/>
                 <label>Threshold for strong binder (logAff)</label>
-                <input type="text" name="sblog" value="0.5" size="5" required/>
+                <input type="text" name="sblog" value="50" size="5" required/>
               </p>        
               <p>
                 <label>Threshold for weak binder (nMAff)</label>
-                <input type="text" name="wbaff" value="500" size="5"required/> 
+                <input type="text" name="wbaff" value="2" size="5"required/> 
                 <label>Threshold for weak binder (logAff)</label>
-                <input type="text" name="wblog" value="2" size="5" required/> 
+                <input type="text" name="wblog" value="500" size="5" required/> 
               </p>
             </div>  
             <button type="submit" class="btn btn-primary"> Submit </button>
@@ -86,19 +86,12 @@ print navbar('Queries');
               <form method="GET" action="hla.php">
                 <label>HLA ID </label>
                 <br>
-                <select name="hla" size="8">
+                <select name="hla" multiple size="8">
                   <?php
-                      $conn = connectSQL();
-                      $sql = "SELECT idHLA, nameHLA from HLA;";
-                      $hlaTable = $conn->query($sql);
-                      $conn->close();
-                      foreach ($hlaTable as $hlarow) {
-                          $idHLA = $hlarow["idHLA"];
-                          $nameHLA = $hlarow["nameHLA"];
-                        ?>
-                      <option selected value="<?php print $idHLA ?>"><?php print $nameHLA. "\n"?></option>
-                      <?php }
-                      ?>
+                    foreach (array_keys($hlaTypeArray) as $idHlaType) {?>
+                    <option name="idHlaType[<?php print $idHlaType ?>]"><?php print $hlaTypeArray[$idHlaType]. "\n"?></option>
+                    <?php }
+                    ?>
                 </select>
                 <br>
                 <button type="submit" class="btn btn-primary"> Submit </button>      

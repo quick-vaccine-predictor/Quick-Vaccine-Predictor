@@ -115,10 +115,25 @@ function navbar($page){
     $navbar .= '            <li><a href="queries.php">Queries</a></li>';
   }
   $navbar .= '          </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="./usr_register/register.php"> Sign Up</a></li>
-              <li><a href="./usr_register/login.php"> Login</a></li>
-            </ul>
+            <ul class="nav navbar-nav navbar-right">';
+            // if the user is not logged in yet, at top right will appear the Sign Up and Login buttons
+            if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] != true){
+              $navbar.='<li><a href="register.php"> Sign Up</a></li> <li><a href="login.php"> Login</a></li>';
+            // if the user is logged in: 
+            }else{
+              $navbar.= '<li class="dropdown">
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Account
+                          <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="reset_pass.php">Reset Password</a></li>
+                            <li><a href="remove_account.php">Delete Account</a></li>
+                            <li><a href="logout.php">Log Out</a></li>
+                          </ul>
+                        </li> ';
+                }
+              
+            $navbar.='</ul>
+            
           </div><!--/.nav-collapse -->
         </div>
       </nav>';
