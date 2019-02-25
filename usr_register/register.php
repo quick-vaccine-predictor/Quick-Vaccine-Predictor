@@ -4,7 +4,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 
 // Include connection file
-include("../globals.inc.php");
+include("globals.inc.php");
 $title = "Register Page";
 print headerDBW($title);
 
@@ -55,7 +55,7 @@ if(isset($_POST) & !empty($_POST)){
 		$_SESSION["loggedin"] = true;
 		$_SESSION['email'] = $email;
 		$_SESSION['success'] = "You are now logged in!";
-		header('location: ../my_vaccine.php');
+		header('location: my_vaccine.php');
 
 	}
 	// Close connection

@@ -4,7 +4,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 
 // Include connection file
-include("../globals.inc.php");
+include("globals.inc.php");
 $title = "Remove Account";
 print headerDBW($title);
 
@@ -13,7 +13,7 @@ $conn = connectSQL();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
-  header("location: ../my_vaccine.php");
+  header("location: my_vaccine.php");
   exit;
 }
 
@@ -93,7 +93,7 @@ print navbar('Remove Account');
         </div>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Delete Account</button>
-            <a class="btn btn-link" href="../my_vaccine.php">Cancel</a>
+            <a class="btn btn-link" href="my_vaccine.php">Cancel</a>
         </div>
     </form>
 </div>

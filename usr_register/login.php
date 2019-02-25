@@ -4,7 +4,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL | E_STRICT);
 
 // Include connection file
-include("../globals.inc.php");
+include("globals.inc.php");
 $title = "Login";
 print headerDBW($title);
 
@@ -13,7 +13,7 @@ $conn = connectSQL();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-  header("location: ../my_vaccine.php");
+  header("location: my_vaccine.php");
   exit;
 }
 // Check if msg is set and not empty from my_vaccine.php
@@ -61,7 +61,7 @@ if(isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
 	                $_SESSION["email"] = $email;
 	                $_SESSION['success'] = "You are now logged in!";
 	                // Redirect user to MyVaccine page
-	                header('location: ../my_vaccine.php');
+	                header('location: my_vaccine.php');
 				}else{
 					// Display an error message if password is not valid
 					array_push($errors, "The password you entered was not valid.");
