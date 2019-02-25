@@ -1,9 +1,24 @@
 <?php 
+// Include connection file
+require_once('connect.php');
+
+// Start the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him/her to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+  header("location: login.php");
+  exit;
+}
+
 include "hlaTypeArray.php";
 include("globals.inc.php");
 print headerDBW("Queries");
 print navbar('Queries');
+
+
 ?>
+
     <div class="container text-center">
       <!-- Main component for a primary marketing message or call to action -->
       <ul class="nav nav-tabs">
@@ -35,15 +50,15 @@ print navbar('Queries');
             <div class="form-group">
               <p>
                 <label>Threshold for strong binder (nMAff) </label>
-                <input type="text" name="sbaff" value="0.5" size="5"/>
+                <input type="text" name="sbaff" value="0.5" size="5" required/>
                 <label>Threshold for strong binder (logAff)</label>
-                <input type="text" name="sblog" value="50" size="5"/>
+                <input type="text" name="sblog" value="50" size="5" required/>
               </p>        
               <p>
                 <label>Threshold for weak binder (nMAff)</label>
-                <input type="text" name="wbaff" value="2" size="5"/> 
+                <input type="text" name="wbaff" value="2" size="5"required/> 
                 <label>Threshold for weak binder (logAff)</label>
-                <input type="text" name="wblog" value="500" size="5"/> 
+                <input type="text" name="wblog" value="500" size="5" required/> 
               </p>
             </div>  
             <button type="submit" class="btn btn-primary"> Submit </button>
@@ -53,83 +68,96 @@ print navbar('Queries');
 
         <div id="idSearch" class="tab-pane fade">
           <b>ID SEARCH</b>
-          <form method="GET" action="epitope.php">
-            <div class="form-group">
-              <label>Epitope ID </label>
-              <input type="text" name="idEpitope" value="24" size="11" />
+           <div class="row">             
+            <div class="col-sm-6" >
+              <form method="GET" action="epitope.php">
+                <div class="form-group">
+                  <label>Epitope ID </label>
+                  <input type="text" name="idEpitope" value="24" size="11" required/>
+                </div>
+                <button type="submit" class="btn btn-primary"> Submit </button>
+              </form>
             </div>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-          </form>
-          <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET" action="hla.php">
-            <label>HLA ID </label>
-            <br>
-            <select name="hla" multiple size="8">
-              <?php
-                foreach (array_keys($hlaTypeArray) as $idHlaType) {?>
-                <option name="idHlaType[<?php print $idHlaType ?>]"><?php print $hlaTypeArray[$idHlaType]. "\n"?></option>
-                <?php }
-                ?>
-            </select>
-            <br>
-            <button type="submit" class="btn btn-primary"> Submit </button>      
-          </form>
-          <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET"  action="organism.php">
-          <label>Organism </label>
-            <div class="form-group">
-              <b>ID </b>
-              <input type="text" name="idOrganism" value="" size="20" minlength="4" maxlength="15"/> 
+            <div class="col-sm-6">
+              <form method="GET" action="hla.php">
+                <label>HLA ID </label>
+                <br>
+                <select name="hla" multiple size="8">
+                  <?php
+                    foreach (array_keys($hlaTypeArray) as $idHlaType) {?>
+                    <option name="idHlaType[<?php print $idHlaType ?>]"><?php print $hlaTypeArray[$idHlaType]. "\n"?></option>
+                    <?php }
+                    ?>
+                </select>
+                <br>
+                <button type="submit" class="btn btn-primary"> Submit </button>      
+              </form>
             </div>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-          </form> 
-          <form method="GET"  action="queryManager.php">
-            <div class="form-group">
-            <b>Name </b>
-              <input type="text" name="nameOrganism" value="" rows="2" size="50" minlength="0" maxlength="100"/> 
+          </div>
+
+          <div class="row">  
+            <div class="col-sm-4"> 
+              <form method="GET"  action="organism.php">
+              <label>Organism </label>
+                <div class="form-group">
+                  <b>ID </b>
+                  <input type="text" name="idOrganism" value="" rows="2" cols="10" minlength="4" maxlength="15" required/> 
+                </div>
+                <button type="submit" class="btn btn-primary"> Submit </button>
+              </form> 
+              <form method="GET"  action="queryManager.php">
+                <div class="form-group">
+                <b>Name </b>
+                  <input type="text" name="nameOrganism" value="cat" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                </div>
+                <button type="submit" class="btn btn-primary"> Submit </button>
+              </form> 
             </div>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-          </form> 
-          <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET"  action="protein.php">
-          <label>Protein</label>
-            <div class="form-group">
-              <b>ID </b>
-              <input type="text" name="idProtein" value="" rows="2" size="15" minlength="4" maxlength="30"/> 
+            <div class="col-sm-4">
+              <form method="GET"  action="protein.php">
+              <label>Protein</label>
+                <div class="form-group">
+                  <b>ID </b>
+                  <input type="text" name="idProtein" value="" rows="2" cols="10" minlength="4" maxlength="30" required/> 
+                </div>
+                <button type="submit" class="btn btn-primary"> Submit </button>
+              </form> 
+              <form method="GET" action="queryManager.php">
+                <div class="form-group">
+                  <b>Name </b>
+                  <input type="text" name="nameProtein" value="" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                </div>
+                <button type="submit" class="btn btn-primary"> Submit </button>
+              </form> 
             </div>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-          </form> 
-          <form method="GET" action="queryManager.php">
-            <div class="form-group">
-              <b>Name </b>
-              <input type="text" name="nameProtein" value="" rows="2" size="50" minlength="0" maxlength="100"/> 
+            <div class="col-sm-4">
+              <form method="GET"  action="antigen.php">
+              <label>Antigen ID </label>
+                <div class="form-group">
+                  <b>ID </b>
+                  <input type="text" name="idAntigen" value="" rows="2" cols="10" minlength="4" maxlength="30" required/> 
+                </div>
+                <button type="submit" class="btn btn-primary"> Submit </button>
+              </form> 
+              <form method="GET"  action="queryManager.php">
+                <div class="form-group">
+                <b>Name </b>
+                  <input type="text" name="nameAntigen" value="" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                </div>
+                <button type="submit" class="btn btn-primary"> Submit </button>
+              </form> 
             </div>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-          </form> 
-          <div class="row" style="border-bottom: solid 1px"></div>
-          <form method="GET"  action="antigen.php">
-          <label>Antigen ID </label>
-            <div class="form-group">
-              <b>ID </b>
-              <input type="text" name="idAntigen" value="" rows="2" size="15" minlength="4" maxlength="30"/> 
-            </div>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-          </form> 
-          <form method="GET"  action="queryManager.php">
-            <div class="form-group">
-            <b>Name </b>
-              <input type="text" name="nameAntigen" value="" rows="2" size="50" minlength="0" maxlength="100"/> 
-            </div>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-          </form> 
+          </div> 
+          <button onClick="return clearData()" type="reset" name="clearData" value="Clear data" class="btn btn-primary">Clear data</button>
+
         </div> <!--id Search-->
-        
+                      
         <div id="proteosome" class="tab-pane fade">
           <b>Proteosome</b>
           <form method="POST" name="proteosomeForm" action="proteosome.php">
             <div class="form-group">
               <label>Proteosome simulator</label>
-              <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText"></textarea>
+              <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText" required></textarea>
               <input name="uploadFile" type="file"><br>
             </div>
             <div class="form-check">
@@ -168,4 +196,23 @@ print navbar('Queries');
         $("input[name=sequenceName]").val('');
       });
     </script>
+    <!--script to clear all ID search formas at once -->
+    <script>
+
+    </script>
+    <script type="text/javascript">
+    function clearData() {
+      $("input[name=idEpitope]").val("");
+      $("input[name=idOrganism]").val("");
+      $("input[name=nameOrganism]").val("");
+      $("input[name=idProtein]").val("");      
+      $("input[name=nameProtein]").val("");
+      $("input[name=idAntigen]").val("");
+      $("input[name=nameAntigen]").val("");
+      $("select").val(""); 
+    }
+    </script>
+
 <?php print footerDBW();?>
+
+
