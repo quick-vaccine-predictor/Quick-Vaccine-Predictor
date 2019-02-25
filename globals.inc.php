@@ -116,13 +116,22 @@ function navbar($page){
   }
   $navbar .= '          </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="signin.html"> Sign Up</a></li>
-              <li><a href="login.html"> Login</a></li>
+              <li><a href="./register.php"> Sign Up</a></li>
+              <li><a href="./login.php"> Login</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </nav>';
   return $navbar;
   }
+
+function check_data($data) {
+    /* This function checks the data before storing in dtabase */
+  $data = trim($data); //strip spaces, tabs or new lines
+  $data = stripslashes($data); //remove "\" from user input data
+  $data = htmlspecialchars($data); // converts special characters to HTML entities, avoiding user hacking.
+  return $data;
+}
+
 
 ?>
