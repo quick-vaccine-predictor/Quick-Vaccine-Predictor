@@ -3,9 +3,6 @@ include("globals.inc.php");
 $title = "my Vaccine";
 print headerDBW($title);
 
-//declaration of some variables
-$email="";
-
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: login.php");
@@ -14,6 +11,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 //Conection to the DB
 $conn = connectSQL();
+
+//declaration of some variables
+$email="";
+
 $email= $_SESSION["email"];
 $sql = "SELECT idVaccine, nameVaccine FROM Vaccine ";
 $sql2 = "SELECT idUser FROM User WHERE mailUser='$email' ";
