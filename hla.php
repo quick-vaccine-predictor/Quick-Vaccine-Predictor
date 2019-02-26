@@ -14,13 +14,17 @@ $nameHLA = $HLA_data[0];
 $pdbHLA = $HLA_data[1];
 $sql ="SELECT Affinity.idEpitope, idHLA, logAff, nMAff, seqEpitope from Affinity JOIN Epitope ON Affinity.idEpitope = Epitope.idEpitope WHERE idHLA = '$idHLA' ORDER BY logAff DESC, nMAff DESC limit 3000;";
 $affTable = $conn->query($sql);
-$affdata = mysqli_fetch_all($affTable);
+$array = array();
+foreach ($affTable as $row){
+  $array[] = $row;
+}
+$_SESSION["array"] = $array;
+$affdata = $array;
 $nm_data = [];
 $log_data = [];
-
 for ($x = 0; $x <= 30; $x++) {
-    $nm = $affdata[$x][3];
-    $log = $affdata[$x][2];
+    $nm = $affdata[$x]['nMAff'];
+    $log = $affdata[$x]['logAff'];
     array_push($nm_data, $nm);
     array_push($log_data, $log);
 }
@@ -66,7 +70,8 @@ print navbar('HLA');
       </div>
   </div>
       <div class="row">
-        <h2>Binding Affinities</h2>
+        <h2>Binding Affinities</h2><br>
+        <button id='tabletocsv'>Export to CSV</button><br>
         <table class="table table-striped table-sm table-responsive" id="affTable">
           <thead>
             <tr>
@@ -96,6 +101,9 @@ print navbar('HLA');
     <script type="text/javascript">
       
         $('#affTable').DataTable();
+        document.getElementById("tabletocsv").onclick = function () {
+        location.href = "tabletocsv.php";
+    };
         
         var nm_array = <?php echo json_encode($nm_data); ?>;
         var log_array = <?php echo json_encode($log_data); ?>;
