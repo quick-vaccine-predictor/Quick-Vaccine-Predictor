@@ -16,6 +16,7 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   header("location: my_vaccine.php");
   exit;
 }
+
 // Check if msg is set and not empty from my_vaccine.php
 if(isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
 	// If is set then we define the array $errors and push the missage
@@ -91,11 +92,20 @@ print navbar('Login');
 <div class="container">
 	<form class="form-signin" action="login.php" method="POST"><?php include('errors.php'); ?>
 	 	<h2 class="form-signin-heading">Please Login</h2>
-		<label for="inputEmail" class="sr-only">Email address</label>
-	    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-	    <label for="inputPassword" class="sr-only">Password</label>
-	    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-	    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+	 	<div class="input-group">
+		 	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			<label for="inputEmail" class="sr-only">Email address</label>
+		    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+		    <label for="inputPassword" class="sr-only">Password</label>
+		    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		</div>
+	   	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+	    <div class="checkbox">
+          <label><input type="checkbox" name="remember"> Remember me</label>
+        </div>
 	    <p>Not yet a member? <a href="register.php">Sign up here</a>.</p>
 	</form>
 </div>

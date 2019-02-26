@@ -23,7 +23,7 @@ $password = "";
 $errors = array();
 
 // Register User
-if(isset($_POST) & !empty($_POST)){
+if(isset($_POST) & !empty($_POST)){ //( [email] => a@mail.com [password] => aaa [confirm_password] => aa ) 
     //Recieve all input values from the form
     $email = mysqli_real_escape_string($conn, check_data($_POST['email']));
     $password = mysqli_real_escape_string($conn, check_data($_POST['password'])); 
@@ -41,14 +41,16 @@ if(isset($_POST) & !empty($_POST)){
         // Check the DB to make sure a user does not already exist with the same email.
         $user_check_query = "SELECT * FROM User WHERE mailUser = '$email' LIMIT 1";
         $result = mysqli_query($conn, $user_check_query);
-        $user = mysqli_fetch_assoc($result);
+        $user = mysqli_fetch_assoc($result); 
+        // $user = [idUser] => 5 [mailUser] => altairch95@gmail.com [Password] => $2y$10$LAwWmJXCbAm3HVW1Y8d1YOcrqJnHejGuzfz7.UKDndo.JPdAVDyci ) 
         //print_r($user);
         //die;
+        //echo "<td><a onClick=\"javascript: return confirm('Please confirm deletion');\" href='remove_account.php?email=".$user['mailUser']."'>x</a></td><tr>"; //use double quotes for js inside php!   
 
         // Check if email exists, if yes then verify password
         if (mysqli_num_rows($result) == 1){
             $hash = $user['Password'];
-            if(password_verify($password,$hash)) {
+            if(password_verify($password,$hash)) { 
                 // Password is correct so we proceed to deleted the user by the id
                 $user_delete_query = "DELETE FROM User WHERE mailUser = '$email' LIMIT 1";
                 $RESULT = mysqli_query($conn, $user_delete_query);
@@ -63,22 +65,23 @@ if(isset($_POST) & !empty($_POST)){
         } else {
             // Display an error message if user doe email doesn't exist
             array_push($errors, "Incorrect email. Please try again."); }
-    } else {
-        array_push($errors, "Oops! Something went wrong. Please try again!");
-        //header('location: login.php'); 
-    }
+    } 
     // Close connection
     $conn->close();
 
 }
 print navbar('Remove Account');
+
+function my_function() {
+    confirm("Are you sure?");
+}
 ?>
 
 
 
 <div class="container">
-    <form class="form-signin" action= "remove_account.php" method="POST"><?php include('errors.php'); ?>
-        <h2 class="form-signin-heading">Fill the form with your email and password.</h2>
+    <form class="form-signin" action= "remove_account.php" method="POST" onsubmit="return confirm('Are you sure you want to submit?');><?php include('errors.php'); ?>
+        <h2 class="form-signin-heading">Fill the form with your email and password<br></h2>
         <div class="form-group">
             <label for="inputEmail" class="sr-only">Email address</label>
             <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
@@ -92,7 +95,7 @@ print navbar('Remove Account');
             <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
         </div>
         <div class="form-group">
-            <button class="btn btn-primary" type="submit">Delete Account</button>
+            <button class="btn btn-primary" onclick="my_function()">Delete Account</button>
             <a class="btn btn-link" href="my_vaccine.php">Cancel</a>
         </div>
     </form>

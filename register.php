@@ -75,9 +75,21 @@ print navbar('Sing Up');
 	    <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
 	    <label for="inputPassword" class="sr-only">Password</label>
 	    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+	    <small id="passwordHelpBlock" class="form-text text-muted">
+		  Your password must be more than 6 characters long, and must not contain spaces, special characters, or emoji.
+		</small>
 	    <label for="inputPassword" class="sr-only">Confirm Password</label>
 	    <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
-	    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+	    <small id="passwordHelpBlock" class="form-text text-muted">
+		  You need to confirm your password
+		</small>
+	    <div class="form-group">
+        <div class="checkbox">
+            <label>
+            	<input type="checkbox" name="agree" value="agree" /> Agree with the terms and conditions
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 	   	<p>Already have an account? <a href="login.php">Sign in</a>.
 	</form>
 </div>
