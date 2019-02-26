@@ -65,7 +65,7 @@ print navbar('Epitope');
             	echo "<th>Antigen Name</th><th>Antigen Id</th>";
             }
             else {
-            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th><th>Binder</th>";
+            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th><th>Binder</th><th>Add</th>";
             }
             ?>
             </tr>
@@ -109,6 +109,9 @@ print navbar('Epitope');
 		      				echo "Weak Binder";
 		      			}
 		      			?></td>
+                        <td> 
+                            <button id='<?php echo $row["idEpitope"].$row["nameHLA"]?>' type='reset' name='addbutton'>add</button>
+                        </td>
 		      			<?php }  
 		      			?>
 		      			
