@@ -12,10 +12,9 @@ $sql = "SELECT nameHLA, pdbHLA FROM HLA WHERE idHLA = '$idHLA';";
 $HLA_data = mysqli_fetch_all($conn->query($sql))[0];
 $nameHLA = $HLA_data[0];
 $pdbHLA = $HLA_data[1];
-
-$sql = "SELECT Affinity.idEpitope, idHLA, logAff, nMAff, seqEpitope from Affinity JOIN Epitope ON Affinity.idEpitope = Epitope.idEpitope where idHLA = '$idHLA'";
+$sql ="SELECT Affinity.idEpitope, idHLA, logAff, nMAff, seqEpitope from Affinity JOIN Epitope ON Affinity.idEpitope = Epitope.idEpitope WHERE idHLA = '$idHLA' ORDER BY logAff DESC, nMAff DESC limit 3000;";
 $affTable = $conn->query($sql);
-$affdata = mysqli_fetch_all($conn->query($sql));
+$affdata = mysqli_fetch_all($affTable);
 $nm_data = [];
 $log_data = [];
 
@@ -96,34 +95,7 @@ print navbar('HLA');
     </div> <!-- /container -->
     <script type="text/javascript">
       
-        $('#affTable').DataTable({
-                  serverSide: true,
-        ordering: false,
-        searching: false,
-        ajax: function ( data, callback, settings ) {
-            var out = [];
- 
-            for ( var i=data.start, ien=data.start+data.length ; i<ien ; i++ ) {
-                out.push( [ i+'-1', i+'-2', i+'-3', i+'-4', i+'-5' ] );
-            }
- 
-            setTimeout( function () {
-                callback( {
-                    draw: data.draw,
-                    data: out,
-                    recordsTotal: 5000000,
-                    recordsFiltered: 5000000
-                } );
-            }, 50 );
-        },
-        scrollY: 200,
-        scroller: {
-            loadingIndicator: true
-        },
-        stateSave: true
-        }
-
-          );
+        $('#affTable').DataTable();
         
         var nm_array = <?php echo json_encode($nm_data); ?>;
         var log_array = <?php echo json_encode($log_data); ?>;

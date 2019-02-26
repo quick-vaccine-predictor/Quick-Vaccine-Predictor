@@ -86,10 +86,13 @@ print navbar('Queries');
               <form method="GET" action="hla.php">
                 <label>HLA ID </label>
                 <br>
-                <select name="hla" multiple size="8">
+                <select name="idHLA" multiple size="8">
                   <?php
-                    foreach (array_keys($hlaTypeArray) as $idHlaType) {?>
-                    <option name="idHlaType[<?php print $idHlaType ?>]"><?php print $hlaTypeArray[$idHlaType]. "\n"?></option>
+                      foreach ($hlaTable as $hlarow) {
+                          $idHLA = $hlarow["idHLA"];
+                          $nameHLA = $hlarow["nameHLA"];
+                    ?>
+                    <option selected value="<?php print $idHLA ?>"><?php print $nameHLA. "\n"?></option>
                     <?php }
                     ?>
                 </select>
