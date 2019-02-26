@@ -14,7 +14,11 @@ $sql = "SELECT nameAntigen, Antigen.idOrganism, Organism.nameOrganism, Antigen.i
 $AntTable = mysqli_fetch_array($conn->query($sql));
 $sql = "SELECT idEpitope, seqEpitope, scoreImmunogenecity, start, end FROM Epitope WHERE idAntigen = '$idAntigen'";
 $affTable = $conn->query($sql);
-$_SESSION["array"] = mysqli_fetch_all($affTable);
+$array = array();
+foreach ($affTable as $row){
+  $array[] = $row;
+}
+$_SESSION["array"] = $array;
 $conn->close();
 print navbar('Antigen');
 if (mysqli_num_rows($affTable) == 0) {

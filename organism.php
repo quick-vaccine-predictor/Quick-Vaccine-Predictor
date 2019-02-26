@@ -15,7 +15,11 @@ $nameOrganism = mysqli_fetch_array($conn->query($sql))['nameOrganism'];
 
 $sql = "SELECT idAntigen, nameAntigen, idProtein FROM Antigen WHERE idOrganism = $idOrganism";
 $antTable = $conn->query($sql);
-$_SESSION["array"] = mysqli_fetch_all($antTable);
+$array = array();
+foreach ($antTable as $row){
+  $array[] = $row;
+}
+$_SESSION["array"] = $array;
 $conn->close();
 print navbar('Organism');
 if (mysqli_num_rows($antTable) == 0) {

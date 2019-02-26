@@ -13,7 +13,11 @@ $sql = "SELECT nameProtein from Protein WHERE idProtein = '$idProtein'";
 $nameProtein = mysqli_fetch_array($conn->query($sql))['nameProtein'];
 $sql = "SELECT idAntigen, nameAntigen, idOrganism FROM Antigen WHERE idProtein = '$idProtein'";
 $antTable = $conn->query($sql);
-$_SESSION["array"] = mysqli_fetch_all($antTable);
+$array = array();
+foreach ($antTable as $row){
+  $array[] = $row;
+}
+$_SESSION["array"] = $array;
 $conn->close();
 print navbar('Protein');
 if (mysqli_num_rows($antTable) == 0) {

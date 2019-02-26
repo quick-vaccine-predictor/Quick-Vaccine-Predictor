@@ -13,7 +13,11 @@ if ($conn->connect_error) {
 }
 $sql = "SELECT idEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA where idEpitope = $idEpitope";
 $affTable = $conn->query($sql);
-$_SESSION["array"] = mysqli_fetch_all($affTable);
+$array = array();
+foreach ($affTable as $row){
+  $array[] = $row;
+}
+$_SESSION["array"] = $array;
 #print_r(mysqli_fetch_all($affTable));
 $affdata = mysqli_fetch_all($conn->query($sql));
 $sql = "SELECT idEpitope, seqEpitope, scoreImmunogenecity, Antigen.idAntigen, nameAntigen, start,end, Antigen.idProtein, nameProtein, Antigen.idOrganism, nameOrganism from Epitope JOIN Antigen ON Epitope.idAntigen = Antigen.idAntigen JOIN Protein ON Antigen.idProtein = Protein.idProtein JOIN Organism ON Antigen.idOrganism = Organism.idOrganism  WHERE idEPitope = $idEpitope";
