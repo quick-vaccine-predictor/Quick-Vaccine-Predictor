@@ -3,6 +3,7 @@ include("globals.inc.php");
 $title = "my Vaccine";
 print headerDBW($title);
 
+
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: login.php");
@@ -13,16 +14,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 $conn = connectSQL();
 
 //declaration of some variables
+$idUser = "";
 $email="";
 
+$idUser = $_SESSION['idUser'];
 $email= $_SESSION["email"];
-$sql = "SELECT idVaccine, nameVaccine FROM Vaccine ";
-$sql2 = "SELECT idUser FROM User WHERE mailUser='$email' ";
+$sql = "SELECT idVaccine, nameVaccine FROM Vaccine WHERE idUser ='$idUser'";
+//$sql2 = "SELECT idUser FROM User WHERE mailUser='$email' ";
 
 //$sql = "SELECT User (mailUser, Password) VALUES ('$email', '$password')";
 //$sql = "SELECT User.idUser, mailUser, Vaccine.idVaccine, nameVaccine, idEpitope from User JOIN Vaccine ON User.idUser = Vaccine.idUser JOIN VaccineContent ON Vaccine.idVaccine = VaccineContent.idVaccine WHERE isUser = $idUser";
 $result = $conn->query($sql); /* the search is done here */  
-$result2 = $conn->query($sql2);
+//$result2 = $conn->query($sql2);
 
 $conn->close();
 
