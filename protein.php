@@ -44,14 +44,27 @@ else{
               <tbody>
                 <tr>
                   <th scope="row" class="text-right">Id</th>
-                  <td class="text-left">
+                  <td class="text-left" colspan="2">
                   <?php $idEptiope = $idProtein;
                         echo "<a href='https://www.ncbi.nlm.nih.gov/protein/$idProtein' target='_blank'>$idProtein</a>"
                   ?></td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Name</th>
-                  <td class="text-left" id="sequence"><?php echo $nameProtein ?></td>
+                  <td class="text-left" id="sequence" colspan="2"><?php echo $nameProtein ?></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-right">Find homolog</th>
+                  <form action="blast.php" method="POST">
+                  <td class="text-left">
+                      <input checked type="radio" name="db" value="sprot">Swissprot<br>
+                      <input type="hidden" value='<?php echo $idAntigen?>' name='id'>
+                      <input type="radio" name="db" value="pdb">PDB<br>
+                  <td>
+                    <input type="submit" value="Submit">
+                  </td>
+                    </form>
+                  </td>
                 </tr>
               </tbody>
             </table>
