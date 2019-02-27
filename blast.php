@@ -10,7 +10,7 @@ $db = $_REQUEST["db"];
 $id = $_REQUEST["id"];
 $command = 'curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=sequences&id=O56129&rettype=fasta&retmode=text" > '.$tmpFile;
 exec($command);
-$blastCommand = $blastPATH.' -query '.$tmpFile.' -db '.$blastDB.$db.' > '.$tmpFile.'.out';
+$blastCommand = $blastPATH.' -query '.$tmpFile.' -db '.$blastDB.$db.' -evalue 0.001 -max_target_seqs 100 > '.$tmpFile.'.out';
 exec($blastCommand);
 $blastFile = file_get_contents($tmpFile.'.out');
 print navbar('Blast');
