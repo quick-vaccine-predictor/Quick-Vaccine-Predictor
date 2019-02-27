@@ -113,7 +113,7 @@ print navbar('Epitope');
 		      			}
 		      			?></td>
                         <td> 
-                            <a href="addindex.php"><button id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addbutton'>add</button></a>
+                            <a href="addindex.php"><input id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addbutton' value="add"></a>
                         </td>
 		      			<?php }  
 		      			?>
