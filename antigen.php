@@ -45,23 +45,36 @@ else{
               <tbody>
                 <tr>
                   <th scope="row" class="text-right">Id</th>
-                  <td class="text-left">
+                  <td class="text-left" colspan="2">
                   <?php echo "<a href='https://www.ncbi.nlm.nih.gov/protein/$idAntigen' target='_blank'>$idAntigen</a>"
                   ?></td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Name Antigen</th>
-                  <td class="text-left" id="sequence"><?php echo $AntTable['nameAntigen'] ?></td>
+                  <td class="text-left" id="sequence" colspan="2"><?php echo $AntTable['nameAntigen'] ?></td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Organism</th>
-                  <td class="text-left"><?php $idOrganism = $AntTable['idOrganism']; $nameOrganism = $AntTable['nameOrganism'];
+                  <td class="text-left" colspan="2"><?php $idOrganism = $AntTable['idOrganism']; $nameOrganism = $AntTable['nameOrganism'];
                         echo "<a href='organism.php?idOrganism=$idOrganism' target='_blank'>$nameOrganism</a>";?></td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-right">Protein</th>
-                  <td class="text-left"><?php $idProtein = $AntTable['idProtein']; $nameProtein = $AntTable['nameProtein'];
+                  <td class="text-left" colspan="2"><?php $idProtein = $AntTable['idProtein']; $nameProtein = $AntTable['nameProtein'];
                         echo "<a href='protein.php?idProtein=$idProtein' target='_blank'>$nameProtein</a>";?></td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-right">Find homolog</th>
+                  <form action="blast.php" method="POST">
+                  <td class="text-left">
+                      <input checked type="radio" name="db" value="sprot">Swissprot<br>
+                      <input type="hidden" value='<?php echo $idAntigen?>' name='id'>
+                      <input type="radio" name="db" value="pdb">PDB<br>
+                  <td>
+                    <input type="submit" value="Submit">
+                  </td>
+                    </form>
+                  </td>
                 </tr>
               </tbody>
             </table>
