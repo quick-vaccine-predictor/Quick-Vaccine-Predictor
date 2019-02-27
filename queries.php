@@ -86,13 +86,13 @@ print navbar('Queries');
               <form method="GET" action="hla.php">
                 <label>HLA ID </label>
                 <br>
-                <select name="idHLA" multiple size="8">
+                <select name="idHLA" size="8">
                   <?php
                       foreach ($hlaTable as $hlarow) {
                           $idHLA = $hlarow["idHLA"];
                           $nameHLA = $hlarow["nameHLA"];
                     ?>
-                    <option selected value="<?php print $idHLA ?>"><?php print $nameHLA. "\n"?></option>
+                    <option value="<?php print $idHLA ?>"><?php print $nameHLA. "\n"?></option>
                     <?php }
                     ?>
                 </select>
