@@ -1,7 +1,9 @@
 <?php
 include("globals.inc.php");
+
 //Conection to the DB if needed
 $conn = connectSQL();
+
 if (isset($_GET["nameOrganism"])){
 	$name = $_GET["nameOrganism"];
 	$sql = "SELECT nameOrganism, idOrganism FROM Organism WHERE nameOrganism LIKE '%".$name."%';";
@@ -41,6 +43,7 @@ else {
 $nameTable = $conn->query($sql);
 $_SESSION["array"] = mysqli_fetch_all($nameTable);
 $conn->close();
+
 print headerDBW("Name Search");
 print navbar('Epitope');
 //sequenceName
@@ -110,7 +113,7 @@ print navbar('Epitope');
 		      			}
 		      			?></td>
                         <td> 
-                            <a href="addindex.php"><button id='<?php echo $row["idEpitope"].$row["nameHLA"]?>' target="_blank" type='reset' name='addbutton'>add</button></a>
+                            <a href="addindex.php"><button id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addbutton'>add</button></a>
                         </td>
 		      			<?php }  
 		      			?>
