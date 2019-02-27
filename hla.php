@@ -12,11 +12,13 @@ $sql = "SELECT nameHLA, pdbHLA FROM HLA WHERE idHLA = '$idHLA';";
 $HLA_data = mysqli_fetch_all($conn->query($sql))[0];
 $nameHLA = $HLA_data[0];
 $pdbHLA = $HLA_data[1];
-$sql ="SELECT Affinity.idEpitope, idHLA, logAff, nMAff, seqEpitope from Affinity JOIN Epitope ON Affinity.idEpitope = Epitope.idEpitope WHERE idHLA = '$idHLA' ORDER BY logAff DESC, nMAff DESC limit 3000;";
+$sql ="SELECT Affinity.idEpitope, idHLA, logAff, nMAff, seqEpitope from Affinity JOIN Epitope ON Affinity.idEpitope = Epitope.idEpitope WHERE idHLA = '$idHLA' ORDER BY logAff DESC, nMAff ASC;";
 $affTable = $conn->query($sql);
 $array = array();
+$dataTable = array();
 foreach ($affTable as $row){
   $array[] = $row;
+  $dataTable[] = [$row["idEpitope"],$row["seqEpitope"],$row["logAff"],$row["nMAff"]];
 }
 $_SESSION["array"] = $array;
 $affdata = $array;
@@ -81,26 +83,19 @@ print navbar('HLA');
               <th>nM</th>
             </tr>
           </thead>
-      <tbody>
-        <?php foreach ($affTable as $r){ ?>
-          <tr>
-            <?php $idEpitope = $r['idEpitope']; ?>
-            <th scope='row' id="idEpitope"><a href=<?php $idEpitope=$r['idEpitope']; echo  "epitope.php?idEpitope=$idEpitope target='_blank'" ?>>
-              <?php echo $idEpitope ?></a></th>
-            <td class='text-center' id="seq">
-              <?php echo $r['seqEpitope'] ?>
-            </td>
-            <td class='text-center' id="log"><?php echo $r['logAff'] ?></td>
-            <td class='text-center' id="nM"><?php echo $r['nMAff'] ?></td>
-          </tr>
-        <?php } ?>
-      </tbody>
       </table>
       </div>
     </div> <!-- /container -->
     <script type="text/javascript">
-      
-        $('#affTable').DataTable();
+      var data = <?php echo json_encode($dataTable); ?>;
+      console.log(data);
+        $('#affTable').DataTable( {
+            data:           data,
+            deferRender:    true,
+            scrollY:        500,
+            scrollCollapse: true,
+            scroller:       true
+        } );
         document.getElementById("tabletocsv").onclick = function () {
         location.href = "tabletocsv.php";
     };
@@ -110,8 +105,6 @@ print navbar('HLA');
 
         var arr_jsons_data = [];
         var HLA_name = <?php echo json_encode($idHLA); ?>;
-        console.log(nm_array);
-        console.log(log_array);
         var nm_num_array = nm_array.map(Number);
         var log_num_array = log_array.map(Number);
 
