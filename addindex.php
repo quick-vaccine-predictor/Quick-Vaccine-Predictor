@@ -21,25 +21,42 @@ $conn = connectSQL();
 $nVaccine = "";
 $idUser="";
 $errors = array();
+$idEpitope= "";
+$idHLA = "";
+$seqEpitope="";
+$idVaccine="";
 
 // Register User
+//if(isset($_POST["addintobutton"]) & !empty($_POST)){
+//    //Recieve all input values from the form
+//    $idEpitope = $_SESSION["idEpitope"];
+//
+//    $idHLA = $_SESSION["idHLA"];
+//    $seqEpitope = $_SESSION["seqEpitope"];
+//    print($idHLA);
+//    die;
+//}
+
+
 if(isset($_POST["addbutton"]) & !empty($_POST)){
-	//Recieve all input values from the form
-    $nVaccine = $_POST['nVaccine'];
-    $idUser = $_SESSION['idUser'];
+    //Recieve all input values from the form
+    $idEpitope = $_SESSION["idEpitope"];
+    $idHLA = $_SESSION["idHLA"];
+    $nVaccine = $_POST["nVaccine"];
+    $idUser = $_SESSION["idUser"];
 	//Form validation by adding corresponding errors into $errors array
-    if(empty($nVaccine)) { array_push($errors, "nameVaccine is required"); }
+    if(empty($nVaccine)) { array_push($errors, "nameVaccine isc required"); }
 }
 
 // If there is no errors in the form register user:
 	if (count($errors) == 0) {
-        //$sql = "INSERT INTO Vaccine set nameVaccine = $nVaccine, idUser = (SELEC idUser FROM User WHERE idUser='6')";
         $sql = "INSERT INTO Vaccine SET nameVaccine = '$nVaccine' , idUser ='$idUser'";
-        //$sql2 = "INSERT INTO VaccineConent SET idVaccine = (SELECT idVaccine FROM Vaccine), idEpitope = '41'";
 
         mysqli_query($conn, $sql);
-        //mysqli_query($conn, $sql2);
-        echo "1 record added";
+        $idVaccine = mysqli_insert_id($conn);
+
+        $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
+        mysqli_query($conn, $sql2);
 	}
 
 
@@ -52,6 +69,11 @@ print navbar('HLA');
 
 <div class="container">
     <form action="" method="post">
+        <p> 
+        idEpitope: <?php echo $_SESSION["idEpitope"];?> 
+        idHLA: <?php echo $_SESSION["idHLA"];?> 
+        seqEpitope: <?php echo $_SESSION["seqEpitope"];?> 
+        </p>
         nameVaccine: <input type="text" name="nVaccine" /><br><br>
         <!--<input type="submit" />-->
         <input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">

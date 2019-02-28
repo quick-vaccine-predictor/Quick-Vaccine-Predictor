@@ -113,7 +113,13 @@ print navbar('Epitope');
 		      			}
 		      			?></td>
                         <td> 
-                            <a href="addindex.php"><input id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addbutton' value="add"></a>
+                            <a href="addindex.php">
+							<button 
+							  <?php $_SESSION["idEpitope"] =  $row["idEpitope"]; 
+								 $_SESSION["idHLA"] = $row["idHLA"];
+								 $_SESSION["seqEpitope"] = $row["seqEpitope"];
+							  ?>
+							id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addintobutton'>add</button></a>
                         </td>
 		      			<?php }  
 		      			?>

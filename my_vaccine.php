@@ -19,13 +19,10 @@ $email="";
 
 $idUser = $_SESSION['idUser'];
 $email= $_SESSION["email"];
-$sql = "SELECT idVaccine, nameVaccine FROM Vaccine WHERE idUser ='$idUser'";
-//$sql2 = "SELECT idUser FROM User WHERE mailUser='$email' ";
+$sql = "SELECT v.idVaccine, v.nameVaccine, vc.idEpitope, e.seqEpitope, vc.idEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope";
+//$sql = "SELECT idVaccine, nameVaccine FROM Vaccine WHERE idUser ='$idUser'";
 
-//$sql = "SELECT User (mailUser, Password) VALUES ('$email', '$password')";
-//$sql = "SELECT User.idUser, mailUser, Vaccine.idVaccine, nameVaccine, idEpitope from User JOIN Vaccine ON User.idUser = Vaccine.idUser JOIN VaccineContent ON Vaccine.idVaccine = VaccineContent.idVaccine WHERE isUser = $idUser";
 $result = $conn->query($sql); /* the search is done here */  
-//$result2 = $conn->query($sql2);
 
 $conn->close();
 
@@ -49,16 +46,14 @@ print navbar('myVaccine');
           <thead>
             <tr>
               <th>Vaccine name</th>
-              <th>idEpitope</th>
-              <th>idVaccine</th>
+              <th>seqEpitope</th>
             </tr>
           </thead>
       <tbody>
         <?php while($row = $result->fetch_assoc()) { ?>
           <tr>
-            <th scope='row' id="idUser"><a href="<?php echo $row['nameVaccine'] ?>"><?php echo $row['nameVaccine'] ?></th>
-            <td class='text-center' id="mail"><?php echo $row['idUser'] ?></td>
-            <td class='text-center' id="idVaccine"><?php echo $row['idVaccine'] ?></td>
+            <th scope='row' id="idUser"><?php echo $row['nameVaccine'] ?></th>
+            <td class='text-center' id="epitope"><a href="<?php echo $row['seqEpitope'] ?>" ><?php echo $row['seqEpitope'] ?></td>
           </tr>
         <?php } ?>
       </tbody>

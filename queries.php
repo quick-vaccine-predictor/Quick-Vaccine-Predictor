@@ -112,7 +112,7 @@ print navbar('Queries');
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
-              <form method="GET"  action="queryManager.php">
+              <form method="GET"  action="queryManager.php" >
                 <div class="form-group">
                 <b>Name </b>
                   <input type="text" name="nameOrganism" value="cat" rows="2" cols="10" minlength="0" maxlength="100" required/> 
@@ -139,7 +139,7 @@ print navbar('Queries');
             </div>
             <div class="col-sm-4">
               <form method="GET"  action="antigen.php">
-              <label>Antigen ID </label>
+              <label>Antigen</label>
                 <div class="form-group">
                   <b>ID </b>
                   <input type="text" name="idAntigen" value="" rows="2" cols="10" minlength="4" maxlength="30" required/> 
@@ -219,5 +219,4 @@ print navbar('Queries');
       $("select").val(""); 
     }
     </script>
-
 <?php print footerDBW();?>
