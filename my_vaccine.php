@@ -53,7 +53,9 @@ print navbar('myVaccine');
         <?php while($row = $result->fetch_assoc()) { ?>
           <tr>
             <th scope='row' id="idUser"><?php echo $row['nameVaccine'] ?></th>
-            <td class='text-center' id="epitope"><a href="<?php echo $row['seqEpitope'] ?>" ><?php echo $row['seqEpitope'] ?></td>
+            <td class='text-center' id="epitope">
+              <a href="<?php echo "epitope.php?idEpitope=".$row['idEpitope']; ?>" ><?php echo $row['seqEpitope'] ?>
+            </td>
           </tr>
         <?php } ?>
       </tbody>
