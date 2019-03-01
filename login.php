@@ -35,8 +35,6 @@ if(isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
 	if(isset($_POST) & !empty($_POST)) {
 		$email = mysqli_real_escape_string($conn, check_data($_POST['email']));
 		$password = mysqli_real_escape_string($conn, check_data($_POST['password'])); 
-		//print_r($_POST);
-		//die;
 
 		//Form validation by adding corresponding errors into $errors array
 		if(empty(check_data($email))) { array_push($errors, "Email is required"); 	}
@@ -55,6 +53,21 @@ if(isset($_SESSION['msg']) && !empty($_SESSION['msg'])) {
 				if(password_verify($password,$hash)) {
 					// Password is correct, so start a new session
 					session_start();
+					// If user click on remember me checkbox then we set cookies:
+					if(!empty($_POST["remember"])) {
+						setcookie ("email",$_POST["email"],time()+ 3600);
+						setcookie ("password",$_POST["password"],time()+ 3600);
+						echo "Cookies Set Successfuly";
+					// Else then we destroy the cookies if they are set
+					} else {
+						if(isset($_COOKIE["email"])){ 
+							setcookie("username","");
+						}
+						if(isset($_COOKIE["password"])){
+							setcookie("password","");
+						}
+						
+					}
 
 					// Store data in session variables
 	                $_SESSION["loggedin"] = true;
@@ -95,16 +108,17 @@ print navbar('Login');
 	 	<div class="input-group">
 		 	<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 			<label for="inputEmail" class="sr-only">Email address</label>
-		    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+		    <input type="email" name="email" value="<?php if(isset($_COOKIE["email"])) { echo $_COOKIE["email"]; } ?>" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		</div>
 		<div class="input-group">
 			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 		    <label for="inputPassword" class="sr-only">Password</label>
-		    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		    <input type="password" name="password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" id="inputPassword" class="form-control" placeholder="Password" required>
 		</div>
 	   	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 	    <div class="checkbox">
-          <label><input type="checkbox" name="remember"> Remember me</label>
+	    	<!-- If user wants to be remembered then the checkbox will be automatically cheked -->
+          <label><input type="checkbox" name="remember" <?php if(isset($_COOKIE["email"])) {?> cheked <?php }  ?> > Remember me</label>
         </div>
 	    <p>Not yet a member? <a href="register.php">Sign up here</a>.</p>
 	</form>

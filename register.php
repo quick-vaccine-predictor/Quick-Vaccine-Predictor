@@ -68,30 +68,38 @@ print navbar('Sing Up');
 
 
 <div class="container">
-	<form class="form-signin" action= "register.php" method="POST"><?php include('errors.php'); ?>
+	<form class="form-signin" action= "register.php" method="POST" autocomplete="on"><?php include('errors.php'); ?>
 	 	<h2 class="form-signin-heading">Sign Up</h2>
-	 	<p>Please fill this form to create an account.</p>
-		<label for="inputEmail" class="sr-only">Email address</label>
-	    <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
-	    <label for="inputPassword" class="sr-only">Password</label>
-	    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-	    <small id="passwordHelpBlock" class="form-text text-muted">
-		  Your password must be more than 6 characters long, and must not contain spaces, special characters, or emoji.
-		</small>
-	    <label for="inputPassword" class="sr-only">Confirm Password</label>
-	    <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
-	    <small id="passwordHelpBlock" class="form-text text-muted">
-		  You need to confirm your password
-		</small>
+	 	<h4>Please fill this form to create an account</h4>
+	 	<br>
+	 	<div class="input-group">
+	 		<span class="input-group-addon"><i class="glyphicon glyphicon-user" data-toggle="tooltip" title="Introduce a correct email account" ></i></span>
+			<label for="inputEmail" class="sr-only">Email address</label>
+		    <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-lock" data-toggle="tooltip" title="Your password must be more than 6 characters long, and must not contain spaces, special characters, or emoji."></i></span>
+		    <label for="inputPassword" class="sr-only">Password</label>
+		    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-lock" data-toggle="tooltip" title="You need to repeat your password in order to register"></i></span>
+		    <label for="inputPassword" class="sr-only">Confirm Password</label>
+		    <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
+		    
+		</div>
 	    <div class="form-group">
         <div class="checkbox">
             <label>
-            	<input type="checkbox" name="agree" value="agree" /> Agree with the terms and conditions
+            	<input id="field_terms" onchange="this.setCustomValidity(validity.valueMissing ? 'Please indicate that you accept the Terms and Conditions' : '');" type="checkbox" requiered name="terms" />I accept the <a href="tc_english.html" target="_blank">Terms and Conditions</a>
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 	   	<p>Already have an account? <a href="login.php">Sign in</a>.
 	</form>
+	<script>
+  		document.getElementById("field_terms").setCustomValidity("Please indicate that you accept the Terms and Conditions");
+	</script>
 </div>
 	
 <?php print footerDBW();?>
