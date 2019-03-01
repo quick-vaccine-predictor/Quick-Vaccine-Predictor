@@ -26,22 +26,21 @@ $result = $conn->query($sql); /* the search is done here */
 
 $conn->close();
 
-
-
 print navbar('myVaccine');
 ?> 
 
 <div class="container">
-    <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["email"]); ?></b>. Welcome to our site.</h1>
+    <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["email"]); ?></b>. Welcome to your personal site.</h1>
     <div class="row"> 
         <div class="col-sm-8">
-            Here will go a brief explanation about QVVP and if we have time we should put a video tuturial or just a tutorial.
+            Here will go a brief explanation about QVVP .
         </div>
 
     </div>
 
+
     <div class="row">
-        <h2>Epitopes</h2>
+        <h2>Vaccines</h2>
         <table class="table table-striped table-sm table-responsive" id="affTable">
           <thead>
             <tr>
