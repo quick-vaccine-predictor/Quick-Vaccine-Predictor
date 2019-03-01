@@ -19,14 +19,33 @@ $email="";
 
 $idUser = $_SESSION['idUser'];
 $email= $_SESSION["email"];
-$sql = "SELECT v.idVaccine, v.nameVaccine, vc.idEpitope, e.seqEpitope, vc.idEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope";
+$sql = "SELECT idVaccine, nameVaccine FROM Vaccine  WHERE idUser ='$idUser' ";
 //$sql = "SELECT idVaccine, nameVaccine FROM Vaccine WHERE idUser ='$idUser'";
 
 $result = $conn->query($sql); /* the search is done here */  
 
-$conn->close();
+
 
 print navbar('myVaccine');
+
+// This is the code for all datatables that are coming;
+// $allnameVaccine = array();
+// $nVac="";
+// while($row = $result->fetch_assoc()) { 
+  // if (!in_array($row["nameVaccine"], $allnameVaccine)) {
+    // array_push($allnameVaccine,$row["nameVaccine"] );
+    // $nVac=$row['nameVaccine'];
+    // $sql2 = "SELECT  vc.idEpitope, e.seqEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope  AND v.nameVaccine ='$nVac' ";
+    // $result2 = $conn->query($sql2); /* the search is done here */  
+    // while($row2 = $result2->fetch_assoc()) { 
+      // echo $nVac;
+      // echo $row2['idEpitope']."  ";
+    // }
+  // } 
+  // else {continue;}
+// }
+
+
 ?> 
 
 <div class="container">
@@ -41,29 +60,47 @@ print navbar('myVaccine');
 
     <div class="row">
         <h2>Vaccines</h2>
-        <table class="table table-striped table-sm table-responsive" id="affTable">
+        <?php 
+            $allnameVaccine = array();
+            $nVac="";
+            while($row = $result->fetch_assoc()) { 
+            if (!in_array($row["nameVaccine"], $allnameVaccine)) {
+            array_push($allnameVaccine,$row["nameVaccine"] );
+            $nVac=$row['nameVaccine'];
+            $sql2 = "SELECT  vc.idEpitope, e.seqEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope  AND v.nameVaccine ='$nVac' ";
+            $result2 = $conn->query($sql2); /* the search is done here */  
+          ?>
+
+        <table class="table table-striped table-sm table-responsive affTable" id="affTable">
           <thead>
             <tr>
-              <th>Vaccine name</th>
-              <th>seqEpitope</th>
+              <th scope='row' id="idUser"><?php echo $nVac ?></th>
             </tr>
           </thead>
       <tbody>
-        <?php while($row = $result->fetch_assoc()) { ?>
-          <tr>
-            <th scope='row' id="idUser"><?php echo $row['nameVaccine'] ?></th>
-            <td class='text-center' id="epitope">
-              <a href="<?php echo "epitope.php?idEpitope=".$row['idEpitope']; ?>" ><?php echo $row['seqEpitope'] ?>
+        
+        
+          <?php while($row2 = $result2->fetch_assoc()) {  ?>
+            <tr>
+            <td scope='row' id="Epitope" class='text-center' >
+              <a href="<?php echo "epitope.php?idEpitope=".$row2['idEpitope']; ?>" target="_blank"><?php echo $row2['seqEpitope'] ;}?>
             </td>
           </tr>
-        <?php } ?>
+        
       </tbody>
+      <?php } 
+        else {continue;}
+      } $conn->close();?>
       </table>
-      </div>
-    <!--</div> -->
+
+      </div>  <!--</div> -->
+   
     <script type="text/javascript">
       $(document).ready(function () {
-        $('#affTable').DataTable();
+        $('.affTable').DataTable({
+          paging:false, 
+          "info":false}
+        );
         
       });
     </script>
