@@ -7,11 +7,11 @@ print navbar('Home');
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron text-justify" style="background:transparent !important">
         <div>
-          <h1>Welcome to Quick Vaccine Predictor</h1>
+          <h1>Welcome to Quick Vaccine Viral Predictor</h1>
         </div>  
           <p>QVVP is a public application designed to help speed up the generation of new viral vaccines. 
               It is a student's project from the Mc in Bioinformatics in Health Science from Universitat Pompeu Fabra (UPF).
-              QVP contains a database with information of more than 41.000 viral epitopes from IEDB. Furthermore, it contains
+              QVVP contains a database with information of more than 41.000 viral epitopes from IEDB. Furthermore, it contains
               already calculated binding simulations for each epitope using netMHCcons, a reliable binding prediction software from DTU Bioinformatics (Denmark).
           </p>
           <p></p>
