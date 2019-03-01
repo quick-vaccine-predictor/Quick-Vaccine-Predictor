@@ -92,7 +92,7 @@ function navbar($page){
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>                        
             </button>
-            <a class="navbar-brand" href="#">QVP</a>
+            <a class="navbar-brand" href="index.php">QVVP</a>
           </div>
           <div id="myNavbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">';
