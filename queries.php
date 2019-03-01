@@ -25,7 +25,8 @@ print navbar('Queries');
       </ul>
       <div class="tab-content"> 
         <div id="epitopeSearch" class="tab-pane fade in active">      
-          <b>EPITOPE SEARCH</b>
+          <b>EPITOPE SEARCH</b> <br>
+          <b> Please choose between Epitope Sequence or EPitope ID:</b>
           <form method="GET" name="sequenceForm" action="queryManager.php">
             <div class="form-group">  
                 <label>Epitope sequence </label>
