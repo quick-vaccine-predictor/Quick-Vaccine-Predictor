@@ -4,6 +4,9 @@ print headerDBW("Queries");
 print navbar('Queries');
 
 
+$url = get_url();
+$_COOKIE['history'][] = $url;
+  
 ?>
 
     <div class="container text-center">
@@ -152,10 +155,10 @@ print navbar('Queries');
                       
         <div id="proteosome" class="tab-pane fade">
           <b>Proteosome</b>
-          <form method="POST" name="proteosomeForm" action="proteosome.php">
+          <form method="POST" name="proteosomeForm" action="proteosomeManager.php" enctype="multipart/form-data">
             <div class="form-group">
               <label>Proteosome simulator</label>
-              <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText" required></textarea>
+              <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText"></textarea>
               <input name="uploadFile" type="file"><br>
             </div>
             <div class="form-check">
@@ -180,6 +183,14 @@ print navbar('Queries');
               </div>
               <button type="submit" class="btn btn-primary"> Submit </button>
               <button type="reset" value="Clear data" class="btn btn-primary">Clear data</button>
+            </div>
+            <div>
+              <label>Start Codon </label>
+              <select name="startCodons[]" multiple="">
+                <option selected value="0">ATG/AUG</option>
+                <option value="1">CTG/CUG</option>
+                <option value="2">TTG/UUG</option>
+              </select>
             </div>
           </form>
         </div>
