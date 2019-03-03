@@ -18,7 +18,7 @@ $idUser = "";
 $email="";
 
 $idUser = $_SESSION['idUser'];
-$email= $_SESSION["email"];
+$email= $_SESSION['email'];
 $sql = "SELECT idVaccine, nameVaccine FROM Vaccine  WHERE idUser ='$idUser' ";
 //$sql = "SELECT idVaccine, nameVaccine FROM Vaccine WHERE idUser ='$idUser'";
 
@@ -57,7 +57,7 @@ print navbar('myVaccine');
 
     </div>
 
-
+ 
     <div class="row">
         <h2>Vaccines</h2>
         <?php 
@@ -74,7 +74,18 @@ print navbar('myVaccine');
         <table class="table table-striped table-sm table-responsive affTable" id="affTable">
           <thead>
             <tr>
-              <th scope='row' id="idUser"><?php echo $nVac ?></th>
+              <th scope='row' id="idUser"><?php echo $nVac ?> </th>
+              <th>  
+              <a href="renameVaccine.php"  target="_blank"> 
+              	<button 
+              	  <?php $_SESSION["currentVac"] = $row['nameVaccine']; ?>
+              	id='<?php echo $nVac ?>' type='submit' name='renameVaccine'>rename <?php echo $nVac ?></button></a>
+              </th> 
+              <th>
+              <a href="removeVaccine.php"  target="_blank"> 
+              	<button 
+              	  <?php $_SESSION["currentVac"] =  $nVac; ?>
+              	id='<?php echo $nVac ?>' type='submit' name='removeVaccine'>remove <?php echo $nVac ?></button></a></th>
             </tr>
           </thead>
       <tbody>
