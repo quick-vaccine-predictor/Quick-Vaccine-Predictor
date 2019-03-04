@@ -1,85 +1,113 @@
 <?php
+//To debug in the terminal when the server is on
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_STRICT);
+
+// Include connection file
 include("globals.inc.php");
 $title = "Remove Vaccine";
 print headerDBW($title);
 
 //Conection to the DB if needed
 $conn = connectSQL();
+
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-  }
+  header("location: my_vaccine.php");
+  exit;
+}
 
-  // Iniziatializing variables
-$password = "";
-$newVaccinename = "";
-$currentVacname = "";
+// Iniziatializing variables
+$email = "";
 $idUser= "";
+$idVaccine = "";
+$password = "";
 $errors = array();
 
-if(isset($_POST) & !empty($_POST)){
+
+
+
+// Register User
+if(isset($_POST) & !empty($_POST) & !isset($_POST["removeVac"])){ 
     //Recieve all input values from the form
-    $password = mysqli_real_escape_string($conn, check_data($_POST['password']));
-    $newVaccinename= $_POST["newVaccinename"];
-    $currentVacname = $_SESSION["currentVac"];
+    $email = mysqli_real_escape_string($conn, check_data($_POST['email']));
+    $password = mysqli_real_escape_string($conn, check_data($_POST['password'])); 
+    $confirm_password = mysqli_real_escape_string($conn, check_data($_POST['confirm_password']));
     $idUser = $_SESSION["idUser"];
-	//Form validation by adding corresponding errors into $errors array
-    if(empty($newVaccinename)) { array_push($errors, "a new Vaccine name is required"); }
+    $idVaccine = $_POST["currentVac"]; 
+
+
+    //Form validation by adding corresponding errors into $errors array
+    if(empty(check_data($email))) { array_push($errors, "Email is required"); }
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) { array_push($errors, "Invalid email format"); }
     if(empty(check_data($password))) { array_push($errors, "Password is required"); }
+    if($password != $confirm_password) { array_push($errors, "The two passwords do not match, try again!"); }
+    
+     // Check input errors before updating the database
+    if(count($errors) == 0) {
+        // Check the DB to make sure a user does not already exist with the same email.
+        $user_check_query = "SELECT * FROM User WHERE mailUser = '$email' LIMIT 1";
+        $result = mysqli_query($conn, $user_check_query);
+        $user = mysqli_fetch_assoc($result); 
 
+        // Check if email exists, if yes then verify password
+        if (mysqli_num_rows($result) == 1){
+            $hash = $user['Password']; 
 
-    // If there is no errors in the form rename Vaccine:
-	if (count($errors) == 0) {
-        $email = $_SESSION['email']; //provided from register.php or login.php 
-        $query_database = "SELECT * FROM User WHERE mailUser = '$email'"; //the email is unique
-        $result_database = mysqli_query($conn, $query_database);
-        // Fetching a result user as an associative array
-        $user_database = mysqli_fetch_assoc($result_database);
-        if (mysqli_num_rows($result_database) == 1){ 
-            $hash = $user_database['Password'];
-            // Verifying password:
-            if(password_verify($password,$hash)) {
-                // Check input errors before updating the database
-                if(count($errors) == 0) {     
-                    $sql = "UPDATE Vaccine SET nameVaccine = '$newVaccinename' WHERE nameVaccine = '$currentVacname' AND idUser ='$idUser'";
+            if(password_verify($password,$hash)) { 
+                // Password is correct so we proceed to deleted the user by the id
+            
+                $sql = "DELETE FROM VaccineContent WHERE idVaccine = '$idVaccine'";
+                mysqli_query($conn, $sql);
+                $sql2 = "DELETE FROM Vaccine WHERE idVaccine = '$idVaccine'";
+                mysqli_query($conn, $sql2);
+                } else {
+                    // Display an error message if nameVaccine is not valid
+                    array_push($errors, "The vaccine name was not valid."); } 
+                
+            } else {
+                // Display an error message if password is not valid
+                array_push($errors, "The password you entered was not valid."); } 
+        } else {
+            // Display an error message if user doe email doesn't exist
+            array_push($errors, "Incorrect email. Please try again."); }
+    } 
+    // Close connection
+    $conn->close();
 
-                    mysqli_query($conn, $sql);
-                    $idVaccine = mysqli_insert_id($conn);
+print navbar('Remove Account');
 
-                    $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
-                    mysqli_query($conn, $sql2);
-                }
-	}
-
+function my_function() {
+    confirm("Are you sure?");
 }
-    }}
-
-$conn->close();
-
-print navbar('HLA');
 ?>
 
 
+
 <div class="container">
-    <form class="form-signin" action= "renameVaccine.php" method="POST"><?php include('errors.php'); ?>
-    <h2 class="form-signin-heading">Remove <?php echo $_SESSION["currentVac"] ?></h2>
-    <p>Please fill out this form to rename your Vaccine.</p>
+    <form class="form-signin" action= "removeVaccine.php" method="POST" onsubmit="return confirm('Are you sure you want to submit?')"><?php include('errors.php'); ?>
+        <input type="hidden" name="currentVac" value="<?php echo $_POST["removeVac"] ?>">
+
+        <h2 class="form-signin-heading">A Fill the form with your email and password<br></h2>
+
         <div class="form-group">
-            <label><p>Type your new Vaccine name</p></label>
-            <input type="text" name="newVaccinename" id="newVaccinename" class="form-control" placeholder="New Vaccine name" required>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
         </div>
         <div class="form-group">
-            <label><p>Type your Password</p></label>
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
         </div>
-
         <div class="form-group">
-            <button class="btn btn-primary" type="submit">Rename</button>
+            <label for="inputPassword" class="sr-only">Confirm Password</label>
+            <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" onclick="my_function()">Delete Account</button>
             <a class="btn btn-link" href="my_vaccine.php">Cancel</a>
         </div>
     </form>
 </div>
 
 <?php print footerDBW();?>
+
