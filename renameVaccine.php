@@ -14,7 +14,7 @@ if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
   // Iniziatializing variables
 $password = "";
 $newVaccinename = "";
-$currentVacname = "";
+$currentVacid = "";
 $idUser= "";
 $errors = array();
 
@@ -23,7 +23,7 @@ if(isset($_POST) & !empty($_POST) & !isset($_POST["renameVac"])){
     //Recieve all input values from the form
     $password = mysqli_real_escape_string($conn, check_data($_POST['password']));
     $newVaccinename= $_POST["newVaccinename"];
-    $currentVacname = $_POST["currentVac"]; //AQUI HI HA UN ERRORç
+    $currentVacid = $_POST["currentVac"]; 
     $idUser = $_SESSION["idUser"];
 	//Form validation by adding corresponding errors into $errors array
     if(empty($newVaccinename)) { array_push($errors, "a new Vaccine name is required"); }
@@ -43,7 +43,7 @@ if(isset($_POST) & !empty($_POST) & !isset($_POST["renameVac"])){
             if(password_verify($password,$hash)) {
                 // Check input errors before updating the database
                 if(count($errors) == 0) {     
-                    $sql = "UPDATE Vaccine SET nameVaccine = '$newVaccinename' WHERE nameVaccine = '$currentVacname' AND idUser ='$idUser'";
+                    $sql = "UPDATE Vaccine SET nameVaccine = '$newVaccinename' WHERE idVaccine = '$currentVacid' AND idUser ='$idUser'";
 
                     mysqli_query($conn, $sql);
                     $idVaccine = mysqli_insert_id($conn);

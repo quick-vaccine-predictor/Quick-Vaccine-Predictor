@@ -70,6 +70,7 @@ print navbar('myVaccine');
               if (!in_array($row["nameVaccine"], $allnameVaccine)) {
                 array_push($allnameVaccine,$row["nameVaccine"] );
                 $nVac=$row['nameVaccine'];
+                $idVaccine = $row["idVaccine"];
                 $sql2 = "SELECT  vc.idEpitope, e.seqEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope  AND v.nameVaccine ='$nVac' ";
                 $result2 = $conn->query($sql2); /* the search is done here */  
           ?>
@@ -79,16 +80,17 @@ print navbar('myVaccine');
             <tr>
               <th scope='row' id="idUser"><?php echo $nVac ?> </th>
               <th>
-              <form method="post" action="renameVaccine.php" >
-                <input type="hidden" name="renameVac" value="<?php echo $nVac ?>">
-                <input type="submit" value="rename <?php echo $nVac ?>">
-              </form>
+                <form method="post" action="renameVaccine.php" >
+                  <input type="hidden" name="renameVac" value="<?php echo $idVaccine ?>">
+                  <input type="submit" value="rename <?php echo $nVac ?>">
+                </form>
               </th> 
               <th>
-              <a href="removeVaccine.php"  target="_blank"> 
-              	<button 
-                <?php $_SESSION['currentVac'] = $nVac; ?>
-              	id='<?php echo $nVac ?>' type='submit' name='removeVaccine'>remove <?php echo $nVac ?></button></a></th>
+                <form method="post" action="removeVaccine.php" >
+                  <input type="hidden" name="removeVac" value="<?php echo $idVaccine ?>">
+                  <input type="submit" value="remove <?php echo $nVac ?>">
+                </form>
+              <th>
             </tr>
           </thead>
       <tbody>
