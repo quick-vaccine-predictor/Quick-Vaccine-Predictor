@@ -4,8 +4,8 @@ print headerDBW("Queries");
 print navbar('Queries');
 
 
-$url = get_url();
-$_COOKIE['history'][] = $url;
+//$url = get_url();
+//$_COOKIE['history'][] = $url;
   
 ?>
 
@@ -18,20 +18,15 @@ $_COOKIE['history'][] = $url;
       </ul>
       <div class="tab-content"> 
         <div id="epitopeSearch" class="tab-pane fade in active">      
-           
-          <a href="#" data-toggle="tooltip" data-placement="top" title="Limit search results by epitope id or sequence "><b>EPITOPE SEARCH</b></a>
-          <br>
-          <b> Please choose between Epitope Sequence or Epitope ID:</b>
+          <b>EPITOPE SEARCH</b> <br>
+          <b> Please choose between Epitope Sequence or EPitope ID:</b>
           <form method="GET" name="sequenceForm" action="queryManager.php">
             <div class="form-group">  
-                <label>Epitope sequence: </label>
+                <label>Epitope sequence </label>
                 <input type="text" name="sequenceName" value="" size="11" minlength="9" maxlength="10"/> 
-                <a href="#" data-toggle="tooltip" data-placement="top" title="The epitope sequence must be between 9 and 10 aminoacids.">?</a>
                 <br>
-                <label>Epitope ID: </label>
+                <label>Epitope ID </label>
                 <input type="text" name="idEpitope" value="24" size="11" />  
-                <a href="#" data-toggle="tooltip" data-placement="top" title="ID from IEDB.">?</a>
-
               </div> 
             <div class="form-group">
               <label>HLA selection:</label> <br>
@@ -51,24 +46,17 @@ $_COOKIE['history'][] = $url;
               </select>
             </div>
             <div class="form-group">
-              <b>Threshold settings: 
-              <a href="#" data-toggle="tooltip" data-placement="top" title="Two different types of thresholds can be set: based on the binding affinity giving in nM IC50 values or based on % Rank obtained using the method on 200.000 random natural peptides.">?</a>
-              </b>
               <p>
-                <label>Threshold for strong binder (nMAff): </label>
+                <label>Threshold for strong binder (nMAff) </label>
                 <input type="text" name="sbaff" value="0.5" size="5" required/>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a strong binder if the binding affinity (IC50) is below the specified threshold for the strong binders.">?</a>
-                <label>Threshold for strong binder (logAff):</label>
+                <label>Threshold for strong binder (logAff)</label>
                 <input type="text" name="sblog" value="50" size="5" required/>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a strong binder if the % Rank is below the specified threshold for the strong binders.">?</a>
               </p>        
               <p>
-                <label>Threshold for weak binder (nMAff):</label>
+                <label>Threshold for weak binder (nMAff)</label>
                 <input type="text" name="wbaff" value="2" size="5"required/> 
-                <a href="#" data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a weak binder if the binding affinity (IC50) is above the threshold of the strong binders but below the specified threshold for the weak binders.">?</a>
-                <label>Threshold for weak binder (logAff):</label>
+                <label>Threshold for weak binder (logAff)</label>
                 <input type="text" name="wblog" value="500" size="5" required/> 
-                <a href="#" data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a weak binder if the % Rank is above the threshold of the strong binders but below the specified threshold for the weak binders.">?</a>
               </p>
             </div>  
             <button type="submit" class="btn btn-primary"> Submit </button>
@@ -82,9 +70,8 @@ $_COOKIE['history'][] = $url;
             <div class="col-sm-6" >
               <form method="GET" action="epitope.php">
                 <div class="form-group">
-                  <label>Epitope ID: </label>
+                  <label>Epitope ID </label>
                   <input type="text" name="idEpitope" value="24" size="11" required/>
-                  <a href="#" data-toggle="tooltip" data-placement="top" title="ID from IEDB.">?</a>
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form>
@@ -113,17 +100,15 @@ $_COOKIE['history'][] = $url;
             <div class="col-sm-4"> 
               <form method="GET"  action="organism.php">
               <label>Organism </label>
-              <a href="#" data-toggle="tooltip" data-placement="top" title="Limit the search results by the epitope's source organism.">?</a>
                 <div class="form-group">
-                  <b>ID:</b>
+                  <b>ID </b>
                   <input type="text" name="idOrganism" value="" rows="2" cols="10" minlength="4" maxlength="15" required/> 
-                  <a href="#" data-toggle="tooltip" data-placement="top" title="ID's from the NCBI taxonomy database.">?</a>
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET"  action="queryManager.php" >
                 <div class="form-group">
-                <b>Name:</b>
+                <b>Name </b>
                   <input type="text" name="nameOrganism" value="cat" rows="2" cols="10" minlength="0" maxlength="100" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
@@ -133,15 +118,14 @@ $_COOKIE['history'][] = $url;
               <form method="GET"  action="protein.php">
               <label>Protein</label>
                 <div class="form-group">
-                  <b>ID:</b>
+                  <b>ID </b>
                   <input type="text" name="idProtein" value="" rows="2" cols="10" minlength="4" maxlength="30" required/> 
-                  <a href="#" data-toggle="tooltip" data-placement="top" title="ID's from the NCBI database.">?</a>
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET" action="queryManager.php">
                 <div class="form-group">
-                  <b>Name:</b>
+                  <b>Name </b>
                   <input type="text" name="nameProtein" value="" rows="2" cols="10" minlength="0" maxlength="100" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
@@ -150,17 +134,15 @@ $_COOKIE['history'][] = $url;
             <div class="col-sm-4">
               <form method="GET"  action="antigen.php">
               <label>Antigen</label>
-              <a href="#" data-toggle="tooltip" data-placement="top" title="Limit the search results by the epitope's source antigen">?</a>
                 <div class="form-group">
-                  <b>ID:</b>
+                  <b>ID </b>
                   <input type="text" name="idAntigen" value="" rows="2" cols="10" minlength="4" maxlength="30" required/> 
-                  <a href="#" data-toggle="tooltip" data-placement="top" title="ID's from the NCBI database.">?</a>
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET"  action="queryManager.php">
                 <div class="form-group">
-                <b>Name:</b>
+                <b>Name </b>
                   <input type="text" name="nameAntigen" value="" rows="2" cols="10" minlength="0" maxlength="100" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
@@ -172,25 +154,56 @@ $_COOKIE['history'][] = $url;
         </div> <!--id Search-->
                       
         <div id="proteosome" class="tab-pane fade">
-          <b>Proteosome</b>
           <form method="POST" name="proteosomeForm" action="proteosomeManager.php" enctype="multipart/form-data">
-            <div class="form-group">
-              <label>Proteosome simulator</label>
+            <div class="form-group text-left">
+              <label>Sequence in FASTA format (or just the raw sequence):</label>
               <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText"></textarea>
               <input name="uploadFile" type="file"><br>
             </div>
-            <div class="form-check">
+            <div class="form-check text-left">
               <div class="radio">
-                <label><input type="radio" name="in_dna" value="2">RNA</label>
+                <label><input type="radio" checked name="in_dna" value="1">DNA/RNA</label>
               </div>
-              <div class="radio">
-                <label><input type="radio" checked name="in_dna" value="1">DNA</label>
-              </div>
+              <label>Minimal ORF length (nt): </label>
+              <select name="orfminLength">
+                <option value="30">30</option>
+                <option value="75">75</option>
+                <option value="150">150</option>
+                <option value="300">300</option>
+                <option value="600">600</option>
+              </select><br>
+              <label>Genetic code: </label>
+              <select name="geneticTable">
+                <option value="1">1. The Standard Code</option>
+                <option value="2">2. The Vertebrate Mitochondrial Code</option>
+                <option value="3">3. The Yeast Mitochondrial Code</option>
+                <option value="4">4. The Mold, Protozoan, and Coelenterate Mitochondrial Code and the Mycoplasma/Spiroplasma Code</option>
+                <option value="6">6. The Ciliate, Dasycladacean and Hexamita Nuclear Code</option>
+                <option value="9">9. The Echinoderm and Flatworm Mitochondrial Code</option>
+                <option value="10">10. The Euplotid Nuclear Code</option>
+                <option selected value="11">11. The Bacterial, Archaeal, Plant Plastid and Viral Code</option>
+                <option value="12">12. The Alternative Yeast Nuclear Code</option>
+                <option value="13">13. The Ascidian Mitochondrial Code</option>
+                <option value="14">14. The Alternative Flatworm Mitochondrial Code</option>
+                <option value="16">16. Chlorophycean Mitochondrial Code</option>
+                <option value="21">21. Trematode Mitochondrial Code</option>
+                <option value="22">22. Scenedesmus obliquus Mitochondrial Code</option>
+                <option value="23">23. Thraustochytrium Mitochondrial Code</option>
+                <option value="24">24. Pterobranchia Mitochondrial Code</option>
+                <option value="25">25. Candidate Division SR1 and Gracilibacteria Code</option>
+                <option value="26">26. Pachysolen tannophilus Nuclear Code</option>
+                <option value="27">27. Karyorelict Nuclear Code</option>
+                <option value="28">28. Condylostoma Nuclear Code</option>
+                <option value="29">29. Mesodinium Nuclear Code</option>
+                <option value="30">30. Peritrich Nuclear Code</option>
+                <option value="31">31. Blastocrithidia Nuclear Code</option>
+                <option value="33">33. Cephalodiscidae Mitochondrial UAA-Tyr Code</option>
+              </select>
               <div class="radio">
                 <label><input type="radio" name="in_dna" value="0">Protein</label>
               </div>
+              <label>Epitope length: </label><br>
               <div class="radio">
-                <p>Word length</p>
                 <label><input type="radio" checked name="length" value="0">9</label>
               </div>
               <div class="radio">
@@ -201,14 +214,6 @@ $_COOKIE['history'][] = $url;
               </div>
               <button type="submit" class="btn btn-primary"> Submit </button>
               <button type="reset" value="Clear data" class="btn btn-primary">Clear data</button>
-            </div>
-            <div>
-              <label>Start Codon </label>
-              <select name="startCodons[]" multiple="">
-                <option selected value="0">ATG/AUG</option>
-                <option value="1">CTG/CUG</option>
-                <option value="2">TTG/UUG</option>
-              </select>
             </div>
           </form>
         </div>
