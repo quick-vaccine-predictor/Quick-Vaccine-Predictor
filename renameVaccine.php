@@ -18,11 +18,12 @@ $currentVacname = "";
 $idUser= "";
 $errors = array();
 
-if(isset($_POST) & !empty($_POST)){
+
+if(isset($_POST) & !empty($_POST) & !isset($_POST["renameVac"])){
     //Recieve all input values from the form
     $password = mysqli_real_escape_string($conn, check_data($_POST['password']));
     $newVaccinename= $_POST["newVaccinename"];
-    $currentVacname = $_SESSION["currentVac"];
+    $currentVacname = $_POST["currentVac"]; //AQUI HI HA UN ERRORç
     $idUser = $_SESSION["idUser"];
 	//Form validation by adding corresponding errors into $errors array
     if(empty($newVaccinename)) { array_push($errors, "a new Vaccine name is required"); }
@@ -63,6 +64,7 @@ print navbar('HLA');
 
 <div class="container">
     <form class="form-signin" action= "renameVaccine.php" method="POST"><?php include('errors.php'); ?>
+    <input type="hidden" name="currentVac" value="<?php echo $_POST["renameVac"] ?>">
     <h2 class="form-signin-heading">Rename Vaccine</h2>
     <p>Please fill out this form to rename your Vaccine.</p>
         <div class="form-group">
