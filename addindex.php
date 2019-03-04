@@ -26,23 +26,11 @@ $idHLA = "";
 $seqEpitope="";
 $idVaccine="";
 
-// Register User
-//if(isset($_POST["addintobutton"]) & !empty($_POST)){
-//    //Recieve all input values from the form
-//    $idEpitope = $_SESSION["idEpitope"];
-//
-//    $idHLA = $_SESSION["idHLA"];
-//    $seqEpitope = $_SESSION["seqEpitope"];
-//    print($idHLA);
-//    die;
-//}
-
-
-if(isset($_POST["addbutton"]) & !empty($_POST)){
+if(isset($_POST) & !empty($_POST)){
     //Recieve all input values from the form
     $idEpitope = $_SESSION["idEpitope"];
     $idHLA = $_SESSION["idHLA"];
-    $nVaccine = $_POST["nVaccine"];
+    $nVaccine = $_POST["nameVaccine"];
     $idUser = $_SESSION["idUser"];
 	//Form validation by adding corresponding errors into $errors array
     if(empty($nVaccine)) { array_push($errors, "nameVaccine isc required"); }
@@ -79,6 +67,34 @@ print navbar('HLA');
         <input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
         <!--echo $_SESSION["idEpitope"].$_SESSION["nameHLA"]?>-->
     </form>
+
+
+    <div class="form-group">
+        <form method="post" name="nameVaccine" action="addindex.php">
+        <label>Insert <?php echo $_SESSION["seqEpitope"];?> into an existing vaccine:</label> <br>
+        <select name="hla[]" size="8">
+            <?php
+            $conn = connectSQL();
+            $idUser = $_SESSION["idUser"];
+            $sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
+            $vaccineTable = $conn->query($sql);
+            $conn->close();
+            $allnameVaccine = array();
+            foreach ($vaccineTable as $vaccinerow) {
+              if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
+                  array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
+                  $nameVaccine = $vaccinerow["nameVaccine"];
+              
+              ?>
+            <option selected value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>
+            <?php }               
+            }
+            ?>    
+        </select>
+        <br>
+        <input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
+        </form>
+    </div>
 </div>
 
 <?php print footerDBW();?>
