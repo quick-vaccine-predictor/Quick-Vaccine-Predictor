@@ -50,7 +50,7 @@ print navbar('Queries');
               </p>        
               <p>
                 <label>Threshold for weak binder (nMAff)</label>
-                <input type="text" name="wbaff" value="500" size="5"required/> 
+                <input type="text" name="wbaff" value="500" size="5" required/> 
                 <label>Threshold for weak binder (logAff)</label>
                 <input type="text" name="wblog" value="0.5" size="5" required/> 
               </p>
@@ -97,15 +97,16 @@ print navbar('Queries');
                 <div class="form-group">
                   <b>ID </b>
                   <input type="text" name="idOrganism" placeholder="ex:11520" rows="2" cols="10" minlength="4" maxlength="15" required/> 
+                  <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
-                <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET"  action="queryManager.php" >
                 <div class="form-group">
                 <b>Name </b>
-                  <input type="text" name="nameOrganism" placeholder="ex:Influenza B virus" rows="2" cols="10" minlength="0" maxlength="100" required/> 
-                </div>
+                  <select class="nameOrganism form-control" style="width:200px" name="nameOrganism"></select>
                 <button type="submit" class="btn btn-primary"> Submit </button>
+                </div>
+                
               </form> 
             </div>
             <div class="col-sm-4">
@@ -113,16 +114,17 @@ print navbar('Queries');
               <label>Protein</label>
                 <div class="form-group">
                   <b>ID </b>
-                  <input type="text" name="idProtein" placeholder="ex:22164631" rows="2" cols="10" minlength="4" maxlength="30" required/> 
+                  <input type="text" name="idProtein" placeholder="ex:22164631" rows="2" cols="10" minlength="4" maxlength="30" required/>
+                  <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
-                <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET" action="queryManager.php">
                 <div class="form-group">
                   <b>Name </b>
-                  <input type="text" name="nameProtein" placeholder="ex:EVM026" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                  <select class="nameProtein form-control"  style="width:200px" name="nameProtein" required></select>
+                  <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
-                <button type="submit" class="btn btn-primary"> Submit </button>
+                
               </form> 
             </div>
             <div class="col-sm-4">
@@ -131,15 +133,15 @@ print navbar('Queries');
                 <div class="form-group">
                   <b>ID </b>
                   <input type="text" name="idAntigen" placeholder="ex:2124409A" rows="2" cols="10" minlength="4" maxlength="30" required/> 
+                  <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
-                <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET"  action="queryManager.php">
                 <div class="form-group">
                 <b>Name </b>
-                  <input type="text" name="nameAntigen" placeholder="ex:RNA polymerase" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                  <select class="nameAntigen form-control" style="width:200px" name="nameAntigen"></select>
+                  <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
-                <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
             </div>
           </div> 
@@ -212,7 +214,7 @@ print navbar('Queries');
             </div>
           </form>
         </div>
-      </div> <!--tab-content--->
+      </div> 
     </div> <!-- /container -->
     <script type="text/javascript">
       $("input[name=sequenceName]").focus(function() {
@@ -220,6 +222,51 @@ print navbar('Queries');
       });
       $("input[name=idEpitope]").focus(function() {
         $("input[name=sequenceName]").val('');
+      });
+      $('.nameOrganism').select2({
+        placeholder: 'Vaccinia Virus',
+        ajax: {
+          url: 'organism_auto.php',
+          dataType: 'json',
+          delay: 250,
+          processResults: function (data) {
+            console.log(data);
+            return {
+              results: data
+            };
+          },
+          cache: true
+        }
+      });
+      $('.nameProtein').select2({
+        placeholder: 'Capsid',
+        ajax: {
+          url: 'protein_auto.php',
+          dataType: 'json',
+          delay: 250,
+          processResults: function (data) {
+            console.log(data);
+            return {
+              results: data
+            };
+          },
+          cache: true
+        }
+      });
+      $('.nameAntigen').select2({
+        placeholder: 'Capsid',
+        ajax: {
+          url: 'antigen_auto.php',
+          dataType: 'json',
+          delay: 250,
+          processResults: function (data) {
+            console.log(data);
+            return {
+              results: data
+            };
+          },
+          cache: true
+        }
       });
     </script>
     <!--script to clear all ID search formas at once -->
