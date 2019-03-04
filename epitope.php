@@ -51,7 +51,16 @@ else{
         <table class="table table-striped table-sm table-responsive">
               <thead>
                 <tr>
-                  <th scope="col"><h2>Epitope</h2></th>
+                  <th scope="col"><h2>Epitope</h2>
+                  <a href="addindex.php">
+							<button 
+							  <?php 
+							  	$_SESSION["idEpitope"] =  $epTable["idEpitope"]; 
+								$_SESSION["idHLA"] = $row["idHLA"];
+								$_SESSION["seqEpitope"] = $epTable['seqEpitope'];
+							  ?>
+							id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addintobutton'>add</button></a>
+              </th>
                 </tr>
               </thead>
               <tbody>
