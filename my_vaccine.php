@@ -1,4 +1,8 @@
 <?php
+//To debug in the terminal when the server is on
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_STRICT);
+
 include("globals.inc.php");
 $title = "my Vaccine";
 print headerDBW($title);
@@ -12,7 +16,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 //Conection to the DB
 $conn = connectSQL();
-
 //declaration of some variables
 $idUser = "";
 $email="";
@@ -26,7 +29,7 @@ $result = $conn->query($sql); /* the search is done here */
 
 
 
-print navbar('myVaccine');
+print navbar('myVaccine'); 
 
 // This is the code for all datatables that are coming;
 // $allnameVaccine = array();
@@ -43,7 +46,7 @@ print navbar('myVaccine');
     // }
   // } 
   // else {continue;}
-// }
+// } 
 
 
 ?> 
@@ -64,33 +67,31 @@ print navbar('myVaccine');
             $allnameVaccine = array();
             $nVac="";
             while($row = $result->fetch_assoc()) { 
-            if (!in_array($row["nameVaccine"], $allnameVaccine)) {
-            array_push($allnameVaccine,$row["nameVaccine"] );
-            $nVac=$row['nameVaccine'];
-            $sql2 = "SELECT  vc.idEpitope, e.seqEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope  AND v.nameVaccine ='$nVac' ";
-            $result2 = $conn->query($sql2); /* the search is done here */  
+              if (!in_array($row["nameVaccine"], $allnameVaccine)) {
+                array_push($allnameVaccine,$row["nameVaccine"] );
+                $nVac=$row['nameVaccine'];
+                $sql2 = "SELECT  vc.idEpitope, e.seqEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope  AND v.nameVaccine ='$nVac' ";
+                $result2 = $conn->query($sql2); /* the search is done here */  
           ?>
 
         <table class="table table-striped table-sm table-responsive affTable" id="affTable">
           <thead>
             <tr>
               <th scope='row' id="idUser"><?php echo $nVac ?> </th>
-              <th>  
-              <a href="renameVaccine.php"  target="_blank"> 
-              	<button 
-              	  <?php $_SESSION["currentVac"] = $row['nameVaccine']; ?>
-              	id='<?php echo $nVac ?>' type='submit' name='renameVaccine'>rename <?php echo $nVac ?></button></a>
+              <th>
+              <form method="post" action="renameVaccine.php" >
+                <input type="hidden" name="renameVac" value="<?php echo $nVac ?>">
+                <input type="submit" value="rename <?php echo $nVac ?>">
+              </form>
               </th> 
               <th>
               <a href="removeVaccine.php"  target="_blank"> 
               	<button 
-              	  <?php $_SESSION["currentVac"] =  $nVac; ?>
+                <?php $_SESSION['currentVac'] = $nVac; ?>
               	id='<?php echo $nVac ?>' type='submit' name='removeVaccine'>remove <?php echo $nVac ?></button></a></th>
             </tr>
           </thead>
       <tbody>
-        
-        
           <?php while($row2 = $result2->fetch_assoc()) {  ?>
             <tr>
             <td scope='row' id="Epitope" class='text-center' >
