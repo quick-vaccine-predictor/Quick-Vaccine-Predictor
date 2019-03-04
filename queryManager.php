@@ -40,7 +40,10 @@ else {
 		$sql .= " AND (logAff >= ".$_GET["wblog"]." AND nMAff <= ".$_GET["wbaff"]."); ";
 }
 $nameTable = $conn->query($sql);
-$_SESSION["array"] = mysqli_fetch_all($nameTable);
+foreach ($nameTable as $row){
+  $array[] = $row;
+}
+$_SESSION["array"] = $array;
 $conn->close();
 print headerDBW("Name Search");
 print navbar('Epitope');
@@ -110,15 +113,14 @@ print navbar('Epitope');
 		      				echo "Weak Binder";
 		      			}
 		      			?></td>
-                        <td> 
-                            <a href="addindex.php">
+                        <td><a href="addindex.php">
 							<button 
 							  <?php 
 							  	$_SESSION["idEpitope"] =  $row["idEpitope"]; 
 								$_SESSION["idHLA"] = $row["idHLA"];
 								$_SESSION["seqEpitope"] = $row["seqEpitope"];
 							  ?>
-							id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addintobutton'>add</button></a>
+							id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addintobutton'>add</button></a> 
                         </td>
 		      			<?php }  
 		      			?>
