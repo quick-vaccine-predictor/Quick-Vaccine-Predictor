@@ -8,7 +8,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     $email= $_SESSION["email"];
     exit;
   }
-  
+
 //Conection to the DB if needed
 $conn = connectSQL();
 
@@ -48,14 +48,31 @@ elseif(isset($_GET) & !empty($_GET)){
 
 // If there is no errors in the form register user:
 	if (count($errors) == 0) {
-        $sql = "INSERT INTO Vaccine SET nameVaccine = '$nVaccine' , idUser ='$idUser'";
+        $query = "SELECT * FROM Vaccine WHERE nameVaccine = '$nVaccine' AND idUser = '$idUser' LIMIT 1";
+        $result = mysqli_query ($conn, $query);
 
-        mysqli_query($conn, $sql);
-        $idVaccine = mysqli_insert_id($conn);
+        if ($result -> num_rows == 1){
+            foreach ($result as $almostresult) {
+                $idVaccine = $almostresult["idVaccine"];
+                $query2 = "SELECT * FROM VaccineContent WHERE idVaccine = '$idVaccine' AND idEpitope = '$idEpitope' LIMIT 1";
+                $result2 = mysqli_query ($conn, $query2);
 
-        $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
-        mysqli_query($conn, $sql2);
-        header("location: my_vaccine.php");
+                if ($result2 -> num_rows == 0) {  //if idEpitope soesn't exist in that User and nameVaccine
+                    print_r($result2);
+                    die;
+                    $sql = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
+                    mysqli_query($conn, $sql);
+                } else {array_push($errors, "that Epitope sequence already exist in this nameVaccine");}
+            }
+            header("location: my_vaccine.php");
+        } elseif ($result -> num_rows == 0 ){ //it doesn't exists
+            $sql = "INSERT INTO Vaccine SET nameVaccine = '$nVaccine' , idUser ='$idUser'";
+            $result2 = mysqli_query($conn, $sql);
+            $idVaccine = mysqli_insert_id($conn);
+            $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
+            mysqli_query($conn, $sql2);
+            header("location: my_vaccine.php");
+        }
     }
     else {
         header("location: addindex.php");
@@ -64,6 +81,4 @@ elseif(isset($_GET) & !empty($_GET)){
 
 // Close connection
 $conn->close();
-
-print navbar('HLA');
 ?>
