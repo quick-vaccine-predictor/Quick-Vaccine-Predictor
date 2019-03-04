@@ -15,13 +15,12 @@ print navbar('Queries');
       </ul>
       <div class="tab-content"> 
         <div id="epitopeSearch" class="tab-pane fade in active text-left">      
-          <b> Please choose between Epitope Sequence or EPitope ID:</b>
           <form method="GET" name="sequenceForm" action="queryManager.php">
             <div class="form-group text-left">  
-                <label>Epitope sequence </label>
-                <input type="text" name="sequenceName" placeholder="ex:AADLTQIFE" size="11" minlength="9" maxlength="10"/> 
+                <label>Epitope sequence</label><a data-toggle="tooltip" data-placement="top" title="Epitope sequence must be between 9 and 10 aminoacids."> [?]</a>
+                <input type="text" name="sequenceName" placeholder="ex:AADLTQIFE" size="11" minlength="9" maxlength="10"/>
                 <br>
-                <label>Epitope ID </label>
+                <label>Epitope ID </label><a data-toggle="tooltip" data-placement="top" title="Epitope ID from IEDB."> [?]</a>
                 <input type="text" name="idEpitope" placeholder="ex:24" size="11" />  
               </div> 
             <div class="form-group">
@@ -43,15 +42,15 @@ print navbar('Queries');
             </div>
             <div class="form-group">
               <p>
-                <label>Threshold for strong binder (nMAff) </label>
+                <label>Threshold for strong binder (nMAff) </label><a data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a strong binder if the binding affinity (IC50) is below the specified threshold"> [?]</a>
                 <input type="text" name="sbaff" value="50" size="5" required/>
-                <label>Threshold for strong binder (logAff)</label>
+                <label>Threshold for strong binder (logAff)</label><a data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a strong binder if the probability (in log) is bigger than the specified threshold. From 0 to 1.">[?]</a>
                 <input type="text" name="sblog" value="0.8" size="5" required/>
               </p>        
               <p>
-                <label>Threshold for weak binder (nMAff)</label>
+                <label>Threshold for weak binder (nMAff)</label><a data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a weak binder if the binding affinity (IC50) is below the specified threshold"> [?]</a>
                 <input type="text" name="wbaff" value="500" size="5" required/> 
-                <label>Threshold for weak binder (logAff)</label>
+                <label>Threshold for weak binder (logAff)</label><a data-toggle="tooltip" data-placement="top" title="The peptide will be identified as a weak binder if the probability (in log) is bigger than the specified threshold. From 0 to 1.">[?]</a>
                 <input type="text" name="wblog" value="0.5" size="5" required/> 
               </p>
             </div>  
@@ -65,7 +64,7 @@ print navbar('Queries');
             <div class="text-left" >
               <form method="GET" action="epitope.php">
                 <div class="form-group">
-                  <label>Epitope ID </label>
+                  <label>Epitope ID </label><a data-toggle="tooltip" data-placement="top" title="Epitope ID from IEDB."> [?]</a>
                   <input type="text" name="idEpitope" placeholder="ex:24" size="11" required/>
                   <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
@@ -73,7 +72,7 @@ print navbar('Queries');
             </div>
             <div class="text-left">
               <form method="GET" action="hla.php">
-                <label>HLA ID </label>
+                <label>HLA</label>
                 <br>
                 <select name="idHLA" size="8">
                   <?php
@@ -95,7 +94,7 @@ print navbar('Queries');
               <form method="GET"  action="organism.php">
               <label>Organism </label>
                 <div class="form-group">
-                  <b>ID </b>
+                  <b>ID </b><a data-toggle="tooltip" data-placement="top" title="Taxonomy id from NCBI"> [?]</a>
                   <input type="text" name="idOrganism" placeholder="ex:11520" rows="2" cols="10" minlength="4" maxlength="15" required/> 
                   <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
@@ -113,7 +112,7 @@ print navbar('Queries');
               <form method="GET"  action="protein.php">
               <label>Protein</label>
                 <div class="form-group">
-                  <b>ID </b>
+                  <b>ID </b><a data-toggle="tooltip" data-placement="top" title="Protein id from NCBI"> [?]</a>
                   <input type="text" name="idProtein" placeholder="ex:22164631" rows="2" cols="10" minlength="4" maxlength="30" required/>
                   <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
@@ -124,14 +123,13 @@ print navbar('Queries');
                   <select class="nameProtein form-control"  style="width:200px" name="nameProtein" required></select>
                   <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
-                
               </form> 
             </div>
             <div class="col-sm-4">
               <form method="GET"  action="antigen.php">
               <label>Antigen</label>
                 <div class="form-group">
-                  <b>ID </b>
+                  <b>ID </b><a data-toggle="tooltip" data-placement="top" title="Protein id from NCBI"> [?]</a>
                   <input type="text" name="idAntigen" placeholder="ex:2124409A" rows="2" cols="10" minlength="4" maxlength="30" required/> 
                   <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
