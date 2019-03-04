@@ -2,8 +2,6 @@
 include("globals.inc.php");
 print headerDBW("Queries");
 print navbar('Queries');
-
-
 //$url = get_url();
 //$_COOKIE['history'][] = $url;
   
@@ -17,11 +15,10 @@ print navbar('Queries');
           <li><a data-toggle="tab" href="#proteosome">Proteosome</a></li>
       </ul>
       <div class="tab-content"> 
-        <div id="epitopeSearch" class="tab-pane fade in active">      
-          <b>EPITOPE SEARCH</b> <br>
+        <div id="epitopeSearch" class="tab-pane fade in active text-left">      
           <b> Please choose between Epitope Sequence or EPitope ID:</b>
           <form method="GET" name="sequenceForm" action="queryManager.php">
-            <div class="form-group">  
+            <div class="form-group text-left">  
                 <label>Epitope sequence </label>
                 <input type="text" name="sequenceName" placeholder="ex:AADLTQIFE" size="11" minlength="9" maxlength="10"/> 
                 <br>
@@ -65,18 +62,17 @@ print navbar('Queries');
         </div> <!--epitope search-->
 
         <div id="idSearch" class="tab-pane fade">
-          <b>ID SEARCH</b>
            <div class="row">             
-            <div class="col-sm-6" >
+            <div class="text-left" >
               <form method="GET" action="epitope.php">
                 <div class="form-group">
                   <label>Epitope ID </label>
                   <input type="text" name="idEpitope" placeholder="ex:24" size="11" required/>
+                  <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
-                <button type="submit" class="btn btn-primary"> Submit </button>
               </form>
             </div>
-            <div class="col-sm-6">
+            <div class="text-left">
               <form method="GET" action="hla.php">
                 <label>HLA ID </label>
                 <br>
@@ -90,13 +86,12 @@ print navbar('Queries');
                     <?php }
                     ?>
                 </select>
-                <br>
                 <button type="submit" class="btn btn-primary"> Submit </button>      
               </form>
             </div>
           </div>
-
-          <div class="row">  
+          <hr class="featurette-divider">
+          <div class="row text-left">  
             <div class="col-sm-4"> 
               <form method="GET"  action="organism.php">
               <label>Organism </label>
@@ -223,14 +218,12 @@ print navbar('Queries');
       $("input[name=sequenceName]").focus(function() {
         $("input[name=idEpitope]").val('');
       });
-
       $("input[name=idEpitope]").focus(function() {
         $("input[name=sequenceName]").val('');
       });
     </script>
     <!--script to clear all ID search formas at once -->
     <script>
-
     </script>
     <script type="text/javascript">
     function clearData() {
