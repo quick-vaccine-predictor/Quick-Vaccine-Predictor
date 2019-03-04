@@ -55,7 +55,26 @@
       ?>
       <div>
       <h3><?php echo "Protein ".$coords; $clean_cords = str_replace(":", "_", $coords); ?></h3>
-      <a href="getFasta.php?coords=<?php echo $coords."&"."frame=".urlencode($_REQUEST["frame"]) ?>" target="_blank"><button>Download FASTA</button></a>
+      <a href="getFasta.php?coords=<?php echo $coords."&"."frame=".urlencode($_REQUEST["frame"]) ?>" target="_blank" class="btn btn-primary">Download FASTA</a><br>
+      <form action="blast.php<?php echo '?coords='.$coords."&"."frame=".urlencode($_REQUEST["frame"]) ?>" method="POST">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2"><label>Find homolog:</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input checked type="radio" name="db" value="sprot">Swissprot<br></td>
+          </tr>
+          <tr>
+            <td><input type="radio" name="db" value="pdb">PDB<br></td>
+            <td rowspan="2" class="text-center"><input type="submit" value="Submit"></td>
+          </tr>
+        </tbody>
+      </table>
+      </form>
+      <br>
       <table class="table table-striped table-sm table-responsive text-center display" id='<?php echo "table".$clean_cords ?>'>
         <thead>
           <tr>
