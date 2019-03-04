@@ -8,10 +8,13 @@ print navbar('Queries');
 
     <div class="container text-center">
       <!-- Main component for a primary marketing message or call to action -->
-      <div>
+      <div class="text-left">
+        <h3>Queries: </h3>
         This is the main query page. From here, users can perform three different queries:
         <ul>
           <li>Epitope or/and HLA affinity results with thresholds.</li>
+          <li>Id or name search of Epitopes, HLA alleles, Organisms, Proteins and Antigens.</li>
+          <li>Proteosome simulator that detects if a given protein contains any known epitope. If a DNA/RNA sequence is given, different ORF are calculated.</li>
         </ul>
       </div>
       <ul class="nav nav-tabs">
