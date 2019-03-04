@@ -15,6 +15,7 @@ exec($blastCommand);
 $blastFile = file_get_contents($tmpFile.'.out');
 print navbar('Blast');
 ?>
+<h3>Blast query: <?php echo $id ?></h3>
 <button onclick="goBack()">Go Back</button>
 <div id="blast-multiple-alignments"></div>
 <div id="blast-alignments-table"></div>
