@@ -23,10 +23,10 @@ print navbar('Queries');
           <form method="GET" name="sequenceForm" action="queryManager.php">
             <div class="form-group">  
                 <label>Epitope sequence </label>
-                <input type="text" name="sequenceName" value="" size="11" minlength="9" maxlength="10"/> 
+                <input type="text" name="sequenceName" placeholder="ex:AADLTQIFE" size="11" minlength="9" maxlength="10"/> 
                 <br>
                 <label>Epitope ID </label>
-                <input type="text" name="idEpitope" value="24" size="11" />  
+                <input type="text" name="idEpitope" placeholder="ex:24" size="11" />  
               </div> 
             <div class="form-group">
               <label>HLA selection:</label> <br>
@@ -71,7 +71,7 @@ print navbar('Queries');
               <form method="GET" action="epitope.php">
                 <div class="form-group">
                   <label>Epitope ID </label>
-                  <input type="text" name="idEpitope" value="24" size="11" required/>
+                  <input type="text" name="idEpitope" placeholder="ex:24" size="11" required/>
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form>
@@ -102,14 +102,14 @@ print navbar('Queries');
               <label>Organism </label>
                 <div class="form-group">
                   <b>ID </b>
-                  <input type="text" name="idOrganism" value="" rows="2" cols="10" minlength="4" maxlength="15" required/> 
+                  <input type="text" name="idOrganism" placeholder="ex:11520" rows="2" cols="10" minlength="4" maxlength="15" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET"  action="queryManager.php" >
                 <div class="form-group">
                 <b>Name </b>
-                  <input type="text" name="nameOrganism" value="cat" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                  <input type="text" name="nameOrganism" placeholder="ex:Influenza B virus" rows="2" cols="10" minlength="0" maxlength="100" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
@@ -119,14 +119,14 @@ print navbar('Queries');
               <label>Protein</label>
                 <div class="form-group">
                   <b>ID </b>
-                  <input type="text" name="idProtein" value="" rows="2" cols="10" minlength="4" maxlength="30" required/> 
+                  <input type="text" name="idProtein" placeholder="ex:22164631" rows="2" cols="10" minlength="4" maxlength="30" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET" action="queryManager.php">
                 <div class="form-group">
                   <b>Name </b>
-                  <input type="text" name="nameProtein" value="" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                  <input type="text" name="nameProtein" placeholder="ex:EVM026" rows="2" cols="10" minlength="0" maxlength="100" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
@@ -136,14 +136,14 @@ print navbar('Queries');
               <label>Antigen</label>
                 <div class="form-group">
                   <b>ID </b>
-                  <input type="text" name="idAntigen" value="" rows="2" cols="10" minlength="4" maxlength="30" required/> 
+                  <input type="text" name="idAntigen" placeholder="ex:2124409A" rows="2" cols="10" minlength="4" maxlength="30" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
               <form method="GET"  action="queryManager.php">
                 <div class="form-group">
                 <b>Name </b>
-                  <input type="text" name="nameAntigen" value="" rows="2" cols="10" minlength="0" maxlength="100" required/> 
+                  <input type="text" name="nameAntigen" placeholder="ex:RNA polymerase" rows="2" cols="10" minlength="0" maxlength="100" required/> 
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit </button>
               </form> 
