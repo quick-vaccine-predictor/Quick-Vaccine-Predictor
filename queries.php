@@ -25,7 +25,8 @@ print navbar('Queries');
       <div class="tab-content"> 
         <div id="epitopeSearch" class="tab-pane fade in active text-left">      
           <form method="GET" name="sequenceForm" action="queryManager.php">
-            <div class="form-group text-left">  
+            <div class="form-group text-left"> 
+                <br> 
                 <label>Epitope sequence</label><a data-toggle="tooltip" data-placement="top" title="Epitope sequence must be between 9 and 10 aminoacids."> [?]</a>
                 <input type="text" name="sequenceName" placeholder="ex:AADLTQIFE" size="11" minlength="9" maxlength="10"/>
                 <br>
@@ -73,6 +74,7 @@ print navbar('Queries');
             <div class="text-left" >
               <form method="GET" action="epitope.php">
                 <div class="form-group">
+                  <br>
                   <label>Epitope ID </label><a data-toggle="tooltip" data-placement="top" title="Epitope ID from IEDB."> [?]</a>
                   <input type="text" name="idEpitope" placeholder="ex:24" size="11" required/>
                   <button type="submit" class="btn btn-primary"> Submit </button>
@@ -159,6 +161,7 @@ print navbar('Queries');
         <div id="proteosome" class="tab-pane fade">
           <form method="POST" name="proteosomeForm" action="proteosomeManager.php" enctype="multipart/form-data">
             <div class="form-group text-left">
+              <br>
               <label>Sequence in FASTA format</label>
               <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText"></textarea>
               <input name="uploadFile" type="file"><br>
