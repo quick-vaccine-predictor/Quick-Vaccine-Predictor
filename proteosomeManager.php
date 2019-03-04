@@ -9,11 +9,21 @@ $in_dna = $_POST["in_dna"];
 print headerDBW("Proteosome");
 print navbar('Proteosome');
 //Reads input
+$ncbiId = $_POST["ncbiId"];
+if (strlen($ncbiId) != 0){
+	$tempFile = "tmp/" . uniqId('proteosome');
+	$command = 'curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=sequences&id='.$ncbiId.'&rettype=fasta&retmode=text" > '.$tempFile;
+	exec($command);
+}
+
 if (intval($in_dna) == 1) {
 if ($_FILES['uploadFile']['size'] != 0){
 	$proteosomeText = file_get_contents($_FILES['uploadFile']['tmp_name']);
-}elseif (isset($_REQUEST['proteosomeText'])) {
+}elseif (strlen($_REQUEST['proteosomeText']) != 0) {
 	$proteosomeText = $_REQUEST['proteosomeText'];
+}elseif (file_exists($tempFile)) {
+	$proteosomeText = file_get_contents($tempFile);
+	unlink($tempFile);
 }
 $p = strpos($proteosomeText, '>');
 if (!$p and ( $p !== 0)) { // strpos returns False if not found and "0" if first character in the string
@@ -43,8 +53,11 @@ $_SESSION["proteosome"] = $output;
 else {
 if ($_FILES['uploadFile']['size'] != 0){
 	$proteosomeText = file_get_contents($_FILES['uploadFile']['tmp_name']);
-}elseif (isset($_REQUEST['proteosomeText'])) {
+}elseif (strlen($_REQUEST['proteosomeText']) != 0) {
 	$proteosomeText = $_REQUEST['proteosomeText'];
+}elseif (file_exists($tempFile)) {
+	$proteosomeText = file_get_contents($tempFile);
+	unlink($tempFile);
 }
 $p = strpos($proteosomeText, '>');
 if (!(!$p and ( $p !== 0))) { 

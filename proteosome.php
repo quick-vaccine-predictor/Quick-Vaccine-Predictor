@@ -52,12 +52,11 @@
         }
         $query_string = substr($query_string, 0, -2).";";
         $results = $conn->query($query_string);
-        
       ?>
       <div>
-      <h3><?php echo "Protein ".$coords ?></h3>
+      <h3><?php echo "Protein ".$coords; $clean_cords = str_replace(":", "_", $coords); ?></h3>
       <a href="getFasta.php?coords=<?php echo $coords."&"."frame=".urlencode($_REQUEST["frame"]) ?>" target="_blank"><button>Download FASTA</button></a>
-      <table class="table table-striped table-sm table-responsive text-center display">
+      <table class="table table-striped table-sm table-responsive text-center display" id='<?php echo "table".$clean_cords ?>'>
         <thead>
           <tr>
                 <th>idEpitope</th>
@@ -67,26 +66,28 @@
                 <th>nM</th>
           </tr>
         </thead>
-        <tbody>
-          <?php foreach ($results as $row) {?>
-          <tr>
-            <td scope='row' id="idEpitope"><?php $idEpitope = $row['idEpitope'];
-                        echo "<a href='epitope.php?idEpitope=$idEpitope'>$idEpitope</a>"?></td>
-            <td class='text-center' id="seq"><?php echo $row['seqEpitope'] ?></td>
-            <td class='text-center' id="hla"><a href=<?php $idHLA=$row['idHLA']; echo "'hla.php?idHLA=$idHLA' target='_blank'" ?>><?php echo $row['nameHLA'] ?></a></td>
-            <td class='text-center' id="log"><?php echo $row['logAff'] ?></td>
-            <td class='text-center' id="nM"><?php echo $row['nMAff'] ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
+          <?php 
+          $json_data = array();
+          foreach ($results as $row){
+            $json_data[] = [$row["idEpitope"],$row["seqEpitope"],$row["nameHLA"],$row["logAff"],$row["nMAff"]];
+             } ?>
       </table>
     </div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+      var data = <?php echo json_encode($json_data); ?>;
+      $('<?php echo "#table".$clean_cords ?>').DataTable( {
+            data:           data,
+            deferRender:    true,
+            scrollY:        500,
+            scrollCollapse: true,
+            scroller:       true
+        } );
+      });
+    </script>
     <?php }?>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-      $('table.display').DataTable();
-  });
 </script>
 
 <?php

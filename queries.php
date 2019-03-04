@@ -4,7 +4,6 @@ print headerDBW("Queries");
 print navbar('Queries');
 //$url = get_url();
 //$_COOKIE['history'][] = $url;
-  
 ?>
 
     <div class="container text-center">
@@ -151,9 +150,10 @@ print navbar('Queries');
         <div id="proteosome" class="tab-pane fade">
           <form method="POST" name="proteosomeForm" action="proteosomeManager.php" enctype="multipart/form-data">
             <div class="form-group text-left">
-              <label>Sequence in FASTA format (or just the raw sequence):</label>
+              <label>Sequence in FASTA format</label>
               <textarea class="form-control" rows="5" value="" type="text" name="proteosomeText"></textarea>
               <input name="uploadFile" type="file"><br>
+              <label>Or NCBI id: </label><input name="ncbiId" type="text"><br>
             </div>
             <div class="form-check text-left">
               <div class="radio">
