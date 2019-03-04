@@ -1,9 +1,7 @@
 <?php
 include("globals.inc.php");
-
 //Conection to the DB if needed
 $conn = connectSQL();
-
 if (isset($_GET["nameOrganism"])){
 	$name = $_GET["nameOrganism"];
 	$sql = "SELECT nameOrganism, idOrganism FROM Organism WHERE nameOrganism LIKE '%".$name."%';";
@@ -31,7 +29,7 @@ else {
 				$hla_string .= "(HLA.idHLA ='$hla' ";
 			}
 			elseif ($hla == array_values(array_slice($hla_arr, -1))[0]){
-				$hla_string .= "OR HLA.idHLA ='$hla');";
+				$hla_string .= "OR HLA.idHLA ='$hla')";
 			}
 			else{
 				$hla_string .= "OR HLA.idHLA ='$hla' ";
@@ -39,11 +37,11 @@ else {
 			
 		}
 		$sql .= $hla_string;
+		$sql .= " AND (logAff >= ".$_GET["wblog"]." AND nMAff <= ".$_GET["wbaff"]."); ";
 }
 $nameTable = $conn->query($sql);
 $_SESSION["array"] = mysqli_fetch_all($nameTable);
 $conn->close();
-
 print headerDBW("Name Search");
 print navbar('Epitope');
 //sequenceName
@@ -105,21 +103,15 @@ print navbar('Epitope');
 		      			$th_nM_WB = floatval($_GET["wbaff"]);
 		      			$th_log_SB = floatval($_GET["sblog"]);
 		      			$th_log_WB = floatval($_GET["wblog"]);
-		      			if ($row["nMAff"] <= $th_nM_SB and $row["logAff"] <= $th_log_SB){
+		      			if ($row["nMAff"] <= $th_nM_SB and $row["logAff"] >= $th_log_SB){
 		      				echo "Strong Binder";
 		      			}
-		      			elseif ($row["nMAff"] <= $th_nM_WB and $row["logAff"] <= $th_log_WB) {
+		      			elseif ($row["nMAff"] <= $th_nM_WB and $row["logAff"] >= $th_log_WB) {
 		      				echo "Weak Binder";
 		      			}
 		      			?></td>
                         <td> 
-                            <a href="addindex.php">
-							<button 
-							  <?php $_SESSION["idEpitope"] =  $row["idEpitope"]; 
-								 $_SESSION["idHLA"] = $row["idHLA"];
-								 $_SESSION["seqEpitope"] = $row["seqEpitope"];
-							  ?>
-							id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addintobutton'>add</button></a>
+                            <button id='<?php echo $row["idEpitope"].$row["nameHLA"]?>' type='reset' name='addbutton'>add</button>
                         </td>
 		      			<?php }  
 		      			?>

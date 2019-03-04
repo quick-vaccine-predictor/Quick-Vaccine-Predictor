@@ -44,15 +44,15 @@ print navbar('Queries');
             <div class="form-group">
               <p>
                 <label>Threshold for strong binder (nMAff) </label>
-                <input type="text" name="sbaff" value="0.5" size="5" required/>
+                <input type="text" name="sbaff" value="50" size="5" required/>
                 <label>Threshold for strong binder (logAff)</label>
-                <input type="text" name="sblog" value="50" size="5" required/>
+                <input type="text" name="sblog" value="0.8" size="5" required/>
               </p>        
               <p>
                 <label>Threshold for weak binder (nMAff)</label>
-                <input type="text" name="wbaff" value="2" size="5"required/> 
+                <input type="text" name="wbaff" value="500" size="5"required/> 
                 <label>Threshold for weak binder (logAff)</label>
-                <input type="text" name="wblog" value="500" size="5" required/> 
+                <input type="text" name="wblog" value="0.5" size="5" required/> 
               </p>
             </div>  
             <button type="submit" class="btn btn-primary"> Submit </button>
