@@ -20,7 +20,7 @@ else {
 		if (strlen($_GET["sequenceName"]) > 0){
 			$sql .= "seqEpitope LIKE '%".$_GET["sequenceName"]."%' AND ";
 		}
-		elseif (isset($_GET["idEpitope"])){
+		elseif (strlen($_GET["idEpitope"]) > 0){
 			$sql .= "Affinity.idEpitope=".$_GET["idEpitope"]." AND ";
 		}
 		$hla_string = "";
@@ -35,6 +35,9 @@ else {
 				$hla_string .= "OR HLA.idHLA ='$hla' ";
 			}
 			
+		}
+		if (count($hla_arr) == 1) {
+			$hla_string .= ") ";
 		}
 		$sql .= $hla_string;
 		$sql .= " AND (logAff >= ".$_GET["wblog"]." AND nMAff <= ".$_GET["wbaff"]."); ";

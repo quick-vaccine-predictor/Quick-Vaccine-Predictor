@@ -8,6 +8,12 @@ print navbar('Queries');
 
     <div class="container text-center">
       <!-- Main component for a primary marketing message or call to action -->
+      <div>
+        This is the main query page. From here, users can perform three different queries:
+        <ul>
+          <li>Epitope or/and HLA affinity results with thresholds.</li>
+        </ul>
+      </div>
       <ul class="nav nav-tabs">
           <li class="active"><a data-toggle="tab" href="#epitopeSearch">Epitope Search</a></li>
           <li><a data-toggle="tab" href="#idSearch">ID Search</a></li>
