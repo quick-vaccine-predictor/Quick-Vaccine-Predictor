@@ -59,7 +59,7 @@ get_url();
                   <form action="blast.php" method="POST">
                   <td class="text-left">
                       <input checked type="radio" name="db" value="sprot">Swissprot<br>
-                      <input type="hidden" value='<?php echo $idAntigen?>' name='id'>
+                      <input type="hidden" value='<?php echo $idProtein?>' name='id'>
                       <input type="radio" name="db" value="pdb">PDB<br>
                   <td>
                     <input type="submit" value="Submit">
