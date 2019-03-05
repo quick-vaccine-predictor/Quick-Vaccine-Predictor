@@ -66,21 +66,21 @@ get_url();
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">
-                              idEpitope: <?php echo $_SESSION["idEpitope"];?> 
-                              idHLA: <?php echo $_SESSION["idHLA"];?> 
-                              seqEpitope: <?php echo $_SESSION["seqEpitope"];?> 
+                              idEpitope: <?php echo $epTable['idEpitope'];?> 
+                              seqEpitope: <?php echo $epTable['seqEpitope'];?> 
                             </h4>
                           </div>
                           <div class="modal-body">
                             <p>
-                              <form action="addlinker.php" method="post">
+                              <form action="addlinker.php" method="POST">
                                 nameVaccine: <input type="text" name="nVaccine" /><br><br>
-                                <input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
+                                <input id='<?php echo $epTable['idEpitope']?>' type='submit' name='addbutton' value="myVaccine">
+														    <input type="hidden" name="idEpitope" value="<?php echo $epTable['idEpitope']?>">
                               </form>
                               <form action="addlinker.php" method="GET">
                                 <div class="form-group">
-                                  <label>Insert <?php echo $_SESSION["seqEpitope"];?> into an existing vaccine:</label> <br>
-                                  <select name="vaccine[]" size="8">
+                                  <label>Insert <?php echo $epTable['seqEpitope'];?> into an existing vaccine:</label> <br>
+                                  <select name="vaccine" size="8">
                                     <?php
                                       $conn = connectSQL();
                                       $idUser = $_SESSION["idUser"];
@@ -98,8 +98,9 @@ get_url();
                                             } 
                                       ?>  
                                     <input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
+                                    <input type="hidden" name="idEpitope" value="<?php echo $epTable['idEpitope']?>">
                                   </select>
-                                  <br>
+                                <br>
                               </form>
                             </p>
                             </div>
