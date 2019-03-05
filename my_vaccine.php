@@ -14,6 +14,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   exit;
 }
 
+if(isset($_SESSION["success"]) & !empty($_SESSION["success"])) { ?>
+  <div class="alert alert-success" role="alert">
+			<p><?php echo $_SESSION["success"] ?></p>
+	</div> <?php 
+} 
+
 //Conection to the DB
 $conn = connectSQL();
 //declaration of some variables
@@ -24,7 +30,7 @@ $errors = array();
 $idUser = $_SESSION['idUser'];
 $email= $_SESSION['email'];
 $sql = "SELECT idVaccine, nameVaccine FROM Vaccine  WHERE idUser ='$idUser' ";
-//$sql = "SELECT idVaccine, nameVaccine FROM Vaccine WHERE idUser ='$idUser'";
+//$sl = "SELECT idVaccine, nameVaccine FROM Vaccine WHERE idUser ='$idUser'";
 
 $result = $conn->query($sql); /* the search is done here */  
 
@@ -32,29 +38,9 @@ $result = $conn->query($sql); /* the search is done here */
 
 print navbar('myVaccine'); 
 
-function my_function() {
-  confirm("Are you sure?");
-}
-
-// This is the code for all datatables that are coming;
-// $allnameVaccine = array();
-// $nVac="";
-// while($row = $result->fetch_assoc()) { 
-  // if (!in_array($row["nameVaccine"], $allnameVaccine)) {
-    // array_push($allnameVaccine,$row["nameVaccine"] );
-    // $nVac=$row['nameVaccine'];
-    // $sql2 = "SELECT  vc.idEpitope, e.seqEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope  AND v.nameVaccine ='$nVac' ";
-    // $result2 = $conn->query($sql2); /* the search is done here */  
-    // while($row2 = $result2->fetch_assoc()) { 
-      // echo $nVac;
-      // echo $row2['idEpitope']."  ";
-    // }
-  // } 
-  // else {continue;}
-// } 
-
 
 ?> 
+
 
 <div class="container">
     <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["email"]); ?></b>. Welcome to your personal site.</h1>
@@ -62,10 +48,7 @@ function my_function() {
         <div class="col-sm-8">
             Here will go a brief explanation about QVVP .
         </div>
-
     </div>
-
- 
     <div class="row">
         <h2>Vaccines</h2>
         <?php 
@@ -79,17 +62,17 @@ function my_function() {
                 $sql2 = "SELECT  vc.idEpitope, e.seqEpitope FROM Vaccine v, VaccineContent vc, Epitope e WHERE idUser ='$idUser' AND v.idVaccine = vc.idVaccine AND vc.idEpitope = e.idEpitope  AND v.nameVaccine ='$nVac' ";
                 $result2 = $conn->query($sql2); /* the search is done here */  
           ?>
-
         <table class="table table-striped table-sm table-responsive affTable" id="affTable">
-          <thead>
+          <thead scope='row' id="idUser"><?php echo $nVac ?> 
+
             <tr>
               <th scope='row' id="idUser"><?php echo $nVac ?> </th>
               <th>
                 <form method="POST" action="my_vaccine.php" >
-                  <button type="button" class="btn" data-toggle="modal" data-target="#myModalrename">Rename <?php echo $nVac ?></button>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModalrename<?php echo $nVac ?>">Rename <?php echo $nVac ?></button>
                 </form>
                   <!-- Modal -->
-                  <div class="modal fade" id="myModalrename" role="dialog">
+                  <div class="modal fade" id="myModalrename<?php echo $nVac ?>" role="dialog">
                     <div class="modal-dialog">
                       <!-- Modal content-->
                       <div class="modal-content">
@@ -108,7 +91,6 @@ function my_function() {
                                     <label for="inputPassword" class="sr-only">Password</label>
                                     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                                 </div>
-
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">Rename</button>
                                 </div>
@@ -118,19 +100,17 @@ function my_function() {
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
-                      </div>
-                                
+                      </div>        
                     </div>
                   </div>
-
               </th> 
               <th>
                 <form method="POST" action="my_vaccine.php" >
                   <input type="hidden" name="removeVac" value="<?php echo $idVaccine ?>">
                 </form>
-                <button type="button" class="btn" data-toggle="modal" data-target="#myModalremove">Remove <?php echo $nVac ?></button>
+                <button type="button" class="btn" data-toggle="modal" data-target="#myModalremove<?php echo $idVaccine ?>">Remove <?php echo $nVac ?></button>
                 <!-- Modal -->
-                <div class="modal fade" id="myModalremove" role="dialog">
+                <div class="modal fade" id="myModalremove<?php echo $idVaccine ?>" role="dialog">
                   <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -138,9 +118,7 @@ function my_function() {
                         <p>
                         <form class="form-signin" action= "removeVaccine.php" method="POST" onsubmit="return confirm('Are you sure you want to submit?')"><?php include('errors.php'); ?>
                           <input type="hidden" name="currentVac" value="<?php echo $idVaccine ?>">
-
                           <h2 class="form-signin-heading">Fill the form with your email and password<br></h2>
-
                           <div class="form-group">
                               <label for="inputEmail" class="sr-only">Email address</label>
                               <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
@@ -157,19 +135,14 @@ function my_function() {
                               <button class="btn btn-primary" onclick="my_function()">Remove</button>
                           </div>
                       </form>
-                        
-                        
-                        
                         </p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                       </div>
                     </div>
-
                   </div>
                 </div>
-
               <th>
             </tr>
           </thead>
@@ -177,15 +150,29 @@ function my_function() {
           <?php while($row2 = $result2->fetch_assoc()) {  ?>
             <tr>
             <td scope='row' id="Epitope" class='text-center' >
-              <a href="<?php echo "epitope.php?idEpitope=".$row2['idEpitope']; ?>" target="_blank"><?php echo $row2['seqEpitope'] ;}?>
+              <a href="<?php echo "epitope.php?idEpitope=".$row2['idEpitope']; ?>" target="_blank"><?php echo $row2['seqEpitope'] ;?>
             </td>
             <td>
-              <?php $idEpitope = $row2['idEpitope'] ;?>
               <form method="post" action="removeSequence.php" >
-                <input type="hidden" name="removeSeq" value="<?php echo $idVaccine?>">
-                <input type="submit" value="remove sequence">
-              </form>
-
+                <input type="hidden" name="removeSeq" value="<?php echo $idVaccine."|".$row2['idEpitope']?>">
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn" data-toggle="modal" data-target="#deleteSequence">Remove Epitope</button>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteSequence" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <p>Are you sure?</p>
+                          <input type="submit" value="Yes">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          <?php } ?>
+            </form>
             </td>
           </tr>
         
@@ -199,8 +186,7 @@ function my_function() {
    
     <script type="text/javascript">
       $(document).ready(function () {
-        $('.affTable').DataTable({
-          paging:false, 
+        $('.affTable').DataTable({ 
           "info":false}
         );
         

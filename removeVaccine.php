@@ -56,6 +56,7 @@ if(isset($_POST) & !empty($_POST) ){
                 mysqli_query($conn, $sql);
                 $sql2 = "DELETE FROM Vaccine WHERE idVaccine = '$idVaccine'";
                 mysqli_query($conn, $sql2);
+                $_SESSION["success"] = "You successfully remove the vaccine";
                 header("location: my_vaccine.php");
                 } else {
                     // Display an error message if nameVaccine is not valid
