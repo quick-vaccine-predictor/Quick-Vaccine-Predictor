@@ -6,7 +6,7 @@ print headerDBW($idHLA);
 $conn = connectSQL();
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    header('Location: error.php');
 }
 $sql = "SELECT nameHLA, pdbHLA FROM HLA WHERE idHLA = '$idHLA';";
 $HLA_data = mysqli_fetch_all($conn->query($sql))[0];
@@ -38,6 +38,7 @@ else {
   $epTable = [];
 }
 print navbar('HLA');
+get_url();
 ?>
     <div class="container">
 
@@ -152,6 +153,5 @@ print navbar('HLA');
 
     </script>
 <?php 
-get_url();
 print footerDBW();
 ?>

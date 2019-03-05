@@ -45,6 +45,7 @@ else {
 else{
   header('Location: error.php');
 }
+get_url();
 ?>
     <div class="container">
 
@@ -56,60 +57,60 @@ else{
                 <tr>
                   <th scope="col"><h2>Epitope</h2>
                   <!-- Trigger the modal with a button -->
-									<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add into myVaccine</button>
-									<!-- Modal -->
-									<div class="modal fade" id="myModal" role="dialog">
-										<div class="modal-dialog">
-											<!-- Modal content-->
-											<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">
-															idEpitope: <?php echo $_SESSION["idEpitope"];?> 
-															idHLA: <?php echo $_SESSION["idHLA"];?> 
-															seqEpitope: <?php echo $_SESSION["seqEpitope"];?> 
-														</h4>
-													</div>
-													<div class="modal-body">
-														<p>
-															<form action="addlinker.php" method="post">
-																nameVaccine: <input type="text" name="nVaccine" /><br><br>
-																<input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
-															</form>
-															<form action="addlinker.php" method="GET">
-																<div class="form-group">
-																	<label>Insert <?php echo $_SESSION["seqEpitope"];?> into an existing vaccine:</label> <br>
-																	<select name="vaccine[]" size="8">
-																		<?php
-																			$conn = connectSQL();
-																			$idUser = $_SESSION["idUser"];
-																			$sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
-																			$vaccineTable = $conn->query($sql);
-																			$conn->close();
-																			$allnameVaccine = array();
-																			foreach ($vaccineTable as $vaccinerow) {
-																				if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
-																					array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
-																					$nameVaccine = $vaccinerow["nameVaccine"];
-																			?>
-																		<option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>																		
-																			<?php }               
-																						} 
-																			?>  
-																		<input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
-																	</select>
-																	<br>
-															</form>
-														</p>
-														</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-															</div>
-														</div>
-													</div>
-												</div> 
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add into myVaccine</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">
+                              idEpitope: <?php echo $_SESSION["idEpitope"];?> 
+                              idHLA: <?php echo $_SESSION["idHLA"];?> 
+                              seqEpitope: <?php echo $_SESSION["seqEpitope"];?> 
+                            </h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>
+                              <form action="addlinker.php" method="post">
+                                nameVaccine: <input type="text" name="nVaccine" /><br><br>
+                                <input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
+                              </form>
+                              <form action="addlinker.php" method="GET">
+                                <div class="form-group">
+                                  <label>Insert <?php echo $_SESSION["seqEpitope"];?> into an existing vaccine:</label> <br>
+                                  <select name="vaccine[]" size="8">
+                                    <?php
+                                      $conn = connectSQL();
+                                      $idUser = $_SESSION["idUser"];
+                                      $sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
+                                      $vaccineTable = $conn->query($sql);
+                                      $conn->close();
+                                      $allnameVaccine = array();
+                                      foreach ($vaccineTable as $vaccinerow) {
+                                        if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
+                                          array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
+                                          $nameVaccine = $vaccinerow["nameVaccine"];
+                                      ?>
+                                    <option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>                                    
+                                      <?php }               
+                                            } 
+                                      ?>  
+                                    <input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
+                                  </select>
+                                  <br>
+                              </form>
+                            </p>
+                            </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div> 
                   </td>
-		      		  </tr>  
+                </tr>  
                   </th>
                 </tr>
               </thead>
@@ -292,5 +293,5 @@ else{
 
     </script>
 <?php 
-get_url();
+
 print footerDBW(); ?>

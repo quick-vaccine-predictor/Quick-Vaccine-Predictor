@@ -29,8 +29,7 @@ else {
 else{
   header('Location: error.php');
 }
-
-
+get_url(); 
 ?>
     <div class="container">
 
@@ -110,6 +109,5 @@ else{
 
     </script>
 <?php 
-get_url();
 print footerDBW();
 ?>
