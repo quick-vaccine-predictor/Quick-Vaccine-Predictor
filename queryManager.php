@@ -1,5 +1,6 @@
 <?php
 include("globals.inc.php");
+//Conection to the DB if needed
 $conn = connectSQL();
 if (isset($_GET["nameOrganism"])){
 	$name = $_GET["nameOrganism"];
@@ -14,49 +15,112 @@ elseif (isset($_GET["nameAntigen"])) {
 	$sql = "SELECT nameAntigen, idAntigen FROM Antigen WHERE nameAntigen LIKE '%".$name."%';";
 }
 else {
-	$hla_arr = $_GET["hla"];
-	$sql = "SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE ";
-	if (strlen($_GET["sequenceName"]) > 0){
-		$sql .= "seqEpitope LIKE '%".$_GET["sequenceName"]."%' AND ";
-	}
-	elseif (strlen($_GET["idEpitope"]) > 0){
-		$sql .= "Affinity.idEpitope=".$_GET["idEpitope"]." AND ";
-	}
-	$hla_string = "";
-	$last_hla = array_values(array_slice($hla_arr, -1))[0];
-	foreach ($hla_arr as $hla){
-		if ($hla == $hla_arr[0]){
-			$hla_string .= "(HLA.idHLA ='$hla' ";
+		$hla_arr = $_GET["hla"];
+		$sql = "SELECT Affinity.idEpitope, Epitope.seqEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA JOIN Epitope ON Epitope.idEpitope = Affinity.idEpitope WHERE ";
+		if (strlen($_GET["sequenceName"]) > 0){
+			$sql .= "seqEpitope LIKE '%".$_GET["sequenceName"]."%' AND ";
 		}
-		elseif ($hla == $last_hla){
-			$hla_string .= "OR HLA.idHLA ='$hla')";
+		elseif (strlen($_GET["idEpitope"]) > 0){
+			$sql .= "Affinity.idEpitope=".$_GET["idEpitope"]." AND ";
 		}
-		else{
-			$hla_string .= "OR HLA.idHLA ='$hla' ";
-		}	
-	}
-	if (count($hla_arr) == 1) {
-		$hla_string .= ") ";
-	}
-	$sql .= $hla_string;
-	$sql .= " AND (logAff >= ".$_GET["wblog"]." AND nMAff <= ".$_GET["wbaff"]."); ";
+		$hla_string = "";
+		foreach ($hla_arr as $hla){
+			if ($hla == $hla_arr[0]){
+				$hla_string .= "(HLA.idHLA ='$hla' ";
+			}
+			elseif ($hla == array_values(array_slice($hla_arr, -1))[0]){
+				$hla_string .= "OR HLA.idHLA ='$hla')";
+			}
+			else{
+				$hla_string .= "OR HLA.idHLA ='$hla' ";
+			}
+			
+		}
+		if (count($hla_arr) == 1) {
+			$hla_string .= ") ";
+		}
+		$sql .= $hla_string;
+		$sql .= " AND (logAff >= ".$_GET["wblog"]." AND nMAff <= ".$_GET["wbaff"]."); ";
 }
 $nameTable = $conn->query($sql);
 foreach ($nameTable as $row){
-	$array[] = $row;
+  $array[] = $row;
 }
 $_SESSION["array"] = $array;
 $conn->close();
 print headerDBW("Name Search");
 print navbar('Epitope');
+//sequenceName
 ?>
+
 <div class="container">
 	<div class="row">
 		<a class="btn btn-primary btn-lg" href="queries.php#proteosome" role="button">Go back</a>
-        <h2>Name Results</h2><br>
+        <h2>Name Results</h2>
+		<?php if (!isset($_GET["nameOrganism"]) or !isset($_GET["nameProtein"]) or !isset($_GET["nameAntigen"])){ ?>
+			<!-- Trigger the modal with a button -->
+			<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add into myVaccine</button>
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">
+								idEpitope: <?php echo $_SESSION["array"][0]["idEpitope"];?> 
+								seqEpitope: <?php echo $_SESSION["array"][0]["seqEpitope"];?> 
+							</h4>
+						</div>
+						<div class="modal-body">
+							<p>
+								<form action="addlinker.php" method="POST">
+									nameVaccine: <input type="text" name="nVaccine" /><br><br>
+									<input id='<?php echo $_SESSION["array"][0]["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
+									<input type="hidden" name="idEpitope" value="<?php echo $_SESSION["array"][0]["idEpitope"]?>">
+								</form>
+								<form action="addlinker.php" method="GET">
+									<div class="form-group">
+										<label>Insert <?php echo $_SESSION["array"][0]["seqEpitope"];?> into an existing vaccine:</label> <br>
+										<select name="vaccine" size="8">
+											<?php
+												$conn = connectSQL();
+												$idUser = $_SESSION["idUser"];
+												$sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
+												$vaccineTable = $conn->query($sql);
+												$conn->close();
+												$allnameVaccine = array();
+												foreach ($vaccineTable as $vaccinerow) {
+													if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
+														array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
+														$nameVaccine = $vaccinerow["nameVaccine"];
+												?>
+											<option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>																		
+												<?php }               
+															} 
+												?>  
+												<br>
+											<input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
+											<input type="hidden" name="idEpitope" value="<?php echo $_SESSION["array"][0]["idEpitope"]?>">
+										</select>
+										<br>
+									</div>
+								</form>
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+					</div>
+				</div>
+			<?php } ?>
+			</div>
+		<br>
         <button id='tabletocsv'> Export to CSV</button><br>
+
         <table class="table table-striped table-sm table-responsive" id="nameTable">
-        	<thead>
+          <thead>
             <tr>
             <?php 
             if (isset($_GET["nameOrganism"])){ 
@@ -69,13 +133,14 @@ print navbar('Epitope');
             	echo "<th>Antigen Name</th><th>Antigen Id</th>";
             }
             else {
-            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th><th>Binder</th><th>Add</th>";
+            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th><th>Binder</th>";
             }
             ?>
             </tr>
-          	</thead>
+          </thead>
       		<tbody>
-		      	<?php foreach ($nameTable as $row){ ?>
+				  <?php
+				   foreach ($nameTable as $row){ ?>
 		      		<tr>
 		      			<?php if (isset($_GET["nameOrganism"])){ ?>
 		      			<th scope='row' class='text-center'><?php echo $row["nameOrganism"]?>	
@@ -96,7 +161,7 @@ print navbar('Epitope');
 		      				echo "<a href='antigen.php?idAntigen=$id' target='_blank'>{$id}</a>";
 		      			}
 		      			else { ?>
-		      			<td scope='row' class='text-center'><a href="<?php echo 'epitope.php?idEpitope='.$row['idEpitope'] ?>" ><?php echo $row["idEpitope"]?></a></td>
+		      			<th scope='row' class='text-center'><?php echo $row["idEpitope"]?></th>
 		      			<td class='text-center'><?php echo $row["seqEpitope"]?></td>
 		      			<td class='text-center'><?php echo $row["nameHLA"]?></td>
 		      			<td class='text-center'><?php echo $row["logAff"]?></td>
@@ -114,76 +179,22 @@ print navbar('Epitope');
 		      			}
 		      			?>
 						</td>
-		                <td>
-						<!-- Trigger the modal with a button -->
-						<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add</button>
-						<!-- Modal -->
-						<div class="modal fade" id="myModal" role="dialog">
-							<div class="modal-dialog">
-								<!-- Modal content-->
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">
-												idEpitope: <?php echo $_SESSION["idEpitope"];?> 
-												idHLA: <?php echo $_SESSION["idHLA"];?> 
-												seqEpitope: <?php echo $_SESSION["seqEpitope"];?> 
-											</h4>
-									</div>
-									<div class="modal-body">
-										<br>
-										<form action="addlinker.php" method="post">
-											nameVaccine: <input type="text" name="nVaccine" /><br><br>
-											<input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
-										</form>
-										<form action="addlinker.php" method="GET">
-											<div class="form-group">
-												<label>Insert <?php echo $_SESSION["seqEpitope"];?> into an existing vaccine:</label> <br>
-												<select name="vaccine[]" size="8">
-													<?php
-														$conn = connectSQL();
-														$idUser = $_SESSION["idUser"];
-														$sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
-														$vaccineTable = $conn->query($sql);
-														$conn->close();
-														$allnameVaccine = array();
-														foreach ($vaccineTable as $vaccinerow) {
-															if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
-																array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
-																$nameVaccine = $vaccinerow["nameVaccine"];
-													?>
-													<option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>																		
-													<?php }               
-															} ?>  
-												</select>
-												<input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
-												<br>
-											</div>
-										</form>
-										<br>	
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> 
-		            	</td>
-		      			<?php }  ?>
+		      			<?php }  
+		      			?>
 		      		</tr>
-		      		<?php } ?>
+		      		<?php  } ?>
       		</tbody>
   		</table>
 	</div>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-    	$('#nameTable').DataTable();
+      $(document).ready(function () {
+        $('#nameTable').DataTable();
         document.getElementById("tabletocsv").onclick = function () {
-        	location.href = "tabletocsv.php";
-    	};
-    });
+        location.href = "tabletocsv.php";
+    };
+      });
 </script>
 
 <?php print footerDBW(); ?>

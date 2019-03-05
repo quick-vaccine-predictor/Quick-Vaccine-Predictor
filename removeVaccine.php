@@ -56,12 +56,10 @@ if(isset($_POST) & !empty($_POST) ){
                 mysqli_query($conn, $sql);
                 $sql2 = "DELETE FROM Vaccine WHERE idVaccine = '$idVaccine'";
                 mysqli_query($conn, $sql2);
-                $_SESSION["success"] = "You successfully remove the vaccine";
                 header("location: my_vaccine.php");
                 } else {
                     // Display an error message if nameVaccine is not valid
                     array_push($errors, "The vaccine name was not valid."); } 
-                
             } else {
                 // Display an error message if password is not valid
                 array_push($errors, "The password you entered was not valid."); } 

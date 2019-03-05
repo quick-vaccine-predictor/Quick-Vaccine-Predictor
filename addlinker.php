@@ -21,24 +21,20 @@ $seqEpitope="";
 $idVaccine="";
 $almostnVaccine = "";
 
+
 if(isset($_POST["addbutton"]) & !empty($_POST)){
     //Recieve all input values from the form
-    $idEpitope = $_SESSION["idEpitope"];
-    $idHLA = $_SESSION["idHLA"];
+    $idEpitope = $_POST["idEpitope"];
     $nVaccine = $_POST["nVaccine"];
     $idUser = $_SESSION["idUser"];
 	//Form validation by adding corresponding errors into $errors array
     if(empty($nVaccine)) { array_push($errors, "nameVaccine is required"); }
 }
-elseif(isset($_GET) & !empty($_GET)){
 
+elseif(isset($_GET) & !empty($_GET)){
     //Recieve all input values from the form
-    $idEpitope = $_SESSION["idEpitope"];
-    $idHLA = $_SESSION["idHLA"];
-    $almostnVaccine = $_GET["vaccine"];
-    foreach ($almostnVaccine as $alnVaccine){
-        $nVaccine = $alnVaccine;
-    }
+    $idEpitope = $_GET["idEpitope"];
+    $nVaccine = $_GET["vaccine"];
     $idUser = $_SESSION["idUser"];
 	//Form validation by adding corresponding errors into $errors array
     if(empty($nVaccine)) { array_push($errors, "nameVaccine is required"); }
@@ -53,26 +49,25 @@ elseif(isset($_GET) & !empty($_GET)){
         if ($result -> num_rows == 1){
             foreach ($result as $almostresult) {
                 $idVaccine = $almostresult["idVaccine"];
-                $query2 = "SELECT * FROM VaccineContent WHERE idVaccine = '$idVaccine' AND idEpitope = '$idEpitope' LIMIT 1";
+                $query2 = "SELECT * FROM VaccineContent WHERE idVaccine = '$idVaccine' , idEpitope = '$idEpitope' LIMIT 1";
                 $result2 = mysqli_query ($conn, $query2);
-
                 if ($result2 -> num_rows == 0) {  //if idEpitope soesn't exist in that User and nameVaccine
-                    $sql = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
+                    $sql = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' , idEpitope ='$idEpitope'";   
                     mysqli_query($conn, $sql);
                 } else {array_push($errors, "that Epitope sequence already exist in this nameVaccine");}
             }
-            header("location: my_vaccine.php");
+            header("location: queries.php");
         } elseif ($result -> num_rows == 0 ){ //it doesn't exists
             $sql = "INSERT INTO Vaccine SET nameVaccine = '$nVaccine' , idUser ='$idUser'";
             $result2 = mysqli_query($conn, $sql);
             $idVaccine = mysqli_insert_id($conn);
-            $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
+            $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' , idEpitope ='$idEpitope'";   
             mysqli_query($conn, $sql2);
-            header("location: my_vaccine.php");
+            header("location: queries.php");
         }
     }
     else {
-        header("location: addindex.php");
+        header("location: queries.php");
     }
 
 

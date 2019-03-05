@@ -14,12 +14,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   exit;
 }
 
-if(isset($_SESSION["success"]) & !empty($_SESSION["success"])) { ?>
-  <div class="alert alert-success" role="alert">
-			<p><?php echo $_SESSION["success"] ?></p>
-	</div> <?php 
-} 
-
 //Conection to the DB
 $conn = connectSQL();
 //declaration of some variables
@@ -63,8 +57,7 @@ print navbar('myVaccine');
                 $result2 = $conn->query($sql2); /* the search is done here */  
           ?>
         <table class="table table-striped table-sm table-responsive affTable" id="affTable">
-          <thead scope='row' id="idUser"><?php echo $nVac ?> 
-
+          <thead>
             <tr>
               <th scope='row' id="idUser"><?php echo $nVac ?> </th>
               <th>
@@ -103,8 +96,8 @@ print navbar('myVaccine');
                       </div>        
                     </div>
                   </div>
-              </th> 
-              <th>
+                </th>
+                <th>
                 <form method="POST" action="my_vaccine.php" >
                   <input type="hidden" name="removeVac" value="<?php echo $idVaccine ?>">
                 </form>
@@ -142,54 +135,65 @@ print navbar('myVaccine');
                       </div>
                     </div>
                   </div>
-                </div>
-              <th>
+                </div>           
+              </th>
+            <tr>
+              <th>Epitope ID </th>
+              <th>Sequence</th>
+              <th>Immunogenecity score</th>
+              <th></th>
             </tr>
           </thead>
-      <tbody>
-          <?php while($row2 = $result2->fetch_assoc()) {  ?>
-            <tr>
-            <td scope='row' id="Epitope" class='text-center' >
-              <a href="<?php echo "epitope.php?idEpitope=".$row2['idEpitope']; ?>" target="_blank"><?php echo $row2['seqEpitope'] ;?>
-            </td>
-            <td>
-              <form method="post" action="removeSequence.php" >
-                <input type="hidden" name="removeSeq" value="<?php echo $idVaccine."|".$row2['idEpitope']?>">
-                <!-- Trigger the modal with a button -->
-                <button type="button" class="btn" data-toggle="modal" data-target="#deleteSequence">Remove Epitope</button>
-                <!-- Modal -->
-                <div class="modal fade" id="deleteSequence" role="dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-body">
-                        <p>Are you sure?</p>
-                          <input type="submit" value="Yes">
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <tbody>
+            <?php while($row2 = $result2->fetch_assoc()) { 
+              $idEpitope = $row2['idEpitope'];
+              $sql3 = "SELECT scoreImmunogenecity FROM Epitope WHERE idEpitope = '$idEpitope'";
+              $result3 = $conn->query($sql3); /* the search is done here */  
+              $scoreImm = $result3->fetch_assoc();
+              ?>
+              <tr>
+              <td scope='row' id="Epitopeid" class='text-center' >
+                <a href="<?php echo "epitope.php?idEpitope=".$row2['idEpitope']; ?>" target="_blank"><?php echo $row2['idEpitope'] ;?>
+              </td>
+              <td scope='row' id="Epitopeseq" class='text-center' >
+                <?php echo $row2['seqEpitope'] ;?>
+              </td>
+              <td> <?php echo $scoreImm["scoreImmunogenecity"]?>
+              <td>
+              <td>
+                <form method="post" action="removeSequence.php" >
+                  <input type="hidden" name="removeSeq" value="<?php echo $idVaccine."|".$row2['idEpitope']?>">
+                  <!-- Trigger the modal with a button -->
+                  <button type="button" class="btn" data-toggle="modal" data-target="#deleteSequence">Remove Epitope</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="deleteSequence" role="dialog">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <p>Are you sure?</p>
+                            <input type="submit" value="Yes">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-          <?php } ?>
-            </form>
-            </td>
-          </tr>
-        
-      </tbody>
+            <?php } ?>
+              </form>
+              </td>
+            </tr>        
+          </tbody>
       <?php }
         else {continue;}
       } $conn->close();?>
       </table>
-
       </div>  <!--</div> -->
-   
     <script type="text/javascript">
       $(document).ready(function () {
         $('.affTable').DataTable({ 
           "info":false}
         );
-        
       });
     </script>
 </div>
