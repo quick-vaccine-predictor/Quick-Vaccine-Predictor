@@ -51,7 +51,9 @@ print navbar('myVaccine');
     <!--</div> -->
     <script type="text/javascript">
       $(document).ready(function () {
-        $('#hisTable').DataTable();
+        $('#hisTable').DataTable( {
+        "order": []
+    	} );
         
       });
     </script>
