@@ -23,11 +23,12 @@ else {
 		$sql .= "Affinity.idEpitope=".$_GET["idEpitope"]." AND ";
 	}
 	$hla_string = "";
+	$last_hla = array_values(array_slice($hla_arr, -1))[0];
 	foreach ($hla_arr as $hla){
 		if ($hla == $hla_arr[0]){
 			$hla_string .= "(HLA.idHLA ='$hla' ";
 		}
-		elseif ($hla == array_values(array_slice($hla_arr, -1))[0]){
+		elseif ($hla == $last_hla){
 			$hla_string .= "OR HLA.idHLA ='$hla')";
 		}
 		else{
