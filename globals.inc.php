@@ -81,6 +81,9 @@ function footerDBW() {
       <p>QVVP © 2019 <a href="#">Back to top</a></p>
     </div>
   </footer>
+  <script type="text/javascript" id="cookieinfo"
+	src="//cookieinfoscript.com/js/cookieinfo.min.js">
+  </script>
 </body>
 </html>';
 }
@@ -116,6 +119,12 @@ function navbar($page){
   else {
     $navbar .= '            <li><a href="queries.php">Queries</a></li>';
   }
+  if ($page == "History"){
+    $navbar .= '            <li class="active"><a href="history.php">History</a></li>';
+  }
+  else {
+    $navbar .= '            <li><a href="history.php">History</a></li>';
+  }
   $navbar .= '          </ul>
             <ul class="nav navbar-nav navbar-right">';
             // if the user is not logged in yet, at top right will appear the Sign Up and Login buttons
@@ -127,7 +136,6 @@ function navbar($page){
                           <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Account
                           <span class="caret"></span></a>
                           <ul class="dropdown-menu">
-                            <li><a href="history.php">History</a></li>
                             <li><a href="reset_pass.php">Reset Password</a></li>
                             <li><a href="remove_account.php">Delete Account</a></li>
                             <li><a href="logout.php">Log Out</a></li>
@@ -151,8 +159,7 @@ function check_data($data) {
   return $data;
 }
 
-function get_url() {
-  if(isset($_SESSION["idUser"]) && !empty($_SESSION['idUser'])) {   
+function get_url() {  
     $link = $_SERVER['REQUEST_URI'];
     $path = explode("/", $link);
     $time = date("G:i - m/d/y");
@@ -172,6 +179,6 @@ function get_url() {
       array_unshift($cookie_arr, $val);
       setcookie('history', json_encode($cookie_arr), $OneMonth);     
     }}
-  }
+
 }
 ?>
