@@ -99,10 +99,18 @@ print navbar('myVaccine');
             <td scope='row' id="Epitope" class='text-center' >
               <a href="<?php echo "epitope.php?idEpitope=".$row2['idEpitope']; ?>" target="_blank"><?php echo $row2['seqEpitope'] ;}?>
             </td>
+            <td>
+              <?php $idEpitope = $row2['idEpitope'] ;?>
+              <form method="post" action="removeSequence.php" >
+                <input type="hidden" name="removeSeq" value="<?php echo $idVaccine?>">
+                <input type="submit" value="remove sequence">
+              </form>
+
+            </td>
           </tr>
         
       </tbody>
-      <?php } 
+      <?php }
         else {continue;}
       } $conn->close();?>
       </table>

@@ -5,7 +5,6 @@ include("globals.inc.php");
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
-    $email= $_SESSION["email"];
     exit;
   }
 
@@ -58,8 +57,6 @@ elseif(isset($_GET) & !empty($_GET)){
                 $result2 = mysqli_query ($conn, $query2);
 
                 if ($result2 -> num_rows == 0) {  //if idEpitope soesn't exist in that User and nameVaccine
-                    print_r($result2);
-                    die;
                     $sql = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
                     mysqli_query($conn, $sql);
                 } else {array_push($errors, "that Epitope sequence already exist in this nameVaccine");}
