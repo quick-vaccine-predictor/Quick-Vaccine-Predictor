@@ -1,7 +1,5 @@
 <?php
 include("globals.inc.php");
-$title = "Rename Vaccine";
-print headerDBW($title);
 
 //Conection to the DB if needed
 $conn = connectSQL();
@@ -19,7 +17,7 @@ $idUser= "";
 $errors = array();
 
 
-if(isset($_POST) & !empty($_POST) & !isset($_POST["renameVac"])){
+if(isset($_POST) & !empty($_POST)){
     //Recieve all input values from the form
     $password = mysqli_real_escape_string($conn, check_data($_POST['password']));
     $newVaccinename= $_POST["newVaccinename"];
@@ -50,6 +48,7 @@ if(isset($_POST) & !empty($_POST) & !isset($_POST["renameVac"])){
 
                     $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' ,idEpitope ='$idEpitope'";   
                     mysqli_query($conn, $sql2);
+                    header("location: my_vaccine.php");
                 }
 	}
 
@@ -58,30 +57,5 @@ if(isset($_POST) & !empty($_POST) & !isset($_POST["renameVac"])){
 
 $conn->close();
 
-print navbar('HLA');
 ?>
 
-
-<div class="container">
-    <form class="form-signin" action= "renameVaccine.php" method="POST"><?php include('errors.php'); ?>
-    <input type="hidden" name="currentVac" value="<?php echo $_POST["renameVac"] ?>">
-    <h2 class="form-signin-heading">Rename Vaccine</h2>
-    <p>Please fill out this form to rename your Vaccine.</p>
-        <div class="form-group">
-            <label><p>Type your new Vaccine name</p></label>
-            <input type="text" name="newVaccinename" id="newVaccinename" class="form-control" placeholder="New Vaccine name" required>
-        </div>
-        <div class="form-group">
-            <label><p>Type your Password</p></label>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        </div>
-
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit">Rename</button>
-            <a class="btn btn-link" href="my_vaccine.php">Cancel</a>
-        </div>
-    </form>
-</div>
-
-<?php print footerDBW();?>

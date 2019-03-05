@@ -5,8 +5,6 @@ error_reporting(E_ALL | E_STRICT);
 
 // Include connection file
 include("globals.inc.php");
-$title = "Remove Vaccine";
-print headerDBW($title);
 
 //Conection to the DB if needed
 $conn = connectSQL();
@@ -24,11 +22,8 @@ $idVaccine = "";
 $password = "";
 $errors = array();
 
-
-
-
 // Register User
-if(isset($_POST) & !empty($_POST) & !isset($_POST["removeVac"])){ 
+if(isset($_POST) & !empty($_POST) ){ 
     //Recieve all input values from the form
     $email = mysqli_real_escape_string($conn, check_data($_POST['email']));
     $password = mysqli_real_escape_string($conn, check_data($_POST['password'])); 
@@ -61,6 +56,7 @@ if(isset($_POST) & !empty($_POST) & !isset($_POST["removeVac"])){
                 mysqli_query($conn, $sql);
                 $sql2 = "DELETE FROM Vaccine WHERE idVaccine = '$idVaccine'";
                 mysqli_query($conn, $sql2);
+                header("location: my_vaccine.php");
                 } else {
                     // Display an error message if nameVaccine is not valid
                     array_push($errors, "The vaccine name was not valid."); } 
@@ -75,39 +71,8 @@ if(isset($_POST) & !empty($_POST) & !isset($_POST["removeVac"])){
     // Close connection
     $conn->close();
 
-print navbar('Remove Account');
-
 function my_function() {
     confirm("Are you sure?");
 }
 ?>
-
-
-
-<div class="container">
-    <form class="form-signin" action= "removeVaccine.php" method="POST" onsubmit="return confirm('Are you sure you want to submit?')"><?php include('errors.php'); ?>
-        <input type="hidden" name="currentVac" value="<?php echo $_POST["removeVac"] ?>">
-
-        <h2 class="form-signin-heading">A Fill the form with your email and password<br></h2>
-
-        <div class="form-group">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        </div>
-        <div class="form-group">
-            <label for="inputPassword" class="sr-only">Confirm Password</label>
-            <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary" onclick="my_function()">Delete Account</button>
-            <a class="btn btn-link" href="my_vaccine.php">Cancel</a>
-        </div>
-    </form>
-</div>
-
-<?php print footerDBW();?>
 

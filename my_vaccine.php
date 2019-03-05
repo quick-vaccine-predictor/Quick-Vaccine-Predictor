@@ -19,6 +19,7 @@ $conn = connectSQL();
 //declaration of some variables
 $idUser = "";
 $email="";
+$errors = array();
 
 $idUser = $_SESSION['idUser'];
 $email= $_SESSION['email'];
@@ -30,6 +31,10 @@ $result = $conn->query($sql); /* the search is done here */
 
 
 print navbar('myVaccine'); 
+
+function my_function() {
+  confirm("Are you sure?");
+}
 
 // This is the code for all datatables that are coming;
 // $allnameVaccine = array();
@@ -80,16 +85,91 @@ print navbar('myVaccine');
             <tr>
               <th scope='row' id="idUser"><?php echo $nVac ?> </th>
               <th>
-                <form method="post" action="renameVaccine.php" >
-                  <input type="hidden" name="renameVac" value="<?php echo $idVaccine ?>">
-                  <input type="submit" value="rename <?php echo $nVac ?>">
+                <form method="POST" action="my_vaccine.php" >
+                  <button type="button" class="btn" data-toggle="modal" data-target="#myModalrename">Rename <?php echo $nVac ?></button>
                 </form>
+                  <!-- Modal -->
+                  <div class="modal fade" id="myModalrename" role="dialog">
+                    <div class="modal-dialog">
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <p>
+                            <form class="form-signin" action= "renameVaccine.php" method="POST"><?php include('errors.php'); ?>
+                            <input type="hidden" name="currentVac" value="<?php echo $idVaccine ?>">
+                            <h2 class="form-signin-heading">Rename <?php echo $nVac ?></h2>
+                            <p>Please fill out this form to rename your Vaccine.</p>
+                                <div class="form-group">
+                                    <label><p>Type your new Vaccine name</p></label>
+                                    <input type="text" name="newVaccinename" id="newVaccinename" class="form-control" placeholder="New Vaccine name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label><p>Type your Password</p></label>
+                                    <label for="inputPassword" class="sr-only">Password</label>
+                                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Rename</button>
+                                </div>
+                            </form>
+                          </p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                                
+                    </div>
+                  </div>
+
               </th> 
               <th>
-                <form method="post" action="removeVaccine.php" >
+                <form method="POST" action="my_vaccine.php" >
                   <input type="hidden" name="removeVac" value="<?php echo $idVaccine ?>">
-                  <input type="submit" value="remove <?php echo $nVac ?>">
                 </form>
+                <button type="button" class="btn" data-toggle="modal" data-target="#myModalremove">Remove <?php echo $nVac ?></button>
+                <!-- Modal -->
+                <div class="modal fade" id="myModalremove" role="dialog">
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <p>
+                        <form class="form-signin" action= "removeVaccine.php" method="POST" onsubmit="return confirm('Are you sure you want to submit?')"><?php include('errors.php'); ?>
+                          <input type="hidden" name="currentVac" value="<?php echo $idVaccine ?>">
+
+                          <h2 class="form-signin-heading">Fill the form with your email and password<br></h2>
+
+                          <div class="form-group">
+                              <label for="inputEmail" class="sr-only">Email address</label>
+                              <input type="email" name="email" id="inputEmail" value="<?php if(isset($email) & !empty($email)){ echo $email; } ?>" class="form-control" placeholder="Email address" required autofocus>
+                          </div>
+                          <div class="form-group">
+                              <label for="inputPassword" class="sr-only">Password</label>
+                              <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="inputPassword" class="sr-only">Confirm Password</label>
+                              <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
+                          </div>
+                          <div class="form-group">
+                              <button class="btn btn-primary" onclick="my_function()">Remove</button>
+                          </div>
+                      </form>
+                        
+                        
+                        
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
               <th>
             </tr>
           </thead>
