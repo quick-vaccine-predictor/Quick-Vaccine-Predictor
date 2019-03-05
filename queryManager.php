@@ -59,7 +59,7 @@ print navbar('Epitope');
         <h2>Name Results</h2><br>
         <button id='tabletocsv'> Export to CSV</button><br>
         <table class="table table-striped table-sm table-responsive" id="nameTable">
-          <thead>
+        	<thead>
             <tr>
             <?php 
             if (isset($_GET["nameOrganism"])){ 
@@ -76,7 +76,7 @@ print navbar('Epitope');
             }
             ?>
             </tr>
-          </thead>
+          	</thead>
       		<tbody>
 		      	<?php foreach ($nameTable as $row){ ?>
 		      		<tr>
@@ -116,72 +116,71 @@ print navbar('Epitope');
 		      				echo "Weak Binder";
 		      			}
 		      			?>
-								</td>
-                <td>
-									<!-- Trigger the modal with a button -->
-									<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add</button>
-									<!-- Modal -->
-									<div class="modal fade" id="myModal" role="dialog">
-										<div class="modal-dialog">
-											<!-- Modal content-->
-											<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal">&times;</button>
-														<h4 class="modal-title">
-															idEpitope: <?php echo $_SESSION["idEpitope"];?> 
-															idHLA: <?php echo $_SESSION["idHLA"];?> 
-															seqEpitope: <?php echo $_SESSION["seqEpitope"];?> 
-														</h4>
-													</div>
-													<div class="modal-body">
-														<p>
-															<form action="addlinker.php" method="post">
-																nameVaccine: <input type="text" name="nVaccine" /><br><br>
-																<input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
-															</form>
-															<form action="addlinker.php" method="GET">
-																<div class="form-group">
-																	<label>Insert <?php echo $_SESSION["seqEpitope"];?> into an existing vaccine:</label> <br>
-																	<select name="vaccine[]" size="8">
-																		<?php
-																			$conn = connectSQL();
-																			$idUser = $_SESSION["idUser"];
-																			$sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
-																			$vaccineTable = $conn->query($sql);
-																			$conn->close();
-																			$allnameVaccine = array();
-																			foreach ($vaccineTable as $vaccinerow) {
-																				if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
-																					array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
-																					$nameVaccine = $vaccinerow["nameVaccine"];
-																			?>
-																		<option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>																		
-																			<?php }               
-																						} 
-																			?>  
-																		<input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
-																	</select>
-																	<br>
-															</form>
-														</p>
-														</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-															</div>
-														</div>
-													</div>
-												</div>
-												<a href="addindex.php">
-												<button 
-													<?php 
-														$_SESSION["idEpitope"] =  $row["idEpitope"]; 
-														$_SESSION["idHLA"] = $row["idHLA"];
-														$_SESSION["seqEpitope"] = $row["seqEpitope"];
+						</td>
+		                <td>
+						<!-- Trigger the modal with a button -->
+						<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add</button>
+						<!-- Modal -->
+						<div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+								<!-- Modal content-->
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">
+												idEpitope: <?php echo $_SESSION["idEpitope"];?> 
+												idHLA: <?php echo $_SESSION["idHLA"];?> 
+												seqEpitope: <?php echo $_SESSION["seqEpitope"];?> 
+											</h4>
+									</div>
+									<div class="modal-body">
+										<p>
+										<form action="addlinker.php" method="post">
+											nameVaccine: <input type="text" name="nVaccine" /><br><br>
+											<input id='<?php echo $_SESSION["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
+										</form>
+										<form action="addlinker.php" method="GET">
+											<div class="form-group">
+												<label>Insert <?php echo $_SESSION["seqEpitope"];?> into an existing vaccine:</label> <br>
+												<select name="vaccine[]" size="8">
+													<?php
+														$conn = connectSQL();
+														$idUser = $_SESSION["idUser"];
+														$sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
+														$vaccineTable = $conn->query($sql);
+														$conn->close();
+														$allnameVaccine = array();
+														foreach ($vaccineTable as $vaccinerow) {
+															if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
+																array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
+																$nameVaccine = $vaccinerow["nameVaccine"];
 													?>
-													id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addintobutton'>add</button></a> 
-                </td>
-		      			<?php }  
-		      			?>
+													<option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>																		
+													<?php }               
+															} ?>  
+													<input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
+												</select>
+												<br>
+											</div>
+										</form>
+										</p>	
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<a href="addindex.php">
+						<button 
+						<?php 
+							$_SESSION["idEpitope"] =  $row["idEpitope"]; 
+							$_SESSION["idHLA"] = $row["idHLA"];
+							$_SESSION["seqEpitope"] = $row["seqEpitope"];
+						?>
+						id='<?php echo $row["idEpitope"].'.'.$row["nameHLA"]?>' target="_blank" type='submit' name='addintobutton'>add</button></a> 
+		            	</td>
+		      			<?php }  ?>
 		      		</tr>
 		      		<?php } ?>
       		</tbody>
@@ -190,12 +189,12 @@ print navbar('Epitope');
 </div>
 
 <script type="text/javascript">
-      $(document).ready(function () {
-        $('#nameTable').DataTable();
+    $(document).ready(function () {
+    	$('#nameTable').DataTable();
         document.getElementById("tabletocsv").onclick = function () {
-        location.href = "tabletocsv.php";
-    };
-      });
+        	location.href = "tabletocsv.php";
+    	};
+    });
 </script>
 
 <?php print footerDBW(); ?>
