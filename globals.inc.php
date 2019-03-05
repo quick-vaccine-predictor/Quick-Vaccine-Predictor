@@ -1,12 +1,12 @@
 <?php
 session_start();
 function connectSQL() {
-	$servername = "localhost";
-	$dbname = "qvvp";
-	$username = "qvvp";
-	$password = "Qvvp_121327";
-	$conn = new mysqli($servername, $username, $password, $dbname);
-	return $conn;
+  $servername = "localhost";
+  $dbname = "qvvp";
+  $username = "qvvp";
+  $password = "Qvvp_121327";
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  return $conn;
 }
 
 function array2csv(array &$array)
@@ -61,12 +61,12 @@ function headerDBW($title) {
         <script type=\"text/javascript\" src=\"https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js\"></script>
         <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>
         <script type=\"text/javascript\" src=\"https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js\"></script>
-	<link href=\"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css\" rel=\"stylesheet\" />
+  <link href=\"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css\" rel=\"stylesheet\" />
         <script src=\"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js\"></script>
     <style>
-		body {min-height: 2000px;
-  			  padding-top: 70px;}
-  	</style>
+    body {min-height: 2000px;
+          padding-top: 70px;}
+    </style>
 </head>
 <body bgcolor=\"#ffffff\">
 <div class= \"container\">
@@ -151,5 +151,27 @@ function check_data($data) {
   return $data;
 }
 
-
+function get_url() {
+  if(isset($_SESSION["idUser"]) && !empty($_SESSION['idUser'])) {   
+    $link = $_SERVER['REQUEST_URI'];
+    $path = explode("/", $link);
+    $time = date("G:i - m/d/y");
+    $OneMonth = time()+60*60*24*30;
+    $val = array($path[3], $time);
+    $cookie_arr = json_decode($_COOKIE["history"]);
+    if(!isset($cookie_arr) && empty($cookie_arr)) {
+      setcookie("history",json_encode(array($val)), $OneMonth);
+    } else{
+      if ((count($cookie_arr) == 25)) {
+        //remove last element array 
+        array_pop($cookie_arr);
+        //appstart new element
+        array_unshift($cookie_arr, $val);
+        setcookie('history', json_encode($cookie_arr), $OneMonth);
+      } else {
+      array_unshift($cookie_arr, $val);
+      setcookie('history', json_encode($cookie_arr), $OneMonth);     
+    }}
+  }
+}
 ?>

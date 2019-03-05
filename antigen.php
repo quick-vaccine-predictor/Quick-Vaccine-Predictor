@@ -117,4 +117,7 @@ else{
     };
       });
     </script>
-<?php print footerDBW();?>
+<?php
+get_url(); 
+print footerDBW();
+?>

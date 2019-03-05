@@ -10,8 +10,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 if(isset($_SESSION["idUser"]) && isset($_SESSION["idUser"])) { ?>
 	<?php 
-	print_r($_COOKIE['history']); 
-	die; 
+	$history = json_decode($_COOKIE["history"]);
+	
 
 print navbar('myVaccine');
 	?>
@@ -19,26 +19,31 @@ print navbar('myVaccine');
 
 	<div class="container">
 		<h3>Hi, <b><?php echo htmlspecialchars($_SESSION["email"]); ?></b>. Welcome to your personal History.</h3>
-		<table class="table table-striped table-sm table-responsive" align="text-center" id="affTable">
+		<table class="table table-striped table-sm table-responsive" align="text-center" id="hisTable">
+		<thead>
 			<tr>
-				<th scope="col">User Id</th>
-				<th scope="col">Visit Url</th>
+				<th scope="col">Type</th>
+				<th scope="col">Id</th>
 				<th scope="col">Date Time</th>
 			</tr>
+		</thead>
 		<tbody>
-	        <?php if(count($history) > 0)
-	        { 	print_r($history); die;
-	        	foreach (array($result) as $key)
-	         { ?>
+	        <?php if(count($history) > 0){   
+	        	foreach ($history as $key){ 
+	        		$url = $key[0];
+	        		$dateTime = $key[1];
+	        		$id = explode("=", $url)[1];
+	        		$type = explode(".", $url)[0];
+	        		?>
 	          <tr>
-	            <td  id="idUser"><?php echo $_SESSION['idUser']; ?></td>
-	            <td  id="email"><?php echo $key[0];?></td>
-	            <td  id="visit"><?php echo $key[1];?></td>
-	            <td  id="Date"><?php echo $key[2];?></td>
+	            <td  id="Type"><?php echo $type;?></td>
+	            <td  id="Id"><a href="<?php echo $url?>"><?php echo $id;?></a></td>
+	            <td  id="Date"><?php echo $dateTime;?></td>
 	          </tr>
 	        <?php } 
 	    }
-	    } ?>
+	}
+	     ?>
 	    </tbody>
 	  	</table>
     </div>
@@ -46,7 +51,7 @@ print navbar('myVaccine');
     <!--</div> -->
     <script type="text/javascript">
       $(document).ready(function () {
-        $('#affTable').DataTable();
+        $('#hisTable').DataTable();
         
       });
     </script>

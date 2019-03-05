@@ -30,20 +30,7 @@ else{
   header('Location: error.php');
 }
 
-function get_url() {
-  if(isset($_SESSION["idUser"]) && !empty($_SESSION['idUser'])) {   
-    $link = $_SERVER['REQUEST_URI'];
-    $path = explode("/", $link);
-    $time = date("G:i - m/d/y");
-    $history = array();
-    $OneMonth = time()+60*60*24*30;
-    setcookie("history[0]",$path[3], $OneMonth);
-    setcookie("history[1]",$time, $OneMonth);
-  }
-  return $_COOKIE['history'];
-}
 
-$url = get_url();
 ?>
     <div class="container">
 
@@ -73,7 +60,7 @@ $url = get_url();
                   <form action="blast.php" method="POST">
                   <td class="text-left">
                       <input checked type="radio" name="db" value="sprot">Swissprot<br>
-                      <input type="hidden" value='<?php echo $idProtein?>' name='id'>
+                      <input type="hidden" value='<?php echo $idAntigen?>' name='id'>
                       <input type="radio" name="db" value="pdb">PDB<br>
                   <td>
                     <input type="submit" value="Submit">
@@ -123,5 +110,6 @@ $url = get_url();
 
     </script>
 <?php 
+get_url();
 print footerDBW();
 ?>

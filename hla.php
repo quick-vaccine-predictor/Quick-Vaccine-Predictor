@@ -151,4 +151,7 @@ print navbar('HLA');
       
 
     </script>
-<?php print footerDBW();?>
+<?php 
+get_url();
+print footerDBW();
+?>
