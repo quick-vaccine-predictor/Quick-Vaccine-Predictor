@@ -21,6 +21,7 @@ if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
 $email = "";
 $password = "";
 $errors = array();
+$idUser = $_SESSION["idUser"];
 
 // Register User
 if(isset($_POST) & !empty($_POST)){
@@ -42,21 +43,42 @@ if(isset($_POST) & !empty($_POST)){
         $user_check_query = "SELECT * FROM User WHERE mailUser = '$email' LIMIT 1";
         $result = mysqli_query($conn, $user_check_query);
         $user = mysqli_fetch_assoc($result);
-        //print_r($user);
-        //die;
-
+        
         // Check if email exists, if yes then verify password
         if (mysqli_num_rows($result) == 1){
             $hash = $user['Password'];
             if(password_verify($password,$hash)) {
+
                 // Password is correct so we proceed to deleted the user by the id
-                $user_delete_query = "DELETE FROM User WHERE mailUser = '$email' LIMIT 1";
-                $RESULT = mysqli_query($conn, $user_delete_query);
+                $usr_vaccines = "SELECT idVaccine FROM Vaccine WHERE idUser = '$idUser'";
+                $query = mysqli_query($conn, $usr_vaccines);
+                $id_vaccine_arr = array();
+                foreach ($query as $q) {
+                    $id_vaccine_arr[] = $q["idVaccine"];
+                    // [0] => Array ( [idVaccine] => 283 ) [1] => Array ( [idVaccine] => 284 )
+                }
+                $last_element = array_values(array_slice($id_vaccine_arr, -1))[0];
+                $comanda1 = "DELETE FROM VaccineContent WHERE (";
+                $comanda2 = "DELETE FROM Vaccine WHERE (";
+                foreach ($id_vaccine_arr as $id_vac) {
+                   if(count($id_vaccine_arr) == 1 OR $id_vac == $last_element){
+                        $comanda1 .= " idVaccine = $id_vac);";
+                        $comanda2 .= " idVaccine = $id_vac);";
+                    } else {
+                        $comanda1 .= " idVaccine = $id_vac OR ";
+                        $comanda2 .= " idVaccine = $id_vac OR ";
+                    }
+                }
+                $conn->query($comanda1);
+                $conn->query($comanda2);                
+                $comanda3 = "DELETE FROM User WHERE idUser = $idUser;";
+                $conn->query($comanda3);
+
                 // Check if the DELETE statement was sucssesfully by looking affected rows in User table:
                 if(mysqli_affected_rows($conn) == 1){
                     session_destroy();
-                    header('location: register.php');
-                    exit; }
+                    header('location: index.php');
+                }
             } else {
                 // Display an error message if password is not valid
                 array_push($errors, "The password you entered was not valid."); } 
