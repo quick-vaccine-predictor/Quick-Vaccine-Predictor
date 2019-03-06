@@ -83,26 +83,49 @@
                 <th>HLA</th>
                 <th>log</th>
                 <th>nM</th>
+                <th>My Vaccine</th>
           </tr>
         </thead>
           <?php 
           $json_data = array();
           foreach ($results as $row){
-            $json_data[] = [$row["idEpitope"],$row["seqEpitope"],$row["nameHLA"],$row["logAff"],$row["nMAff"]];
+            $json_data[] = ["idEpitope" => $row["idEpitope"],
+                            "seqEpitope" => $row["seqEpitope"],
+                            "nameHLA" => $row["nameHLA"],
+                            "logAff" => $row["logAff"],
+                            "nMAff" => $row["nMAff"], 
+                            "link" => "addindex.php?idEpitope=".$row["idEpitope"]."&"."idHLA=".$row["idHLA"]
+                          ];
              } ?>
       </table>
     </div>
     <script type="text/javascript">
       $(document).ready(function () {
       var data = <?php echo json_encode($json_data); ?>;
+      console.log(data);
       $('<?php echo "#table".$clean_cords ?>').DataTable( {
             data:           data,
             deferRender:    true,
             scrollY:        500,
             scrollCollapse: true,
-            scroller:       true
+            scroller:       true,
+            columns: [
+              { data: "idEpitope" },
+              { data: "seqEpitope" },
+              { data: "nameHLA" },
+              { data: "logAff" },
+              { data: "nMAff" },
+              { data: "link" , render : function ( data, type, row, meta ) {
+                    return type === 'display'  ?
+                    '<a class="btn btn-info btn-sm" href="' + data + '">' + 'Add' + '</a>' :
+                    data;
+                  }},
+          ],
         } );
       });
+
+
+
     </script>
     <?php }?>
 
