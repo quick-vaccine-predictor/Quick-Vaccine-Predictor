@@ -107,6 +107,12 @@ function navbar($page){
   else {
     $navbar .= '            <li><a href="index.php">Home</a></li>';
   }
+  if ($page == "About"){
+    $navbar .= '            <li class="active"><a href="doc.php">About</a></li>';
+  }
+  else {
+    $navbar .= '            <li><a href="doc.php">About</a></li>';
+  }
   if ($page == "MyVaccine"){
     $navbar .= '            <li class="active"><a href="my_vaccine.php">MyVaccine</a></li>';
   }
