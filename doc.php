@@ -36,9 +36,9 @@ print navbar('About');
 				epitopes based in experimental data, as well as immunoassay tools to assist in the prediction 
 				and analysis of epitopes. It provide al large collection of 
 
-			http://tools.iedb.org/mhci/help/ --> MHC-I binding prediction
-			https://help.iedb.org/hc/en-us/articles/114094151851  --> HLA allele frequencies
-			https://www.ncbi.nlm.nih.gov/pubmed/16789818?dopt=AbstractPlus --> benchmarking predictions of peptide binding to MHC-H molecules
+			<a href="http://tools.iedb.org/mhci/help/" target="_blank">MHC-I binding prediction</a>
+			<a href="https://help.iedb.org/hc/en-us/articles/114094151851" target="_blank">HLA allele frequencies</a>
+			<a href="https://www.ncbi.nlm.nih.gov/pubmed/16789818?dopt=AbstractPlus" target="_blank">benchmarking predictions of peptide binding to MHC-H molecules</a>
 
 
 			</p>
@@ -55,27 +55,18 @@ print navbar('About');
 			<h5></h5>
 		<h4>Introduction</h4>
 		<h4>Introduction</h4>
-		<h4>HIstory</h4>
+		<h4>History</h4>
             <p>
-            The history will be lost after 30 days of beeing stored in your browser.
-            </p>
-            <p>
-            The maximum number of searches available in History is 25. Once the maximum number is reached, 
-            QVVP will remove the oldest search from history and add the most current search.
-            </p>
-            <p>
-            You don't need to be logged to see your history of searches.
+            The history feature requires your web browser to be set to accept cookies. The history will be lost after 30 days of beeing stored in your browser. The maximum number of searches available in History is 25. Once the maximum number is reached, QVVP will remove the oldest search from history and add the most current search. You don't need to be logged to see your history of searches.
             </p>
             <p>
             The history is created for each browser. If in the same browser you login with different users
             the history will be merged together. This will not happen if the logins are done in different browsers.
+            If a new search is the same as a previous search, QVVP will create a new record in the search database with different date time. Here is an image of a history example:
             </p>
-            <p>
-            If a new search is the same as a previous search, QVVP will create a new record in the search database with different date time.
-            </p>
+            <img class="img-rounded img-responsive center-block" src="png/history.png" width="1000"><br><br>
             <p> 
-            For each search in QVVP done, in the history you will see its type ( epitope, hla, antigen, protein, organism,).
-            In the second column there is the id that will redirect to the page looked previously. The third column is the date time
+             For each search done in QVVP, in the history you will see its type ( epitope, hla, antigen, protein, organism,), it's id that will redirect to the page looked previously, and the date time
             when the page was looked. 
             </p>
 
