@@ -2,12 +2,9 @@
 include("globals.inc.php");
 $title = "About";
 print headerDBW($title);
-
 //Conection to the DB if needed
 //$conn = connectSQL();
 //$conn->close();
-
-
 print navbar('About');
 ?>
 
@@ -67,28 +64,27 @@ print navbar('About');
 				<br><br><br>
 				
 					<img class="img-responsive" src="png/out_HLA_example.png" width="700" height="500" alt="output-example">
-					<h4><b>Figure 1</b></h4> <h4>MHC-I Binding Prediction Results:</h4><p>Each row corresponds to one epitope binding prediction. The columns contain the <b>allele</b> the prediction was made for, the <b>epitope sequence</b>, the identity number for this sequence, two columns refered to the <b>affinity</b>, the <b>percentile rank</b> and the <b>Binding Level</b> for each interactions, based in the IC50 and %Rank. </p>
+					<h4><b>Figure 1</b></h4> <h4>MHC-I Binding Prediction Results:</h4><p>Each row corresponds to one epitope binding prediction. The columns contain the <b>allele</b> the prediction was made for, the <b>epitope sequence</b>, the identity number for this sequence, two columns refered to the <b>affinity</b>(Prediction score called 1-log50k and IC50 value in nM), the <b>percentile rank of prediction score</b> and the <b>Binding Level(SB=> Strong Binder / WB=> Weak Binder</b> for each interactions. The epitope will be identified as a SB or WB if the % Rank OR binding affinity (IC50) is above or below the specified threshold for the strong binders and weak binders based in the IC50 and %Rank. </p>
 
 				<br><br>
 
 			<h4><b> Process & Filter Result Data</b></h4>	
 
 			<p>
+				Once the data was obtained in the output showed above, we proceed to filter only those details of the binding 
+				we were interested in. In the following image it can be seen the final data that compose our database:
+
+			</p>
+				<br><br>
+					<img class="img-responsive" src="png/filter_data.png" width="300" height="200" alt="output-example">
+					<h4><b>Figure 2</b></h4><h4>MHC-I Binding Prediction Filtered Results:</h4><p> In this case the output results are organized in four columns. As before, each row corresponds to one epitope binding prediction. The columns contain the <b>Epitope Id from the IEDB</b>, the <b>HLA type molecule</b>, the <b>Prediction Score</b> in a logarithmic scale and the <b>Affinity</b>, that represents the IC50 value in nM.</p>
+
+				<br><br>
+			<p>
 				
-
-
 
 
 			</p>
-
-
-				
-
-
-
-	
-
-
 			
 
 			<br><br><br>
