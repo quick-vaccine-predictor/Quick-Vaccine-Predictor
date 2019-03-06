@@ -87,6 +87,17 @@ print navbar('About');
                 You can do 8 different searches either by the name or ID from Epitope, HLA, Organism, Protein, and Antigen.
                 All the ID stored in our databes are from NCBI, so you can easily put a NCBI ID and perform the search .
                 </p>
+                <p>When search is done by <b>Epitope ID</b>, QVVP will redirect you into its Epitope page. Here is an example of the Epitope page when the Epitope ID is 24:
+                <img class="img-rounded img-responsive center-block" src="png/epitope1.png" width="1000"><br><br>
+                <img class="img-rounded img-responsive center-block" src="png/epitope2.png" width="1000"><br><br>
+                On the upper rigth there is a graphic shouing the distribution of all epitopes with that ID from the QVVP database. On the x-axis it shows the logaritmic affinity and on the y-axis its shows the binding affinity (IC50) of each epitope.<br>
+                On the upper left of the page it shows information regarding the name ID of that epitope, it's sequence, length of the sequence, immunogenicity score, antigen id and name, protein id and name and organism name. <br>
+                All the id's acts as a link to other pages. The id goes to its IEDB epitope summary page. The antigen ID goes to the Antigen page of QVVP. The protein ID goes to the Protein page of QVVP. And the organism goes to the Organism page of QVVP. <br>
+                The ring graph shows the aminoacid properties of each sequence aminoacid. In light-green the polar, in dark-green the non-polar, in red the positive charged, and in blue the negative-charged amino acids. <br>
+                The second half of the page shows a Binding Affinities tables. It shows information about the Epitope ID name, each HLA with the affinities in terms of logarithmic (log) and binding affinities (nM) for each of the 27 HLA that QVVP database have.<br>
+                Finally it also have 2 buttons one to add this Epitope ID into the User's MyVaccine site, only allowed if the user is registered and has an account. The other is to export the binding affinites into CSV format.
+
+                </p>
 			<h5><b>Proetosome</b></h5>
 		<h4>Introduction</h4>
 		<h4>Introduction</h4>
@@ -104,8 +115,6 @@ print navbar('About');
              For each search done in QVVP, in the history you will see its type ( epitope, hla, antigen, protein, organism,), it's id that will redirect to the page looked previously, and the date time
             when the page was looked. 
             </p>
-
-
 
 
 </div>
