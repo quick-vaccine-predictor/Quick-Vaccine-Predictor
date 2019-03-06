@@ -1,7 +1,8 @@
 <?php
 include("globals.inc.php");
-$title = "";
-print headerDBW($About);
+$title = "About";
+print headerDBW($title);
+
 //Conection to the DB if needed
 //$conn = connectSQL();
 //$conn->close();
@@ -9,6 +10,7 @@ print headerDBW($About);
 
 print navbar('About');
 ?>
+
 <div class="container">
 	<h2>Documentation</h2>
 		<h4>Introduction</h4>
@@ -53,7 +55,29 @@ print navbar('About');
 			<h5></h5>
 		<h4>Introduction</h4>
 		<h4>Introduction</h4>
-		<h4>Introduction</h4>
+		<h4>HIstory</h4>
+            <p>
+            The history will be lost after 30 days of beeing stored in your browser.
+            </p>
+            <p>
+            The maximum number of searches available in History is 25. Once the maximum number is reached, 
+            QVVP will remove the oldest search from history and add the most current search.
+            </p>
+            <p>
+            You don't need to be logged to see your history of searches.
+            </p>
+            <p>
+            The history is created for each browser. If in the same browser you login with different users
+            the history will be merged together. This will not happen if the logins are done in different browsers.
+            </p>
+            <p>
+            If a new search is the same as a previous search, QVVP will create a new record in the search database with different date time.
+            </p>
+            <p> 
+            For each search in QVVP done, in the history you will see its type ( epitope, hla, antigen, protein, organism,).
+            In the second column there is the id that will redirect to the page looked previously. The third column is the date time
+            when the page was looked. 
+            </p>
 
 
 
