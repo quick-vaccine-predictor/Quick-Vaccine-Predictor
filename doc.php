@@ -13,7 +13,7 @@ print navbar('About');
 
 <div class="container">
 	<h2>Documentation</h2>
-		<h4>Introduction</h4>
+		<h4><b>Introduction</b></h4>
 		<p>
 			A brief introduction??
 		</p>
@@ -48,14 +48,23 @@ print navbar('About');
 			<h5> D'on hem agafat les dades? </h5>
 			<h5> Què hem fet amb les dades? </h5>
 
-		<h4>Web Site</h4>
-			<h5> Binding Search System</h5>
-			- Distribució de la cerca: queries, ids, proteosoma
-			<h5></h5>
-			<h5></h5>
+		<h4><b>Queries</b></h4>
+            <p>
+            From here, users can perform three different queries: <br>
+            - <u>Epitope Search</u>: Epitope or/and HLA affinity results with thresholds.<br>
+            - <u>ID Search</u>: Id or name search of Epitopes, HLA alleles, Organisms, Proteins and Antigens.<br>
+            - <u>Proteosome</u>: Proteosome simulator that detects if a given protein contains any known epitope. If a DNA/RNA sequence is given, different ORF are calculated.
+            </p>
+			<h5><b>Epitope Search</b></h5>
+			<h5><b>ID Search</b></h5>
+                <p>
+                You can do 8 different searches either by the name or ID from Epitope, HLA, Organism, Protein, and Antigen.
+                All the ID stored in our databes are from NCBI, so you can easily put a NCBI ID and perform the search .
+                </p>
+			<h5><b>Proetosome</b></h5>
 		<h4>Introduction</h4>
 		<h4>Introduction</h4>
-		<h4>History</h4>
+		<h4><b>History</b></h4>
             <p>
             The history feature requires your web browser to be set to accept cookies. The history will be lost after 30 days of beeing stored in your browser. The maximum number of searches available in History is 25. Once the maximum number is reached, QVVP will remove the oldest search from history and add the most current search. You don't need to be logged to see your history of searches.
             </p>
