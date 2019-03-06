@@ -1,6 +1,6 @@
 <?php
 include("globals.inc.php");
-$sql = "SELECT idOrganism, nameOrganism FROM Organism WHERE nameOrganism LIKE '".$_GET['q']."%' limit 5;";
+$sql = "SELECT idOrganism, nameOrganism FROM Organism WHERE nameOrganism LIKE '%".$_GET['q']."%' limit 5;";
 $conn = connectSQL();
 $q = $conn->query($sql);
 $results = array();
