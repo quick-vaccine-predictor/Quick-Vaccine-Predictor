@@ -41,10 +41,15 @@ print navbar('About');
 				specifically 27 HLA alleles (<a href="https://help.iedb.org/hc/en-us/articles/114094151851-HLA-allele-frequencies-and-reference-sets-with-maximal-population-coverage">Click
 				here fore more information</a>). 
 
+			<h5> Quines dades hem agafat?  </h5>
+				
+
 				Taking advantage of these tools, we proceed to download a collection of almost 41.300 viral epitopes and the set
-				of 27 HLA allels, with the aim of persue a set of binding predictions in order to obtain the binding results of 
-				binding affinty for each epitope with  
-				 
+				of 27 HLA allels, with the aim of persue a set of binding binding predictions between these two molecules. In order to do so, we use the free binding predictor method <a href="http://www.cbs.dtu.dk/services/NetMHCcons/">NetMHCcons</a>. This consensus method for MHC I predictions integrate three softwares to give more accurate predictions:
+				NetMHC and NetMHCpan, that are artificial neural network methods allele-specific and based in more than 115,000 quantitative binding data; and PickPocket method based on receptor-pocket similarities between MHC molecules. Also, NetMHCcons server can produce predictions for peptides of 8-15 aminoacids in length, for which we made predictions 
+				only for epitopes of 9 or 10 aminoacid length. 
+
+
 
 			<a href="http://tools.iedb.org/mhci/help/" target="_blank">MHC-I binding prediction</a>
 			<a href="https://help.iedb.org/hc/en-us/articles/114094151851" target="_blank">HLA allele frequencies</a>
@@ -54,7 +59,7 @@ print navbar('About');
 			</p>
 
 
-			<h5> Quines dades hem agafat?  </h5>
+			
 			<h5> D'on hem agafat les dades? </h5>
 			<h5> Què hem fet amb les dades? </h5>
 
