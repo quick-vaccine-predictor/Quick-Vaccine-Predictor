@@ -30,7 +30,16 @@ print navbar('About');
 
 		<h4>Data</h4>
 			<h5> Data Aquirement: IEDB  </h5>
-			<p> IEDB </p>
+			<p> IEDB is the Immune Epitope Database that freely provide information about anitbody and T cell epitopes based in experimental data, as well as immunoassay tools to assist in the prediction and analysis of epitopes. It provide al large collection of 
+
+			http://tools.iedb.org/mhci/help/ --> MHC-I binding prediction
+			https://help.iedb.org/hc/en-us/articles/114094151851  --> HLA allele frequencies
+			https://www.ncbi.nlm.nih.gov/pubmed/16789818?dopt=AbstractPlus --> benchmarking predictions of peptide binding to MHC-H molecules
+
+
+			</p>
+
+
 			<h5> Quines dades hem agafat?  </h5>
 			<h5> D'on hem agafat les dades? </h5>
 			<h5> Què hem fet amb les dades? </h5>
