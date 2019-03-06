@@ -1,5 +1,4 @@
 <?php
-
 include("globals.inc.php");
 $title = "About";
 print headerDBW($title);
@@ -14,11 +13,11 @@ print navbar('About');
 
 <div class="container">
 	<h2>Documentation</h2>
-		<h4><b>Introduction</b></h4>
+		<h3><b>Introduction</b></h3>
 		<p>
 			A brief introduction??
 		</p>
-			<h5> Scope  </h5> 
+			<h4><b> Scope </b></h4> 
 			<p>
 			The main scope oh this web application is to develope a viral vaccine generator based in the 
 			viral epitope data extracted from the IEDB (Immune Epitope Database And Analysis Resuource). 
@@ -31,15 +30,15 @@ print navbar('About');
 			On the following documentation we briefly explain how our website works.
 			</p>
 
-		<h4>Data</h4>
-			<h5> HLA & Epitope aquirement: IEDB  </h5>
+		<h3><b>Data</b></h3>
+			<h4><b>HLA & Epitope aquirement: IEDB</b></h4>
 
 			<p> IEDB is the <a href="https://www.iedb.org/">Immune Epitope Database</a> that freely provide information about anitbody 		and T cell epitopes based in experimental data, as well as immunoassay tools to assist in the prediction 
 				and analysis of epitopes. Within these tools, the T Cell Epitope - MHC binding prediction can
 				foretell IC50 values for peptides binding to specific MHC molecules. 
 
 				Besides, the predictor can determine, among other options, the ability of an aminoacid subsequence 
-				to bind to a specific MHC class I molecule, using a large collection of the most common HLA alleles, 
+				to bind to a specific MHC class I molecule, using a large collection of the most common human HLA alleles, 
 				specifically 27 HLA alleles (<a href="https://help.iedb.org/hc/en-us/articles/114094151851-HLA-allele-frequencies-and-reference-sets-with-maximal-population-coverage">Click
 				here fore more information</a>). In order to predict these specific interactions, IEDB has different softwares
 				based on Artificial Neural Networks or Stabilized Matrix methods, among others, and a set of libraries that, 
@@ -47,15 +46,28 @@ print navbar('About');
 
 				However, although predictions can be made in a very easy way, the required time to obtain binding affinities between
 				a large collection of epitopes (as can be all curated viral epitopes) and the most common HLA molecules can take a lot
-				of time. Taking into account that premise, in this project we performed a serie of predictions between a lage set
+				of time. 
+
+				Taking into account this premise, in this project we performed a serie of predictions between a lage set
 				of viral epitopes and HLA molecules with the purpose of generate a useful database that can serve to generate vaccines
 				based in these specific interaction data.   
 
-			<h5> Prediction: NetMHCcons </h5>
+			<h4><b> Prediction: NetMHCcons </b></h4>
 
-				Taking advantage of the tools offered by IEDB, we proceed to download a collection of almost 41.300 viral epitopes and the set of 27 HLA allels, with the aim of persue a set of binding binding predictions between these two molecules. In order to do so, we use the free binding predictor method <a href="http://www.cbs.dtu.dk/services/NetMHCcons/">NetMHCcons</a>. This consensus method for MHC I predictions integrate three softwares to give more accurate predictions:
+				Taking advantage of the tools offered by IEDB, we proceed to download a collection of almost 41.300 viral epitopes and the set of 27 HLA allels, with the aim of persue a set of binding predictions between these two molecules. In order to do so, we use the free binding predictor method <a href="http://www.cbs.dtu.dk/services/NetMHCcons/">NetMHCcons</a>. This consensus method for MHC I predictions integrate three softwares to give more accurate predictions:
 				NetMHC and NetMHCpan, that are artificial neural network methods allele-specific and based in more than 115,000 quantitative binding data; and PickPocket method based on receptor-pocket similarities between MHC molecules. Also, NetMHCcons server can produce predictions for peptides of 8-15 aminoacids in length, for which we made predictions 
 				only for epitopes of 9 or 10 aminoacid length.
+
+				Predictions benckmarks were around 180 - 200 minutes for HLA - Epitope interactions with 9 aminoacid of length, and 
+				150 - 180 minutes for epitoes with 10 aminoacid of length. Results where obtained in a prediction output table, as the
+				following:
+				<br><br><br>
+				<div class="col-lg-4 text-center">
+					<img class="img-responsive" src="png/out_HLA_example.png" width="700" height="500" alt="output-example">
+					<h4><b>Figure 1</b> MHC-I Binding Prediction Results: each row corresponds to one epitope binding prediction. The columns contain the <b>allele</b> the prediction was made for, the <b>epitope sequence</b>, the identity number for this sequence, two columns refered to the <b>affinity</b>, the <b>percentile rank</b> and the <b>Binding Level</b> for each interactions, based in the IC50 and %Rank. </h4>
+
+				<br><br><br>
+
 
 
 				
