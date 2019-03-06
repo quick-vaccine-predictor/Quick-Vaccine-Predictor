@@ -113,7 +113,7 @@ print navbar('Queries');
               <form method="GET"  action="queryManager.php" >
                 <div class="form-group">
                 <b>Name </b>
-                  <select class="nameOrganism form-control" style="width:200px" name="nameOrganism"></select>
+                  <select class="nameOrganism form-control" style="width:200px" name="nameOrganism" required></select>
                 <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
                 
@@ -148,7 +148,7 @@ print navbar('Queries');
               <form method="GET"  action="queryManager.php">
                 <div class="form-group">
                 <b>Name </b>
-                  <select class="nameAntigen form-control" style="width:200px" name="nameAntigen"></select>
+                  <select class="nameAntigen form-control" style="width:200px" name="nameAntigen" required></select>
                   <button type="submit" class="btn btn-primary"> Submit </button>
                 </div>
               </form> 
