@@ -120,7 +120,18 @@ print navbar('About');
                     <img class="img-responsive" src="png/hla2.png" width="700" height="500" alt="output-example">
                 On the upper rigth there is a graphic shouing the distribution of all epitopes with that hla from the QVVP database. On the x-axis it shows the logaritmic affinity and on the y-axis its shows the binding affinity (IC50) of each epitope.<br>
                 On the upper left of the page it shows information regarding the hla ID of that hla, it's name, an image of the hla structure and a link to the PDB crystal structure information. Not all the hla's have a crystalized structure.<br>
-                The second half of the page shows a Binding Affinities table. It shows information about the Epitope ID name, each HLA with the affinities in terms of logarithmic (log) and binding affinities (nM) for each of the 27 HLA that QVVP database have.<br>
+                The second half of the page shows a Binding Affinities table. It shows information about the Epitope ID name, each HLA with the affinities in terms of logarithmic (log) and binding affinities (nM) for each of the 27 HLA that QVVP database have. Finally there is a button to export the binding affinites into CSV format.<br>
+                <p> 
+                For each search done in QVVP, in the history you will see its type ( epitope, hla, antigen, protein, organism,), it's id that will redirect to the page looked previously, and the date time
+                when the page was looked. 
+                </p>
+                <p>
+                When search is done by <b>Organism</b> you can specify either its ID or name.
+                If the search is done by its <b>Organism ID</b>. QVVP will redirect you into its Organism page. Here is an example of the Organism page by 11520 ID:
+                <img class="img-responsive" src="png/organism.png" width="700" height="500" alt="output-example">
+                On the upper left of the page it shows information regarding the ID of that Organism and it's name. The organism ID act's as a link to the NCBI Taxonomy Browser<br>
+                The second half of the page shows an Antigens table. It shows information about the Antigen ID, Antigen name, and Protein ID. Each ID acts as a link to the corresponding QVVP page.Finally there is a button to export the Antigen table into CSV format.<br>
+
 
 			<h5><b>Proteosome</b></h5>
 		<h4>Introduction</h4>
@@ -135,10 +146,8 @@ print navbar('About');
             If a new search is the same as a previous search, QVVP will create a new record in the search database with different date time. Here is an image of a history example:
             </p>
             <img class="img-responsive" src="png/history.png" width="700" height="500" alt="output-example">
-            <p> 
-             For each search done in QVVP, in the history you will see its type ( epitope, hla, antigen, protein, organism,), it's id that will redirect to the page looked previously, and the date time
-            when the page was looked. 
-            </p>
+
+
 
 </div>
 
