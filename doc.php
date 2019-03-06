@@ -32,9 +32,19 @@ print navbar('About');
 
 		<h4>Data</h4>
 			<h5> Data Aquirement: IEDB  </h5>
-			<p> IEDB is the Immune Epitope Database that freely provide information about anitbody and T cell 
-				epitopes based in experimental data, as well as immunoassay tools to assist in the prediction 
-				and analysis of epitopes. It provide al large collection of 
+			<p> IEDB is the <a href="https://www.iedb.org/">Immune Epitope Database</a> that freely provide information about anitbody 		and T cell epitopes based in experimental data, as well as immunoassay tools to assist in the prediction 
+				and analysis of epitopes. Within these tools, the T Cell Epitope - MHC binding prediction can
+				foretell IC50 values for peptides binding to specific MHC molecules. 
+
+				Besides, the predictor can determine, among other options, the ability of an aminoacid subsequence 
+				to bind to a specific MHC class I molecule, using a large collection of the most common HLA alleles, 
+				specifically 27 HLA alleles (<a href="https://help.iedb.org/hc/en-us/articles/114094151851-HLA-allele-frequencies-and-reference-sets-with-maximal-population-coverage">Click
+				here fore more information</a>). 
+
+				Taking advantage of these tools, we proceed to download a collection of almost 41.300 viral epitopes and the set
+				of 27 HLA allels, with the aim of persue a set of binding predictions in order to obtain the binding results of 
+				binding affinty for each epitope with  
+				 
 
 			<a href="http://tools.iedb.org/mhci/help/" target="_blank">MHC-I binding prediction</a>
 			<a href="https://help.iedb.org/hc/en-us/articles/114094151851" target="_blank">HLA allele frequencies</a>
