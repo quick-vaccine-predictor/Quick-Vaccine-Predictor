@@ -38,7 +38,7 @@ print navbar('myVaccine');
 
 <div class="container">
     <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["email"]); ?></b>. Welcome to your personal site.</h1>
-    <div class="row"> 
+    <div class="jumbotron"> 
         <div class="col-sm-8">
             Here is your personal site inside QVVP. You can create vaccines, add as many as needed epitopes. All of them from a simple query into our database.
         </div>
