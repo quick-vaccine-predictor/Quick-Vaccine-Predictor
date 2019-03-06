@@ -120,14 +120,14 @@ print navbar('Remove Account');
             <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
         </div>
         <div class="form-group">
-            <button onclick="alert()" class="btn btn-primary" type="submit">Delete Account</button>
+            <button class="btn btn-primary" type="submit" onclick="my_alert()">Delete Account</button>
             <a class="btn btn-link" href="my_vaccine.php">Cancel</a>
         </div>
     </form>
 </div>
 
 <script>
-function alert() {
+function my_alert() {
   alert("Are you sure you want to delete your account?");
 }
 </script>
