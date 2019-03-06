@@ -21,7 +21,7 @@ if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
 $email = "";
 $password = "";
 $errors = array();
-$idUser = $_SESSION["idUser"];
+
 
 // Register User
 if(isset($_POST) & !empty($_POST)){
@@ -43,6 +43,7 @@ if(isset($_POST) & !empty($_POST)){
         $user_check_query = "SELECT * FROM User WHERE mailUser = '$email' LIMIT 1";
         $result = mysqli_query($conn, $user_check_query);
         $user = mysqli_fetch_assoc($result);
+        $idUser = $user["idUser"];
         
         // Check if email exists, if yes then verify password
         if (mysqli_num_rows($result) == 1){
@@ -50,29 +51,34 @@ if(isset($_POST) & !empty($_POST)){
             if(password_verify($password,$hash)) {
 
                 // Password is correct so we proceed to deleted the user by the id
-                $usr_vaccines = "SELECT idVaccine FROM Vaccine WHERE idUser = '$idUser'";
-                $query = mysqli_query($conn, $usr_vaccines);
+                // Select all vaccines od the user from Vaccine table 
+
+                $select_vaccines = "SELECT idVaccine FROM Vaccine WHERE idUser = '$idUser'";
+                $query = mysqli_query($conn, $select_vaccines);
                 $id_vaccine_arr = array();
+                // Put the results into an array:
                 foreach ($query as $q) {
                     $id_vaccine_arr[] = $q["idVaccine"];
-                    // [0] => Array ( [idVaccine] => 283 ) [1] => Array ( [idVaccine] => 284 )
                 }
+                // Last element of the query
                 $last_element = array_values(array_slice($id_vaccine_arr, -1))[0];
-                $comanda1 = "DELETE FROM VaccineContent WHERE (";
-                $comanda2 = "DELETE FROM Vaccine WHERE (";
+
+                $delete_vaccine_content = "DELETE FROM VaccineContent WHERE (";
+                $delete_vaccine = "DELETE FROM Vaccine WHERE (";
                 foreach ($id_vaccine_arr as $id_vac) {
                    if(count($id_vaccine_arr) == 1 OR $id_vac == $last_element){
-                        $comanda1 .= " idVaccine = $id_vac);";
-                        $comanda2 .= " idVaccine = $id_vac);";
+                        $delete_vaccine_content .= " idVaccine = $id_vac);";
+                        $delete_vaccine .= " idVaccine = $id_vac);";
                     } else {
-                        $comanda1 .= " idVaccine = $id_vac OR ";
-                        $comanda2 .= " idVaccine = $id_vac OR ";
+                        $delete_vaccine_content .= " idVaccine = $id_vac OR ";
+                        $delete_vaccine .= " idVaccine = $id_vac OR ";
                     }
                 }
-                $conn->query($comanda1);
-                $conn->query($comanda2);                
-                $comanda3 = "DELETE FROM User WHERE idUser = $idUser;";
-                $conn->query($comanda3);
+                // Execute queries
+                $conn->query($delete_vaccine_content);
+                $conn->query($delete_vaccine);                
+                $delete_user = "DELETE FROM User WHERE idUser = $idUser;";
+                $conn->query($delete_user);
 
                 // Check if the DELETE statement was sucssesfully by looking affected rows in User table:
                 if(mysqli_affected_rows($conn) == 1){
@@ -114,11 +120,17 @@ print navbar('Remove Account');
             <input type="password" name="confirm_password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
         </div>
         <div class="form-group">
-            <button class="btn btn-primary" type="submit">Delete Account</button>
+            <button onclick="alert()" class="btn btn-primary" type="submit">Delete Account</button>
             <a class="btn btn-link" href="my_vaccine.php">Cancel</a>
         </div>
     </form>
 </div>
+
+<script>
+function alert() {
+  alert("Are you sure you want to delete your account?");
+}
+</script>
 
 <?php print footerDBW();?>
 
