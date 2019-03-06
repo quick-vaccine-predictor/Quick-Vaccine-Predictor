@@ -5,7 +5,7 @@ $history = json_decode($_COOKIE["history"]);
 print navbar('History');
 ?>
 <div class="container">
-	<h3>Hi, <b><?php echo htmlspecialchars($_SESSION["email"]); ?></b>. Welcome to your personal History.</h3>
+	<h3>History</h3>
 	<table class="table table-striped table-sm table-responsive" align="text-center" id="hisTable">
 		<thead>
 			<tr>
