@@ -12,7 +12,7 @@ $idUser = $_SESSION['idUser'];
 $email= $_SESSION['email'];
 $sql = "SELECT idVaccine, nameVaccine FROM Vaccine  WHERE idUser ='$idUser' ";
 $vaccines = $conn->query($sql); /* the search is done here */  
-print navbar('myVaccine'); 
+print navbar('MyVaccine'); 
 ?> 
 <div class="container">
     <div class="jumbotron" style="background:transparent !important"> 
