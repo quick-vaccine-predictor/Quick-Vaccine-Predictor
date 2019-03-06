@@ -36,8 +36,7 @@ print navbar('MyVaccine');
                 <option selected value="<?php echo $idVaccine ?>"><?php echo $nameVaccine?></option>
                 <?php                
                 } 
-                ?>  
-                
+                ?>
             </select>
             <input hidden value="<?php echo $_REQUEST["idEpitope"] ?>" name="idEpitope">
             <button type='submit' class="btn btn-info btn-sm">Add</button>

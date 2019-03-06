@@ -4,7 +4,6 @@ include("globals.inc.php");
 $idHLA = $_GET["idHLA"];
 print headerDBW($idHLA);
 $conn = connectSQL();
-// Check connection
 if ($conn->connect_error) {
     header('Location: error.php');
 }
@@ -18,7 +17,11 @@ $array = array();
 $dataTable = array();
 foreach ($affTable as $row){
   $array[] = $row;
-  $dataTable[] = [$row["idEpitope"],$row["seqEpitope"],$row["logAff"],$row["nMAff"]];
+  $dataTable[] = ["idEpitope" => $row["idEpitope"],
+                  "seqEpitope" => $row["seqEpitope"],
+                  "logAff" => $row["logAff"],
+                  "nMAff" => $row["nMAff"], 
+                  "link" => "addindex.php?idEpitope=".$row["idEpitope"]];
 }
 $_SESSION["array"] = $array;
 $affdata = $array;
@@ -30,72 +33,83 @@ for ($x = 0; $x <= 30; $x++) {
     array_push($nm_data, $nm);
     array_push($log_data, $log);
 }
-
 $conn->close();
 }
 else {
-  $affTable = [];
-  $epTable = [];
+  header('Location: error.php');
 }
 print navbar('HLA');
 get_url();
 ?>
-    <div class="container">
-
-      <!-- Main component for a primary marketing message or call to action -->
-    <h2>HLA allele</h2>
-    <div class="row">
-      <div class="col-md-4">
-        <table class="table table-striped table-sm table-responsive">
-              <tbody>
-                <tr>
-                  <th scope="row" class="text-right">Id</th>
-                  <td class="text-center"><?php echo "<a href='https://www.ebi.ac.uk/cgi-bin/ipd/imgt/hla/get_allele.cgi?$idHLA' target='_blank'>$idHLA</a>"
-                  ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Name</th>
-                  <td class="text-center" id="name"><?php echo $nameHLA ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">PDB</th>
-                  <td class="text-center" id="name">
-                    <?php if($pdbHLA != "None"){echo "<img src='http://www.pdb.org/pdb/images/{$pdbHLA}_bio_r_250.jpg' width='250' height='250' border='0'><br><a href='http://www.pdb.org/pdb/explore.do?structureId=$pdbHLA'>Link to PDB</a>";} ?>
-                    </td>
-                </tr>
-              </tbody>
-            </table>
-      </div>
-      <div class="col-md-8 ">
-        <div class="chart-container " style="height: 400px; width: auto; text-align:center">
-          <canvas id="Scatter"></canvas>
-      </div>
-      </div>
-  </div>
-      <div class="row">
-        <h2>Binding Affinities</h2><br>
-        <button id='tabletocsv'>Export to CSV</button><br>
-        <table class="table table-striped table-sm table-responsive" id="affTable">
-          <thead>
-            <tr>
-              <th>idEpitope</th>
-              <th>Sequence</th>
-              <th>log</th>
-              <th>nM</th>
-            </tr>
-          </thead>
+<div class="container">
+  <h2>HLA allele</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <table class="table table-striped table-sm table-responsive">
+        <tbody>
+          <tr>
+            <th scope="row" class="text-right">Id</th>
+            <td class="text-center"><?php echo "<a href='https://www.ebi.ac.uk/cgi-bin/ipd/imgt/hla/get_allele.cgi?$idHLA' target='_blank'>$idHLA</a>"?></td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Name</th>
+            <td class="text-center" id="name"><?php echo $nameHLA ?></td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">PDB</th>
+            <td class="text-center" id="name">
+              <?php if($pdbHLA != "None"){echo "<img src='http://www.pdb.org/pdb/images/{$pdbHLA}_bio_r_250.jpg' width='250' height='250' border='0'><br><a href='http://www.pdb.org/pdb/explore.do?structureId=$pdbHLA'>Link to PDB</a>";}?>
+            </td>
+          </tr>
+        </tbody>
       </table>
+    </div>
+    <div class="col-md-8 ">
+      <div class="chart-container " style="height: 400px; width: auto; text-align:center">
+        <canvas id="Scatter"></canvas>
       </div>
-    </div> <!-- /container -->
-    <script type="text/javascript">
+    </div>
+  </div>
+  <div class="row">
+    <h2>Binding Affinities</h2><br>
+    <button id='tabletocsv'>Export to CSV</button><br>
+    <table class="table table-striped table-sm table-responsive" id="affTable">
+      <thead>
+        <tr>
+          <th>idEpitope</th>
+          <th>Sequence</th>
+          <th>log</th>
+          <th>nM</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
       var data = <?php echo json_encode($dataTable); ?>;
       console.log(data);
-        $('#affTable').DataTable( {
+      $('#affTable').DataTable( {
             data:           data,
             deferRender:    true,
             scrollY:        500,
             scrollCollapse: true,
-            scroller:       true
+            scroller:       true,
+            columns: [
+              { data: "idEpitope" , render : function ( data, type, row, meta ) {
+                    return type === 'display'  ?
+                    '<a href="epitope.php?idEpitope=' + data + '" target="_blank">' + data + '</a>' :
+                    data;
+                  }},
+              { data: "seqEpitope" },
+              { data: "logAff" },
+              { data: "nMAff" },
+              { data: "link" , render : function ( data, type, row, meta ) {
+                    return type === 'display'  ?
+                    '<a class="btn btn-info btn-sm" href="' + data + '" target="_blank">' + 'Add' + '</a>' :
+                    data;
+                  }},
+          ],
         } );
         document.getElementById("tabletocsv").onclick = function () {
         location.href = "tabletocsv.php";
@@ -148,10 +162,7 @@ get_url();
           }
         }
         });
-   
-      
-
-    </script>
+</script>
 <?php 
 print footerDBW();
 ?>

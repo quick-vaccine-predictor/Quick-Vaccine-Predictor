@@ -109,7 +109,11 @@
             scrollCollapse: true,
             scroller:       true,
             columns: [
-              { data: "idEpitope" },
+              { data: "idEpitope" , render : function ( data, type, row, meta ) {
+                    return type === 'display'  ?
+                    '<a href="epitope.php?idEpitope=' + data + '" target="_blank">' + data + '</a>' :
+                    data;
+                  }},
               { data: "seqEpitope" },
               { data: "nameHLA" },
               { data: "logAff" },

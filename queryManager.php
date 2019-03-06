@@ -50,77 +50,14 @@ $_SESSION["array"] = $array;
 $conn->close();
 print headerDBW("Name Search");
 print navbar('Epitope');
-//sequenceName
+$json_data = array();
 ?>
 
 <div class="container">
-	<div class="row">
-		<a class="btn btn-primary btn-lg" href="queries.php#proteosome" role="button">Go back</a>
-        <h2>Name Results</h2>
-		<?php if (!isset($_GET["nameOrganism"]) or !isset($_GET["nameProtein"]) or !isset($_GET["nameAntigen"])){ ?>
-			<!-- Trigger the modal with a button -->
-			<button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add into myVaccine</button>
-			<!-- Modal -->
-			<div class="modal fade" id="myModal" role="dialog">
-				<div class="modal-dialog">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">
-								idEpitope: <?php echo $_SESSION["array"][0]["idEpitope"];?> 
-								seqEpitope: <?php echo $_SESSION["array"][0]["seqEpitope"];?> 
-							</h4>
-						</div>
-						<div class="modal-body">
-							<p>
-								<form action="addlinker.php" method="POST">
-									nameVaccine: <input type="text" name="nVaccine" /><br><br>
-									<input id='<?php echo $_SESSION["array"][0]["idEpitope"]?>' type='submit' name='addbutton' value="myVaccine">
-									<input type="hidden" name="idEpitope" value="<?php echo $_SESSION["array"][0]["idEpitope"]?>">
-								</form>
-								<form action="addlinker.php" method="GET">
-									<div class="form-group">
-										<label>Insert <?php echo $_SESSION["array"][0]["seqEpitope"];?> into an existing vaccine:</label> <br>
-										<select name="vaccine" size="8">
-											<?php
-												$conn = connectSQL();
-												$idUser = $_SESSION["idUser"];
-												$sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
-												$vaccineTable = $conn->query($sql);
-												$conn->close();
-												$allnameVaccine = array();
-												foreach ($vaccineTable as $vaccinerow) {
-													if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
-														array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
-														$nameVaccine = $vaccinerow["nameVaccine"];
-												?>
-											<option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>																		
-												<?php }               
-															} 
-												?>  
-												<br>
-											<input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
-											<input type="hidden" name="idEpitope" value="<?php echo $_SESSION["array"][0]["idEpitope"]?>">
-										</select>
-										<br>
-									</div>
-								</form>
-							</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-					</div>
-					</div>
-				</div>
-			<?php } ?>
-			</div>
-		<br>
-        <button id='tabletocsv'> Export to CSV</button><br>
-
-        <table class="table table-striped table-sm table-responsive" id="nameTable">
-          <thead>
+	<h2>Results</h2>
+    <button id='tabletocsv'> Export to CSV</button><br>
+    <table class="table table-striped table-sm table-responsive" id="<?php if (isset($_GET["nameOrganism"])){echo 'nameTable';} else {echo 'affTable';}?>">
+    	<thead>
             <tr>
             <?php 
             if (isset($_GET["nameOrganism"])){ 
@@ -133,59 +70,54 @@ print navbar('Epitope');
             	echo "<th>Antigen Name</th><th>Antigen Id</th>";
             }
             else {
-            	echo "<th>Epitope Id</th><th>Sequence</th><th>HLA</th><th>log</th><th>nM</th><th>Binder</th>";
+            	echo "	<th>Epitope Id</th>
+            			<th>Sequence</th>
+            			<th>HLA</th>
+            			<th>log</th>
+            			<th>nM</th>
+            			<th>Link</th>";
             }
             ?>
             </tr>
-          </thead>
-      		<tbody>
-				  <?php
-				   foreach ($nameTable as $row){ ?>
-		      		<tr>
-		      			<?php if (isset($_GET["nameOrganism"])){ ?>
-		      			<th scope='row' class='text-center'><?php echo $row["nameOrganism"]?>	
-		      			</th>
-		      			<td class='text-center'><?php $id = $row["idOrganism"];
-		      				echo "<a href='organism.php?idOrganism=$id' target='_blank'>{$id}</a>";
-		      			} 
-		      			elseif (isset($_GET["nameProtein"])){ ?>
-		      			<th scope='row' class='text-center'><?php echo $row["nameProtein"]?>	
-		      			</th>
-		      			<td class='text-center'><?php $id = $row["idProtein"];
-		      				echo "<a href='protein.php?idProtein=$id' target='_blank'>{$id}</a>";
-		      			}
-		      			elseif (isset($_GET["nameAntigen"])){ ?>
-		      			<th scope='row' class='text-center'><?php echo $row["nameAntigen"]?>	
-		      			</th>
-		      			<td class='text-center'><?php $id = $row["idAntigen"];
-		      				echo "<a href='antigen.php?idAntigen=$id' target='_blank'>{$id}</a>";
-		      			}
-		      			else { ?>
-		      			<th scope='row' class='text-center'><?php echo $row["idEpitope"]?></th>
-		      			<td class='text-center'><?php echo $row["seqEpitope"]?></td>
-		      			<td class='text-center'><?php echo $row["nameHLA"]?></td>
-		      			<td class='text-center'><?php echo $row["logAff"]?></td>
-		      			<td class='text-center'><?php echo $row["nMAff"]?></td>
-		      			<td class='text-center'><?php 
-		      			$th_nM_SB = floatval($_GET["sbaff"]);
-		      			$th_nM_WB = floatval($_GET["wbaff"]);
-		      			$th_log_SB = floatval($_GET["sblog"]);
-		      			$th_log_WB = floatval($_GET["wblog"]);
-		      			if ($row["nMAff"] <= $th_nM_SB and $row["logAff"] >= $th_log_SB){
-		      				echo "Strong Binder";
-		      			}
-		      			elseif ($row["nMAff"] <= $th_nM_WB and $row["logAff"] >= $th_log_WB) {
-		      				echo "Weak Binder";
-		      			}
-		      			?>
-						</td>
-		      			<?php }  
-		      			?>
-		      		</tr>
-		      		<?php  } ?>
-      		</tbody>
-  		</table>
-	</div>
+        </thead>
+			<?php foreach ($nameTable as $row){ ?>
+		      	<?php if (isset($_GET["nameOrganism"])){ ?>
+		      	<tr>
+			      	<th scope='row' class='text-center'><?php echo $row["nameOrganism"]?> </th>
+			      	<td class='text-center'>
+			      		<?php $id = $row["idOrganism"];
+			      			echo "<a href='organism.php?idOrganism=$id' target='_blank'>{$id}</a>";
+			      		?>
+			      	</td>
+		      	</tr>
+		      	<?php } elseif (isset($_GET["nameProtein"])){ ?>
+		      	<tr>
+			      	<th scope='row' class='text-center'><?php echo $row["nameProtein"]?> </th>
+			      	<td class='text-center'>
+			      		<?php $id = $row["idProtein"];
+			      			echo "<a href='protein.php?idProtein=$id' target='_blank'>{$id}</a>"; 
+			      		?>
+			      	</td>
+		      	</tr>
+		      	<?php } elseif (isset($_GET["nameAntigen"])){ ?>
+		      	<tr>
+			      	<th scope='row' class='text-center'><?php echo $row["nameAntigen"]?> </th>
+			      	<td class='text-center'>
+			      		<?php $id = $row["idAntigen"];
+			      			echo "<a href='antigen.php?idAntigen=$id' target='_blank'>{$id}</a>";
+			      		?>
+			      	</td>
+		      	</tr>
+		      	<?php } else {
+		      		$json_data[] = ["idEpitope" => $row["idEpitope"],
+				                    "seqEpitope" => $row["seqEpitope"],
+				                    "nameHLA" => $row["nameHLA"],
+				                    "logAff" => $row["logAff"],
+				                    "nMAff" => $row["nMAff"], 
+				                    "link" => "addindex.php?idEpitope=".$row["idEpitope"]];
+				        } 
+				} ?>
+  	</table>
 </div>
 
 <script type="text/javascript">
@@ -193,7 +125,32 @@ print navbar('Epitope');
         $('#nameTable').DataTable();
         document.getElementById("tabletocsv").onclick = function () {
         location.href = "tabletocsv.php";
-    };
+    	};
+    	var data = <?php echo json_encode($json_data); ?>;
+    	console.log(data);
+    	$('#affTable').DataTable( {
+            data:           data,
+            deferRender:    true,
+            scrollY:        500,
+            scrollCollapse: true,
+            scroller:       true,
+            columns: [
+              { data: "idEpitope" , render : function ( data, type, row, meta ) {
+                    return type === 'display'  ?
+                    '<a href="epitope.php?idEpitope=' + data + '" target="_blank">' + data + '</a>' :
+                    data;
+                  }},
+              { data: "seqEpitope" },
+              { data: "nameHLA" },
+              { data: "logAff" },
+              { data: "nMAff" },
+              { data: "link" , render : function ( data, type, row, meta ) {
+                    return type === 'display'  ?
+                    '<a class="btn btn-info btn-sm" href="' + data + '" target="_blank">' + 'Add' + '</a>' :
+                    data;
+                  }},
+          ],
+        } );
       });
 </script>
 

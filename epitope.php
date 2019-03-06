@@ -1,45 +1,27 @@
 <?php
-session_start();
+include("globals.inc.php");
 $idEpitope = $_GET["idEpitope"];
 if (isset($idEpitope)){
-include("globals.inc.php");
-
 print headerDBW($idEpitope);
 $conn = connectSQL();
-
-
-
-// Create connection
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 $sql = "SELECT idEpitope, HLA.idHLA, logAff, nMAff, nameHLA from Affinity JOIN HLA ON Affinity.idHLA = HLA.idHLA where idEpitope = $idEpitope";
 $affTable = $conn->query($sql);
 $array = array();
-foreach ($affTable as $row){
-  $array[] = $row;
-}
-$_SESSION["array"] = $array;
-#print_r(mysqli_fetch_all($affTable));
-$affdata = mysqli_fetch_all($conn->query($sql));
-$sql = "SELECT idEpitope, seqEpitope, scoreImmunogenecity, Antigen.idAntigen, nameAntigen, start,end, Antigen.idProtein, nameProtein, Antigen.idOrganism, nameOrganism from Epitope JOIN Antigen ON Epitope.idAntigen = Antigen.idAntigen JOIN Protein ON Antigen.idProtein = Protein.idProtein JOIN Organism ON Antigen.idOrganism = Organism.idOrganism  WHERE idEPitope = $idEpitope";
-$epTable = mysqli_fetch_array($conn->query($sql));
-#print_r($epTable);
-
-$conn->close();
 $nm_data = [];
 $log_data = [];
-foreach ($affdata as $r){
-  array_push($nm_data, $r[3]);
-  array_push($log_data, $r[2]);
+foreach ($affTable as $row){
+  $array[] = $row;
+  $nm_data[] = $row["nMAff"];
+  $log_data[] = $row["logAff"];
 }
+$_SESSION["array"] = $array;
+$affdata = $array;
+$sql = "SELECT idEpitope, seqEpitope, scoreImmunogenecity, Antigen.idAntigen, nameAntigen, start,end, Antigen.idProtein, nameProtein, Antigen.idOrganism, nameOrganism from Epitope JOIN Antigen ON Epitope.idAntigen = Antigen.idAntigen JOIN Protein ON Antigen.idProtein = Protein.idProtein JOIN Organism ON Antigen.idOrganism = Organism.idOrganism  WHERE idEPitope = $idEpitope";
+$epTable = mysqli_fetch_array($conn->query($sql));
+$conn->close();
 print navbar('Epitope');
-
 if (mysqli_num_rows($affTable) == 0) {
   header('Location: error.php');
-}
-else {
 }
 }
 else{
@@ -47,158 +29,103 @@ else{
 }
 get_url();
 ?>
-    <div class="container">
-
-      <!-- Main component for a primary marketing message or call to action -->
-    <div class="row">
-      <div class="col-md-5">
-        <table class="table table-striped table-sm table-responsive">
-              <thead>
-                <tr>
-                  <th scope="col"><h2>Epitope</h2>
-                  <!-- Trigger the modal with a button -->
-                  <button type="button" class="btn" data-toggle="modal" data-target="#myModal">Add into myVaccine</button>
-                  <!-- Modal -->
-                  <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-                      <!-- Modal content-->
-                      <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">
-                              idEpitope: <?php echo $epTable['idEpitope'];?> 
-                              seqEpitope: <?php echo $epTable['seqEpitope'];?> 
-                            </h4>
-                          </div>
-                          <div class="modal-body">
-                            <p>
-                              <form action="addlinker.php" method="POST">
-                                nameVaccine: <input type="text" name="nVaccine" /><br><br>
-                                <input id='<?php echo $epTable['idEpitope']?>' type='submit' name='addbutton' value="myVaccine">
-														    <input type="hidden" name="idEpitope" value="<?php echo $epTable['idEpitope']?>">
-                              </form>
-                              <form action="addlinker.php" method="GET">
-                                <div class="form-group">
-                                  <label>Insert <?php echo $epTable['seqEpitope'];?> into an existing vaccine:</label> <br>
-                                  <select name="vaccine" size="8">
-                                    <?php
-                                      $conn = connectSQL();
-                                      $idUser = $_SESSION["idUser"];
-                                      $sql = "SELECT idVaccine, nameVaccine from Vaccine WHERE idUser = '$idUser'";
-                                      $vaccineTable = $conn->query($sql);
-                                      $conn->close();
-                                      $allnameVaccine = array();
-                                      foreach ($vaccineTable as $vaccinerow) {
-                                        if (!in_array($vaccinerow["nameVaccine"], $allnameVaccine)) {
-                                          array_push($allnameVaccine,$vaccinerow["nameVaccine"] );
-                                          $nameVaccine = $vaccinerow["nameVaccine"];
-                                      ?>
-                                    <option selected name="<?php print $nameVaccine ?>"  value="<?php print $nameVaccine ?>"><?php print $nameVaccine. "\n"?></option>                                    
-                                      <?php }               
-                                            } 
-                                      ?>  
-                                    <input id='<?php echo $nameVaccine?>' type='submit' name='namevac' value="myVaccine">
-                                    <input type="hidden" name="idEpitope" value="<?php echo $epTable['idEpitope']?>">
-                                  </select>
-                                <br>
-                              </form>
-                            </p>
-                            </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div> 
-                  </td>
-                </tr>  
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row" class="text-right">Id</th>
-                  <td class="text-left">
-                  <?php $idEptiope = $epTable['idEpitope'];
-                        echo "<a href='http://www.iedb.org/epitope/$idEpitope' target='_blank'>$idEpitope</a>"
-                  ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Sequence</th>
-                  <td class="text-left" id="sequence"><?php echo $epTable['seqEpitope'] ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Length</th>
-                  <td class="text-left"><?php echo $epTable['end'] - $epTable['start'] ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Immunogenicity score:</th>
-                  <td class="text-left"><?php echo $epTable['scoreImmunogenecity'] ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Antigen Id</th>
-                  <td class='text-left'><?php $idAntigen = $epTable['idAntigen'];
-                    echo "<a href='antigen.php?idAntigen=$idAntigen' target='_blank'>$idAntigen</a>"?></td>
-                </tr>
-                
-                <tr>
-                  <th scope="row" class="text-right">Antigen name</th>
-                  <?php $nameAntigen = $epTable['nameAntigen'];
-                  echo "<td class='text-left'>$nameAntigen</td>"
-                  ?>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Protein Id</th>
-                    <td class='text-left'><?php $idProtein = $epTable['idProtein'];
-                    echo "<a href='protein.php?idProtein=$idProtein' target='_blank'>$idProtein</a>"?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Protein name</th>
-                    <td class='text-left'><?php echo $epTable['nameProtein']?></td>
-                </tr>
-                <tr>
-                <tr>
-                  <th scope="row" class="text-right">Organism</th>
-                  <td class="text-left">
-                    <?php $idOrganism = $epTable['idOrganism'];
-                          $nameOrganism = $epTable['nameOrganism'];
-                        echo "<a href='organism.php?idOrganism=$idOrganism' target='_blank'>$nameOrganism</a>"
-                  ?>
-                  </td>
-                </tr>
-                <tr>
-                  <th colspan="2">
-                  <div class="chart-container" style='height: 300px; width: auto; text-align:center'>
-                    <canvas id="Polarity"></canvas>
-                  </div>
-                  </th>
-                </tr>
-              </tbody>
-            </table>
-      </div>
-      <div class="col-md-7 ">
-        <div class="chart-container " style="height: 700px; width: auto; text-align:center">
-          <canvas id="Scatter"></canvas>
-        </div>
-      </div>
-  </div>
-      <div class="row">
-        <h2>Binding Affinities</h2><br>
-        <button id='tabletocsv'> Export to CSV</button><br>
-        <table class="table table-striped table-sm table-responsive" id="affTable">
-          <thead>
-            <tr>
-              <th>idEpitope</th>
-              <th>HLA</th>
-              <th>log</th>
-              <th>nM</th>
-            </tr>
-          </thead>
-      <tbody>
-        <?php foreach ($affTable as $row){ ?>
+<div class="container">
+<!-- Main component for a primary marketing message or call to action -->
+  <h2>Epitope <a class="btn btn-info btn-sm" href="addindex.php?idEpitope=<?php echo $idEpitope ?>">Add</a></h2>
+  <div class="row">
+    <div class="col-md-5">
+      <table class="table table-striped table-sm table-responsive">
+        <tbody>
           <tr>
-            <th scope='row' id="idEpitope"><?php $idEptiope = $epTable['idEpitope'];
-                        echo "<a href='epitope.php?idEpitope=$idEpitope'>$idEpitope</a>"?></th>
+            <th scope="row" class="text-right">Id</th>
+            <td class="text-left">
+              <?php $idEptiope = $epTable['idEpitope'];
+                    echo "<a href='http://www.iedb.org/epitope/$idEpitope' target='_blank'>$idEpitope</a>"
+              ?>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Sequence</th>
+            <td class="text-left" id="sequence"><?php echo $epTable['seqEpitope'] ?></td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Length</th>
+              <td class="text-left"><?php echo $epTable['end'] - $epTable['start'] ?></td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Immunogenicity score:</th>
+            <td class="text-left"><?php echo $epTable['scoreImmunogenecity'] ?></td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Antigen Id</th>
+            <td class='text-left'>
+              <?php $idAntigen = $epTable['idAntigen'];
+                    echo "<a href='antigen.php?idAntigen=$idAntigen' target='_blank'>$idAntigen</a>"?>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Antigen name</th>
+            <td class='text-left'>
+              <?php $nameAntigen = $epTable['nameAntigen'];
+                  echo "$nameAntigen"
+              ?>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Protein Id</th>
+            <td class='text-left'>
+              <?php $idProtein = $epTable['idProtein'];
+                    echo "<a href='protein.php?idProtein=$idProtein' target='_blank'>$idProtein</a>"?>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Protein name</th>
+            <td class='text-left'><?php echo $epTable['nameProtein']?></td>
+          </tr>
+          <tr>
+            <th scope="row" class="text-right">Organism</th>
+            <td class="text-left">
+              <?php $idOrganism = $epTable['idOrganism'];
+                    $nameOrganism = $epTable['nameOrganism'];
+                    echo "<a href='organism.php?idOrganism=$idOrganism' target='_blank'>$nameOrganism</a>"
+              ?>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="2">
+              <div class="chart-container" style='height: 300px; width: auto; text-align:center'>
+                <canvas id="Polarity"></canvas>
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-7 ">
+      <div class="chart-container " style="height: 700px; width: auto; text-align:center">
+        <canvas id="Scatter"></canvas>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <h2>Binding Affinities</h2><br>
+      <button id='tabletocsv'> Export to CSV</button><br>
+      <table class="table table-striped table-sm table-responsive" id="affTable">
+        <thead>
+          <tr>
+            <th>idEpitope</th>
+            <th>HLA</th>
+            <th>log</th>
+            <th>nM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($affTable as $row){ ?>
+          <tr>
+            <th scope='row' id="idEpitope">
+              <?php $idEptiope = $epTable['idEpitope'];
+                    echo "<a href='epitope.php?idEpitope=$idEpitope'>$idEpitope</a>"?>
+             </th>
             <td class='text-center' id="hla"><a href=<?php $idHLA=$row['idHLA']; echo "'hla.php?idHLA=$idHLA' target='_blank'" ?>><?php echo $row['nameHLA'] ?></a></td>
             <td class='text-center' id="log"><?php echo $row['logAff'] ?></td>
             <td class='text-center' id="nM"><?php echo $row['nMAff'] ?></td>
