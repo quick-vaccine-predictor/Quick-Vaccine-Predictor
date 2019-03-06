@@ -94,8 +94,7 @@
                             "nameHLA" => $row["nameHLA"],
                             "logAff" => $row["logAff"],
                             "nMAff" => $row["nMAff"], 
-                            "link" => "addindex.php?idEpitope=".$row["idEpitope"]."&"."idHLA=".$row["idHLA"]
-                          ];
+                            "link" => "addindex.php?idEpitope=".$row["idEpitope"]];
              } ?>
       </table>
     </div>
