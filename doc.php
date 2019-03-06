@@ -91,19 +91,22 @@ print navbar('About');
 		<h4><b>Queries</b></h4>
             <p>
             From here, users can perform three different queries: <br>
-            - <u>Epitope Search</u>: Epitope or/and HLA affinity results with thresholds.<br>
-            - <u>ID Search</u>: Id or name search of Epitopes, HLA alleles, Organisms, Proteins and Antigens.<br>
-            - <u>Proteosome</u>: Proteosome simulator that detects if a given protein contains any known epitope. If a DNA/RNA sequence is given, different ORF are calculated.
-            </p>
-			<h5><b>Epitope Search</b></h5>
+            1.<b>Epitope Search</b>: Epitope or/and HLA affinity results with thresholds.<br>
+            2.<b>ID Search</b>: Id or name search of Epitopes, HLA alleles, Organisms, Proteins and Antigens.<br>
+            3.<b>Proteosome</b>: Proteosome simulator that detects if a given protein contains any known epitope. If a DNA/RNA sequence is given, different ORF are calculated.
+            </p> <br>
+			<h5><b>Epitope Search</b></h5> 
+
+            <br>
 			<h5><b>ID Search</b></h5>
                 <p>
-                You can do 8 different searches either by the name or ID from Epitope, HLA, Organism, Protein, and Antigen.
-                All the ID stored in our databes are from NCBI, so you can easily put a NCBI ID and perform the search .
+                Eight different searches can be done either by the name or ID from Epitope, HLA, Organism, Protein, and Antigen.
+                All the ID stored in our databes are from NCBI, so you can easily put a NCBI ID and perform the search.
                 </p>
                 <p>When search is done by <b>Epitope ID</b>, QVVP will redirect you into its Epitope page. Here is an example of the Epitope page when the Epitope ID is 24:
                 <img class="img-responsive" src="png/epitope1.png" width="700" height="500" alt="output-example">
                 <img class="img-responsive" src="png/epitope2.png" width="700" height="500" alt="output-example">
+                
                 On the upper rigth there is a graphic shouing the distribution of all epitopes with that ID from the QVVP database. On the x-axis it shows the logaritmic affinity and on the y-axis its shows the binding affinity (IC50) of each epitope.<br>
                 On the upper left of the page it shows information regarding the name ID of that epitope, it's sequence, length of the sequence, immunogenicity score, antigen id and name, protein id and name and organism name. 
                 All the ID's acts as a link to other pages. The id goes to its IEDB epitope summary page. The antigen ID goes to the Antigen page of QVVP. The protein ID goes to the Protein page of QVVP. And the organism goes to the Organism page of QVVP. <br>
@@ -127,21 +130,49 @@ print navbar('About');
                 <img class="img-responsive" src="png/organism.png" width="700" height="500" alt="output-example">
                 On the upper left of the page it shows information regarding the ID of that Organism and it's name. The organism ID act's as a link to the NCBI Taxonomy Browser<br>
                 The second half of the page shows an Antigens table. It shows information about the Antigen ID, Antigen name, and Protein ID. Each ID acts as a link to the corresponding QVVP page.Finally there is a button to export the Antigen table into CSV format.<br>
-
+                If the search is done by its <b>Organism name</b>. QVVP will redirect you into an intermediate page where a result list of all organisms with that name, and the corresponding organism ID. the ID acts as a link into the organism page previously explained (<b>Figure XXXX</b>). Here is an example of the Organism name by vaccinia virus:
+                <img class="img-responsive" src="png/organism2.png" width="700" height="500" alt="output-example">
+                </p>
+                <p>
+                When search is done by <b>Protein</b> you can specify either its ID or name.
+                If the search is done by its <b>Protein ID</b>. QVVP will redirect you into its Protein page. Here is an example of the Protein page 22164631 ID:
+                <img class="img-responsive" src="png/protein1.png" width="700" height="500" alt="output-example">
+                On the upper left of the page it shows information regarding the ID of that Protein and it's name. The organism ID act's as a link to the NCBI Protein Browser. There is also the option of finding an homolog either in Swissprot or Protein Data Bank (PDB) and finding more epitopes using the Proteosome tool choosing it's epitope length (9, 10 or both)<br>
+                The second half of the page shows an Antigens table. It shows information about the Antigen ID, Antigen name, and Organism ID. Each ID acts as a link to the corresponding QVVP page.Finally there is a button to export the Antigen table into CSV format.<br>
+                This is an example if a Swissprot homolog search is done.
+                <img class="img-responsive" src="png/blast1.png" width="700" height="500" alt="output-example">
+                <img class="img-responsive" src="png/blast2.png" width="700" height="500" alt="output-example">
+                There are three main parts in this page. It follows the results of a blastp query. The first is one is a general view of the alignment scores with the query and the matches founded by Blast. The scoring can be seen depending of the Maximum score or by the E-values. Each bar respresents a match and if you move the mouse over it will show defline and scores, and if you click it will show the alignments. You can download it as PNG or JPEG image.<br>
+                The second part is a table with a ranked list of matches starting from the closest to the farthest. For each match it gives a brief description of the virues, the maximum score, the total score, the query coverage, the E-value, and finally the % of identity. All these table can be downloaded as CSV, PNG Or JPEG. If you click in any of the matches it will redirect you to the third part.<br>
+                The third part it shows an alignment with the query sequence and the matched one. Also it gives a brief description of the matched virus, the alignment score, the E-value, the % of identity, the % of positives and % of gaps. The amino acid color code is the standard. You can downlad this alignment as PNG or JPEG image. 
+                If a PDB homolog search is done it will give the same result format but it will use the data from the PDB database instead of the Swissprot one.<br>
+                If what you want to do is to find more epitopes for this specific protein you can make a direct query only chosing the epitope length (9, 10, or both). Here is an example is a 9 and 10 length epitope search is submitted:
+                <img class="img-responsive" src="png/moreepitopes.png" width="700" height="500" alt="output-example">
+                As in the protein page you can also male an homology search, either by Swissprot or PDB, and it will give the same result format as <b>Figure XXXX</b>. It also give you a table with a list of all epitopes founded in that sequence. It describes it's epitope ID, epitope sequence, HLA, logarithmic and nM affinities and an option to add this epitope into My Vaccine User page. The epitope ID acts as a link to its QVVP epitope page. Finally you can download the sequence into FASTA format.
+                If the search is done by its <b>Protein name</b>. QVVP will redirect you into an intermediate page where a result list of all proteins with that name, and the corresponding protein ID. The ID acts as a link into the protein page previously explained (<b>Figure XXXX</b>). Here is an example of the Protein name polyprotein:
+                <img class="img-responsive" src="png/protein2.png" width="700" height="500" alt="output-example">
+                </p>
+                <p>
+                When search is done by <b>Antigen</b> you can specify either its ID or name.
+                If the search is done by its <b>Antigen ID</b>. QVVP will redirect you into its Antigen page. Here is an example of the Antigen page 2124409A ID:
+                <img class="img-responsive" src="png/antigen1.png" width="700" height="500" alt="output-example">
+                <img class="img-responsive" src="png/antigen2.png" width="700" height="500" alt="output-example">
+                On the upper left of the page it shows information regarding the ID of that Antigen, it's name, the organism name, the protein name (in this case is unknow and if we ckick it will ). And as the Protein page it can search for an homolog into the Swissprot or PDB database and find more epitopes for these antigen with length 9, 10, or both. The Antigen ID act's as a link to the NCBI Protein Browser, the organism name acts as a link to the QVVP organism page and the protein name to the QVVP protein page. There is also the option of finding an homolog either in Swissprot or Protein Data Bank (PDB) and finding more epitopes using the Proteosome tool choosing it's epitope length (9, 10 or both).<br>
+                The second half of the page shows an Antigens table. It shows information about the Epitope ID, Epitope sequence, immunogenecity score and the start and end positions of that antigen. The Epitope ID acts as a link to the corresponding QVVP page.<br>
+                If the search is done by its <b>Antigen name</b>. QVVP will redirect you into an intermediate page where a result list of all antigens with that name, and the corresponding antigen ID. The ID acts as a link into the antigen page previously explained (<b>Figure XXXX</b>). Here is an example of the Antigen name neuraminidase:
+                <img class="img-responsive" src="png/protein3.png" width="700" height="500" alt="output-example">
 
 			<h5><b>Proteosome</b></h5>
-		<h4>Introduction</h4>
-		<h4>Introduction</h4>
-		<h4><b>History</b></h4>
-            <p>
-            The history feature requires your web browser to be set to accept cookies. The history will be lost after 30 days of beeing stored in your browser. The maximum number of searches available in History is 25. Once the maximum number is reached, QVVP will remove the oldest search from history and add the most current search. You don't need to be logged to see your history of searches.
-            </p>
-            <p>
-            The history is created for each browser. If in the same browser you login with different users
-            the history will be merged together. This will not happen if the logins are done in different browsers.
-            If a new search is the same as a previous search, QVVP will create a new record in the search database with different date time. Here is an image of a history example:
-            </p>
-            <img class="img-responsive" src="png/history.png" width="700" height="500" alt="output-example">
+		    <h4><b>History</b></h4>
+                <p>
+                The history feature requires your web browser to be set to accept cookies. The history will be lost after 30 days of    beeing stored in your browser. The maximum number of searches available in History is 25. Once the maximum number is   reached, QVVP will remove the oldest search from history and add the most current search. You don't need to be logged     to see your history of searches.
+                </p>
+                <p>
+                The history is created for each browser. If in the same browser you login with different users
+                the history will be merged together. This will not happen if the logins are done in different browsers.
+                If a new search is the same as a previous search, QVVP will create a new record in the search database with different   date time. Here is an image of a history example:
+                </p>
+                <img class="img-responsive" src="png/history.png" width="700" height="500" alt="output-example">
 
 
 
