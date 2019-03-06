@@ -37,38 +37,54 @@ get_url();
     <div class="row">
       <div class="col-md-5">
         <table class="table table-striped table-sm table-responsive">
-              <thead>
-                <tr>
-                  <th scope="col"><h2>Protein</h2></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row" class="text-right">Id</th>
-                  <td class="text-left" colspan="2">
-                  <?php $idEptiope = $idProtein;
-                        echo "<a href='https://www.ncbi.nlm.nih.gov/protein/$idProtein' target='_blank'>$idProtein</a>"
-                  ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Name</th>
-                  <td class="text-left" id="sequence" colspan="2"><?php echo $nameProtein ?></td>
-                </tr>
-                <tr>
-                  <th scope="row" class="text-right">Find homolog</th>
-                  <form action="blast.php" method="POST">
-                  <td class="text-left">
-                      <input checked type="radio" name="db" value="sprot">Swissprot<br>
-                      <input type="hidden" value='<?php echo $idProtein?>' name='id'>
-                      <input type="radio" name="db" value="pdb">PDB<br>
-                  <td>
-                    <input type="submit" value="Submit">
-                  </td>
-                    </form>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <thead>
+            <tr>
+              <th scope="col"><h2>Protein</h2></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="text-right">Id</th>
+              <td class="text-left" colspan="2">
+              <?php $idEptiope = $idProtein;
+                echo "<a href='https://www.ncbi.nlm.nih.gov/protein/$idProtein' target='_blank'>$idProtein</a>"
+              ?></td>
+            </tr>
+            <tr>
+              <th scope="row" class="text-right">Name</th>
+              <td class="text-left" id="sequence" colspan="2"><?php echo $nameProtein ?></td>
+            </tr>
+          </tbody>
+        </table>
+        <form action="blast.php" method="POST">
+          <table class="table table-striped table-sm table-responsive">
+            <tr>
+              <th scope="row" class="text-right">Find homolog</th>
+              <td class="text-left">
+                <input checked type="radio" name="db" value="sprot">Swissprot<br>
+                <input type="hidden" value='<?php echo $idProtein?>' name='id'>
+                <input type="radio" name="db" value="pdb">PDB
+              </td>
+              <td><input type="submit" value="Submit"></td>
+            </tr>
+          </table>
+        </form>
+        <form action="proteosomeManager.php" method="POST" id="protQuery">
+          <table class="table table-striped table-sm table-responsive">
+            <tr>
+              <th class="text-left">Find more epitopes<br> (Proteosome)</th>
+              <td class="text-left">
+                <label>Select length</label><br>
+                <input checked type="radio" name="length" value="0">9<br>
+                <input checked type="radio" name="length" value="1">10<br>
+                <input checked type="radio" name="length" value="2">Both<br>
+                <input type="hidden" value='<?php echo $idProtein?>' name='ncbiId'>
+                <input type="hidden" value='0' name='in_dna'>
+              </td>
+              <td><input type="submit" value="Submit"></td>
+            </tr>
+          </table>
+        </form> 
       </div>
   </div>
       <div class="row">
@@ -103,7 +119,14 @@ get_url();
         $('#affTable').DataTable();
         document.getElementById("tabletocsv").onclick = function () {
         location.href = "tabletocsv.php";
-    };
+        };
+        var protId = '<?php echo $idProtein ?>';
+        console.log(protId);
+        if (protId == 'unknwon') {
+          $('#protQuery').hide();
+        } else {
+          $('#protQuery').show();
+        }
       });
       
 

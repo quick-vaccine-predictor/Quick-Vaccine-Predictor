@@ -5,17 +5,14 @@ $epitopeLen = $_POST["length"];
 $table = $_POST["geneticTable"];
 $orfminLength = $_POST["orfminLength"];
 $in_dna = $_POST["in_dna"];
-//print_r($_REQUEST);
 print headerDBW("Proteosome");
 print navbar('Proteosome');
-//Reads input
 $ncbiId = $_POST["ncbiId"];
 if (strlen($ncbiId) != 0){
 	$tempFile = "tmp/" . uniqId('proteosome');
 	$command = 'curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=sequences&id='.$ncbiId.'&rettype=fasta&retmode=text" > '.$tempFile;
 	exec($command);
 }
-
 if (intval($in_dna) == 1) {
 if ($_FILES['uploadFile']['size'] != 0){
 	$proteosomeText = file_get_contents($_FILES['uploadFile']['tmp_name']);
@@ -78,27 +75,25 @@ else {
 $_SESSION["proteosome"] = array("+0" => array("0:".strval(strlen($proteosomeText)) => $proteosomeText));
 header("Location: proteosome.php?frame=".urlencode("+0")."&epitopeLen=".urlencode($epitopeLen));
 }
-
 ?>
 <div>
 	<h2>ORF search results:</h2>
 	<? foreach ($output as $frame => $cords_arr) { ?>
+	<h2>Frame <?php echo $frame ?> <a href="proteosome.php?frame=<?php echo urlencode($frame)."&epitopeLen=".urlencode($epitopeLen) ?>" target="_blank" class="btn btn-info btn-sm">Run Query</a></h2>
 	<table class="table table-striped table-sm table-responsive text-center display">
 		<thead>
 			<tr>
-				<th class="text-center">Frame</th>
 				<th class="text-center">Length</th>
 				<th class="text-center">Range</th>
-				<th class="text-center"><a href="proteosome.php?frame=<?php echo urlencode($frame)."&epitopeLen=".urlencode($epitopeLen) ?>" target="_blank">Run Query</a></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 				<? foreach ($cords_arr as $coords => $seq) { ?>
 				<tr>
-				<td><?php echo $frame ?></td>
-				<td><?php echo strlen($seq) ?></td>
-				<td><?php echo $coords ?></td>
-				<td></td>
+					<td><?php echo strlen($seq) ?></td>
+					<td><?php echo $coords ?></td>
+					<td><a href="getFasta.php?coords=<?php echo $coords."&"."frame=".urlencode($frame) ?>" target="_blank" class="btn btn-info btn-sm">Download FASTA</a></td>
 				</tr>
 				<?php } ?>
 			

@@ -71,11 +71,23 @@ get_url();
                       <input checked type="radio" name="db" value="sprot">Swissprot<br>
                       <input type="hidden" value='<?php echo $idAntigen?>' name='id'>
                       <input type="radio" name="db" value="pdb">PDB<br>
-                  <td>
-                    <input type="submit" value="Submit">
                   </td>
-                    </form>
+                  <td><input type="submit" value="Submit"></td>
+                  </form>
+                </tr>
+                <tr>
+                  <th class="text-left">Find more epitopes<br> (Proteosome)</th>
+                  <form action="proteosomeManager.php" method="POST">
+                  <td class="text-left">
+                      <label>Select length</label><br>
+                      <input checked type="radio" name="length" value="0">9<br>
+                      <input checked type="radio" name="length" value="1">10<br>
+                      <input checked type="radio" name="length" value="2">Both<br>
+                      <input type="hidden" value='<?php echo $idAntigen?>' name='ncbiId'>
+                      <input type="hidden" value='0' name='in_dna'>
                   </td>
+                  <td><input type="submit" value="Submit"></td></td>
+                  </form>
                 </tr>
               </tbody>
             </table>

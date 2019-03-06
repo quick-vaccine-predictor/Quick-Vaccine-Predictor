@@ -9,9 +9,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 print navbar('MyVaccine');
 ?>
 <div class="container">
-    <?php echo $_SESSION["status"];
-    $_SESSION["status"] = "";
-     ?>
+    <?php echo $_SESSION["status"]; $_SESSION["status"] = ""; ?>
     <form action="addlinker.php" method="POST">
         <h3>Add epitope <?php echo $_REQUEST["idEpitope"]?>:</h3>
         <label>Add to a new Vaccine: </label><input type="text" name="newVaccine" required>

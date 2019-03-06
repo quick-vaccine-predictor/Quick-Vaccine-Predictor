@@ -54,8 +54,7 @@
         $results = $conn->query($query_string);
       ?>
       <div>
-      <h3><?php echo "Protein ".$coords; $clean_cords = str_replace(":", "_", $coords); ?></h3>
-      <a href="getFasta.php?coords=<?php echo $coords."&"."frame=".urlencode($_REQUEST["frame"]) ?>" target="_blank" class="btn btn-primary">Download FASTA</a><br>
+      <h3><?php echo "Protein ".$coords; $clean_cords = str_replace(":", "_", $coords); ?> <a href="getFasta.php?coords=<?php echo $coords."&"."frame=".urlencode($_REQUEST["frame"]) ?>" target="_blank" class="btn btn-info btn-sm">Download FASTA</a></h3>
       <form action="blast.php<?php echo '?coords='.$coords."&"."frame=".urlencode($_REQUEST["frame"]) ?>" method="POST">
       <table>
         <thead>

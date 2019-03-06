@@ -3,7 +3,7 @@ include("globals.inc.php");
 print headerDBW("Queries");
 print navbar('Queries');
 //$url = get_url();
-//$_COOKIE['history'][] = $url;
+$_SESSION["proteosome"] = array();
 ?>
 
     <div class="container text-center">
