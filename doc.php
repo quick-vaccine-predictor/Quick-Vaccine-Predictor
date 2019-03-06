@@ -1,4 +1,5 @@
 <?php
+
 include("globals.inc.php");
 $title = "About";
 print headerDBW($title);
@@ -31,7 +32,8 @@ print navbar('About');
 			</p>
 
 		<h4>Data</h4>
-			<h5> Data Aquirement: IEDB  </h5>
+			<h5> HLA & Epitope aquirement: IEDB  </h5>
+
 			<p> IEDB is the <a href="https://www.iedb.org/">Immune Epitope Database</a> that freely provide information about anitbody 		and T cell epitopes based in experimental data, as well as immunoassay tools to assist in the prediction 
 				and analysis of epitopes. Within these tools, the T Cell Epitope - MHC binding prediction can
 				foretell IC50 values for peptides binding to specific MHC molecules. 
@@ -39,15 +41,24 @@ print navbar('About');
 				Besides, the predictor can determine, among other options, the ability of an aminoacid subsequence 
 				to bind to a specific MHC class I molecule, using a large collection of the most common HLA alleles, 
 				specifically 27 HLA alleles (<a href="https://help.iedb.org/hc/en-us/articles/114094151851-HLA-allele-frequencies-and-reference-sets-with-maximal-population-coverage">Click
-				here fore more information</a>). 
+				here fore more information</a>). In order to predict these specific interactions, IEDB has different softwares
+				based on Artificial Neural Networks or Stabilized Matrix methods, among others, and a set of libraries that, 
+				based in a very large amount of data produce a very accurate results.  
 
-			<h5> Quines dades hem agafat?  </h5>
-				
+				However, although predictions can be made in a very easy way, the required time to obtain binding affinities between
+				a large collection of epitopes (as can be all curated viral epitopes) and the most common HLA molecules can take a lot
+				of time. Taking into account that premise, in this project we performed a serie of predictions between a lage set
+				of viral epitopes and HLA molecules with the purpose of generate a useful database that can serve to generate vaccines
+				based in these specific interaction data.   
 
-				Taking advantage of these tools, we proceed to download a collection of almost 41.300 viral epitopes and the set
-				of 27 HLA allels, with the aim of persue a set of binding binding predictions between these two molecules. In order to do so, we use the free binding predictor method <a href="http://www.cbs.dtu.dk/services/NetMHCcons/">NetMHCcons</a>. This consensus method for MHC I predictions integrate three softwares to give more accurate predictions:
+			<h5> Prediction: NetMHCcons </h5>
+
+				Taking advantage of the tools offered by IEDB, we proceed to download a collection of almost 41.300 viral epitopes and the set of 27 HLA allels, with the aim of persue a set of binding binding predictions between these two molecules. In order to do so, we use the free binding predictor method <a href="http://www.cbs.dtu.dk/services/NetMHCcons/">NetMHCcons</a>. This consensus method for MHC I predictions integrate three softwares to give more accurate predictions:
 				NetMHC and NetMHCpan, that are artificial neural network methods allele-specific and based in more than 115,000 quantitative binding data; and PickPocket method based on receptor-pocket similarities between MHC molecules. Also, NetMHCcons server can produce predictions for peptides of 8-15 aminoacids in length, for which we made predictions 
-				only for epitopes of 9 or 10 aminoacid length. 
+				only for epitopes of 9 or 10 aminoacid length.
+
+
+				
 
 
 
