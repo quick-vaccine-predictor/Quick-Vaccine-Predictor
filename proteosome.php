@@ -116,15 +116,12 @@
               { data: "nMAff" },
               { data: "link" , render : function ( data, type, row, meta ) {
                     return type === 'display'  ?
-                    '<a class="btn btn-info btn-sm" href="' + data + '">' + 'Add' + '</a>' :
+                    '<a class="btn btn-info btn-sm" href="' + data + '" target="_blank">' + 'Add' + '</a>' :
                     data;
                   }},
           ],
         } );
       });
-
-
-
     </script>
     <?php }?>
 

@@ -1,76 +1,59 @@
 <?php
 //This file is to link addindex.php and my_vaccine.php when a user creates a new Vaccine instance into de database
 include("globals.inc.php");
-
+print headerDBW($title);
+print navbar('MyVaccine');
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
-    exit;
-  }
-
+} elseif (count($_REQUEST) == 0) {
+    header("location: error.php");
+}
+$idVaccine = $_REQUEST["idVaccine"];
+$idEpitope = $_REQUEST["idEpitope"];
+$newVaccine = $_REQUEST["newVaccine"];
+$idUser = $_SESSION["idUser"];
 //Conection to the DB if needed
+echo "<div class=\"container\">";
 $conn = connectSQL();
-
-// Iniziatializing variables
-$nVaccine = "";
-$idUser="";
-$errors = array();
-$idEpitope= "";
-$idHLA = "";
-$seqEpitope="";
-$idVaccine="";
-$almostnVaccine = "";
-
-
-if(isset($_POST["addbutton"]) & !empty($_POST)){
-    //Recieve all input values from the form
-    $idEpitope = $_POST["idEpitope"];
-    $nVaccine = $_POST["nVaccine"];
-    $idUser = $_SESSION["idUser"];
-	//Form validation by adding corresponding errors into $errors array
-    if(empty($nVaccine)) { array_push($errors, "nameVaccine is required"); }
+if (!strlen($newVaccine) == 0) {
+    $sql = "INSERT INTO Vaccine SET nameVaccine = '$newVaccine' , idUser ='$idUser';";
+    $conn->query($sql);
+    $idVaccine = mysqli_insert_id($conn);
+    $sql = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' , idEpitope ='$idEpitope';";
+    $conn->query($sql);
+    $status = '<div class="alert alert-success">
+    <strong>SUCCESS:</strong> Epitope added successfully!
+    <a class="close" data-dismiss="alert">×</a>
+    </div>';
+    $_SESSION["status"] = $status;
+    header("location: addindex.php?idEpitope=$idEpitope");
+} elseif (!strlen($idVaccine) == 0) {
+    $sql = "SELECT idEpitope FROM VaccineContent WHERE (idVaccine = '$idVaccine' AND idEpitope = '$idEpitope');";
+    $var = mysqli_num_rows($conn->query($sql));
+    echo $var;
+    if ($var == 0) {
+        $sql = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' , idEpitope ='$idEpitope';";
+        $conn->query($sql);
+        $status = '<div class="alert alert-success">
+        <strong>SUCCESS:</strong> Epitope added successfully!
+        <a class="close" data-dismiss="alert">×</a>
+        </div>';
+        $_SESSION["status"] = $status;
+        header("location: addindex.php?idEpitope=$idEpitope");
+    } else {
+        echo '<div class="alert alert-danger">';
+        echo "<strong>FAILED:</strong> Epitope already in Vaccine!";
+        echo '<a class="close" data-dismiss="alert">×</a>';
+        echo '</div>';
+        $status = '<div class="alert alert-danger">
+        <strong>FAILED:</strong> Epitope already in Vaccine!
+        <a class="close" data-dismiss="alert">×</a>
+        </div>';
+        $_SESSION["status"] = $status;
+        header("location: addindex.php?idEpitope=$idEpitope");
+    } 
 }
-
-elseif(isset($_GET) & !empty($_GET)){
-    //Recieve all input values from the form
-    $idEpitope = $_GET["idEpitope"];
-    $nVaccine = $_GET["vaccine"];
-    $idUser = $_SESSION["idUser"];
-	//Form validation by adding corresponding errors into $errors array
-    if(empty($nVaccine)) { array_push($errors, "nameVaccine is required"); }
-}
-
-
-// If there is no errors in the form register user:
-	if (count($errors) == 0) {
-        $query = "SELECT * FROM Vaccine WHERE nameVaccine = '$nVaccine' AND idUser = '$idUser' LIMIT 1";
-        $result = mysqli_query ($conn, $query);
-
-        if ($result -> num_rows == 1){
-            foreach ($result as $almostresult) {
-                $idVaccine = $almostresult["idVaccine"];
-                $query2 = "SELECT * FROM VaccineContent WHERE idVaccine = '$idVaccine' , idEpitope = '$idEpitope' LIMIT 1";
-                $result2 = mysqli_query ($conn, $query2);
-                if ($result2 -> num_rows == 0) {  //if idEpitope soesn't exist in that User and nameVaccine
-                    $sql = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' , idEpitope ='$idEpitope'";   
-                    mysqli_query($conn, $sql);
-                } else {array_push($errors, "that Epitope sequence already exist in this nameVaccine");}
-            }
-            header("location: queries.php");
-        } elseif ($result -> num_rows == 0 ){ //it doesn't exists
-            $sql = "INSERT INTO Vaccine SET nameVaccine = '$nVaccine' , idUser ='$idUser'";
-            $result2 = mysqli_query($conn, $sql);
-            $idVaccine = mysqli_insert_id($conn);
-            $sql2 = "INSERT INTO VaccineContent SET idVaccine = '$idVaccine' , idEpitope ='$idEpitope'";   
-            mysqli_query($conn, $sql2);
-            header("location: queries.php");
-        }
-    }
-    else {
-        header("location: queries.php");
-    }
-
-
-// Close connection
+echo "</div>";
 $conn->close();
-?>
+print footerDBW();
