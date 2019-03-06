@@ -153,7 +153,7 @@ print navbar('myVaccine');
               ?>
               <tr>
               <td scope='row' id="Epitopeid" class='text-center' >
-                <a href="<?php echo "epitope.php?idEpitope=".$row2['idEpitope']; ?>" target="_blank"><?php echo $row2['idEpitope'] ;?>
+                <a href="<?php echo "epitope.php?idEpitope=".$idEpitope; ?>" target="_blank"><?php echo $idEpitope ;?>
               </td>
               <td scope='row' id="Epitopeseq" class='text-center' >
                 <?php echo $row2['seqEpitope'] ;?>
@@ -162,11 +162,11 @@ print navbar('myVaccine');
               <td>
               <td>
                 <form method="post" action="removeSequence.php" >
-                  <input type="hidden" name="removeSeq" value="<?php echo $idVaccine."|".$row2['idEpitope']?>">
+                  <input type="hidden" name="removeSeq" value="<?php echo $idVaccine."|".$idEpitope?>">
                   <!-- Trigger the modal with a button -->
-                  <button type="button" class="btn" data-toggle="modal" data-target="#deleteSequence">Remove Epitope</button>
+                  <button type="button" class="btn" data-toggle="modal" data-target="#deleteSequence<?php echo $idVaccine.$idEpitope?>">Remove Epitope</button>
                   <!-- Modal -->
-                  <div class="modal fade" id="deleteSequence" role="dialog">
+                  <div class="modal fade" id="deleteSequence<?php echo $idVaccine.$idEpitope?>" role="dialog">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-body">

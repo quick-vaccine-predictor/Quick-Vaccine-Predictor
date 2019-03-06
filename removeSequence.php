@@ -20,10 +20,10 @@ $idVaccine = "";
 $errors = array();
 $idEpitope = "";
 
+
 // Register User
 if(isset($_POST) & !empty($_POST) ){ 
     //Recieve all input values from the form
-
     list($idVaccine, $idEpitope) = explode("|",$_POST["removeSeq"]);
     $sql = "DELETE FROM VaccineContent WHERE idVaccine = '$idVaccine' AND idEpitope = '$idEpitope' LIMIT 1";
     mysqli_query($conn, $sql);
