@@ -9,7 +9,7 @@ print navbar('About');
 ?>
 
 <div class="container text-left">
-	<h2>Documentation</h2>
+	<h2 class="text-center"><b>Documentation</b></h2>
 		<br>
 	<div class="container text-justify">
 		<h3><b>Index</b></h3>
@@ -44,6 +44,8 @@ print navbar('About');
 			On the following documentation we briefly explain how our website works.
 			</p>
 		</div>
+
+		<hr>
 		
 		<h3 id="C2"><b>2. Data</b></h3>
 		<div class="container text-justify">
@@ -197,6 +199,8 @@ print navbar('About');
 		</div>
 		<br><br>
 
+		<hr>
+
 		<h3 id="C3"><b>3. QVVP In Action</b></h3>	
 		<br>
 		<p>
@@ -292,6 +296,7 @@ print navbar('About');
 
 
 
-</div>
+	</div>
+
 
 <?php print footerDBW();?>
