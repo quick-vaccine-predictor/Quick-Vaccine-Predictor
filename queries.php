@@ -4,6 +4,7 @@ print headerDBW("Queries");
 print navbar('Queries');
 //$url = get_url();
 $_SESSION["proteosome"] = array();
+$_SESSION["status"] = "";
 ?>
 
     <div class="container text-center">

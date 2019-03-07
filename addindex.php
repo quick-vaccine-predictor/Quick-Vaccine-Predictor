@@ -21,7 +21,6 @@ $conn->close();
         <label>Add to a new Vaccine: </label><input type="text" name="newVaccine" required>
         <input hidden value="<?php echo $_REQUEST["idEpitope"] ?>" name="idEpitope">
         <button type='submit' class="btn btn-info btn-sm">Add</button>
-        <button onclick="self.close()" class="btn btn-warning btn-sm">Cancel</button>
     </form>
     <form action="addlinker.php" method="GET" id="existingVacc">
         <div class="form-group">
@@ -40,9 +39,9 @@ $conn->close();
             </select>
             <input hidden value="<?php echo $_REQUEST["idEpitope"] ?>" name="idEpitope">
             <button type='submit' class="btn btn-info btn-sm">Add</button>
-            <button onclick="self.close()" class="btn btn-warning btn-sm">Cancel</button>
         </div>
     </form>
+    <button onclick="self.close()" class="btn btn-warning btn-sm">Cancel</button>
 </div>
 <script type="text/javascript">
     var vaccine_json = '<?php echo json_encode($vaccine_arr) ?>';
