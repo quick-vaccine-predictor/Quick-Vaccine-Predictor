@@ -208,51 +208,110 @@ print navbar('About');
 			get around in all the different tools.
 		</p>
 
-		<h4><b>Queries</b></h4>
+		<h3><b>Queries</b></h3> <br>
             <p>
+            This is the page of all possible queries are clustered together. 
             From here, users can perform three different queries: <br>
             1.<b>Epitope Search</b>: Epitope or/and HLA affinity results with thresholds.<br>
-            2.<b>ID Search</b>: Id or name search of Epitopes, HLA alleles, Organisms, Proteins and Antigens.<br>
+            2.<b>ID Search</b>: ID or name search of Epitopes, HLA alleles, Organisms, Proteins and Antigens.<br>
             3.<b>Proteosome</b>: Proteosome simulator that detects if a given protein contains any known epitope. If a DNA/RNA sequence is given, different ORF are calculated.
+            We will see eacho of them in more detail.
             </p> <br>
-			<h5><b>Epitope Search</b></h5> 
+
+			<h4><b>Epitope Search</b></h4> 
 
             <br>
-			<h5><b>ID Search</b></h5>
+			<h4><b>ID Search</b></h4>
                 <p>
-                Eight different searches can be done either by the name or ID from Epitope, HLA, Organism, Protein, and Antigen.
-                All the ID stored in our databes are from NCBI, so you can easily put a NCBI ID and perform the search.
-                </p>
-                <p>When search is done by <b>Epitope ID</b>, QVVP will redirect you into its Epitope page. Here is an example of the Epitope page when the Epitope ID is 24:
-                <img class="img-responsive" src="png/epitope1.png" width="700" height="500" alt="output-example">
-                <img class="img-responsive" src="png/epitope2.png" width="700" height="500" alt="output-example">
-                
-                On the upper rigth there is a graphic shouing the distribution of all epitopes with that ID from the QVVP database. On the x-axis it shows the logaritmic affinity and on the y-axis its shows the binding affinity (IC50) of each epitope.<br>
-                On the upper left of the page it shows information regarding the name ID of that epitope, it's sequence, length of the sequence, immunogenicity score, antigen id and name, protein id and name and organism name. 
-                All the ID's acts as a link to other pages. The id goes to its IEDB epitope summary page. The antigen ID goes to the Antigen page of QVVP. The protein ID goes to the Protein page of QVVP. And the organism goes to the Organism page of QVVP. <br>
-                The ring graph shows the aminoacid properties of each sequence aminoacid. In light-green the polar, in dark-green the non-polar, in red the positive charged, and in blue the negative-charged amino acids. <br>
-                The second half of the page shows a Binding Affinities table. It shows information about the Epitope ID name, each HLA with the affinities in terms of logarithmic (log) and binding affinities (nM) for each of the 27 HLA that QVVP database have.<br>
-                Finally it also have 2 buttons one to add this Epitope ID into the User's MyVaccine site, only allowed if the user is registered and has an account. The other is to export the binding affinites into CSV format.
-                </p>
-                <p>When search is done by <b>HLA</b>, QVVP will redirect you into its HLA page.There are 27 different HLA into QVVP database, there are the most common and well-documented. In these selector you can only select one of them. Here is an example of the HLA page when the HLA-A01:01 is selected:
-                    <img class="img-responsive" src="png/hla1.png" width="700" height="500" alt="output-example">
-                    <img class="img-responsive" src="png/hla2.png" width="700" height="500" alt="output-example">
-                On the upper rigth there is a graphic shouing the distribution of all epitopes with that hla from the QVVP database. On the x-axis it shows the logaritmic affinity and on the y-axis its shows the binding affinity (IC50) of each epitope.<br>
-                On the upper left of the page it shows information regarding the hla ID of that hla, it's name, an image of the hla structure and a link to the PDB crystal structure information. Not all the hla's have a crystalized structure.<br>
-                The second half of the page shows a Binding Affinities table. It shows information about the Epitope ID name, each HLA with the affinities in terms of logarithmic (log) and binding affinities (nM) for each of the 27 HLA that QVVP database have. Finally there is a button to export the binding affinites into CSV format.<br>
-                <p> 
-                For each search done in QVVP, in the history you will see its type ( epitope, hla, antigen, protein, organism,), it's id that will redirect to the page looked previously, and the date time
-                when the page was looked. 
-                </p>
+                Eight different searches can be done;  either by name or ID from Epitope, HLA, Organism, Protein, and Antigen.
+                All the IDs stored in our databes are from NCBI, so you can easily put a NCBI ID and perform the search.
+                </p><br>
+                <h5><b>Epitope ID</b></h5>
+                <p>When search is done by <b>Epitope ID</b>, QVVP will redirect you into its Epitope page. </p>
+                <div class="row">
+					    <div class="col-md-12">
+					      <div class="thumbnail">
+                          <img src="png/epitope.png" alt="data model" style="width:600px;height:500px">
+					          <div class="caption">
+					            <h5><b>Figure A</b>.Epitope page where the Epitope ID is 24</h5>
+					            <p> 
+                                On the upper rigth there is a graphic showing the distribution of all epitopes with that ID from the QVVP database. On the x-axis it shows Prediction score called 1-log50k and on the y-axis its shows the binding affinity (IC50) value in nM of each epitope.<br>
+                                On the upper left of the page it list information regarding the name ID of that epitope, it's sequence and length, the immunogenicity score, antigen ID and name, protein ID and name and organism name. 
+                                All the IDs acts as a link to other pages. The ID goes to its IEDB epitope summary page. The antigen ID goes to the Antigen page of QVVP. The protein ID goes to the Protein page of QVVP. And the organism goes to the Organism page of QVVP. <br>
+                                The ring graph shows the aminoacid properties of each aminoacid sequence. In light-green the polar, in dark-green the non-polar, in red the positive charged, and in blue the negative-charged amino acids. <br>
+                                The second half of the page shows the Binding Affinities table. Each row has information about the Epitope ID name, each allele with the affinities in terms of logarithmic (log) and binding affinities (nM) for each of the 27 HLA alleles that QVVP database have.<br>
+                                Finally, it also have two buttons: one to add this Epitope ID into the User's MyVaccine site (only allowed if the user is registered and has an account). The other is to export the binding affinites table into CSV format.
+					            </p>
+					          </div>
+					      </div>
+					    </div>
+				</div>
+                <br>
+                <h5><b>HLA</b></h5>                
+                <p>When search is done by <b>HLA</b>, QVVP will redirect you into its HLA page.There are 27 different HLA alleles into QVVP database, there correspond to the most common and well-documented alleles. In the HLA selector you can only select one of them. </p>
+                <div class="row">
+				    <div class="col-md-12">
+				      <div class="thumbnail">
+                      <img src="png/hla.png" alt="data model" style="width:600px;height:500px">
+				          <div class="caption">
+				            <h5><b>Figure B</b>.HLA page where the HLA selected is HLA-A01:01</h5>
+				            <p> 
+                            On the upper rigth there is a graphic showing the distribution of all epitopes with that HLA from the QVVP database. On the x-axis it shows Prediction score called 1-log50k and on the y-axis its shows the binding affinity (IC50) value in nM of each epitope.<br>
+                            The upper left side of the page lists information regarding the HLA ID, it's name, an image of the HLA structure and a link to the PDB crystal structure information. Not all the hla's have a crystalized    structure.<br>
+                            The second half of the page shows the Binding Affinities table. Each row has information about the Epitope ID name, each HLA with the affinities in terms of logarithmic (log) and binding affinities (nM). Finally there is a button to export the binding affinites into CSV format.</p>
+				          </div>
+				      </div>
+				    </div>
+				</div>
+                <h5><b>Organism</b></h5>
+                <p>When search is done by <b>Organism</b> you can specify either its ID or name.If the search is done by its <b>Organism ID</b>. QVVP will redirect you into its Organism page.</p>
+                <div class="row">
+					<div class="col-md-12">
+					  <div class="thumbnail">
+                      <img src="png/organism.png" alt="data model" style="width:700px;height:300px">
+					      <div class="caption">
+					        <h5><b>Figure C</b>. Organism page where the Organism ID is 11520:</h5>
+					        <p> 
+                            On the upper left of the page it shows information regarding the Organism ID and it's name. TheOrganism ID act's as a link to the NCBI Taxonomy Browser<br>
+                            The second half of the page shows the Antigens table. Each row has information about the AntigenID and name, and Protein ID. Each ID acts as a link to the corresponding QVVP page.<br>
+                            Finally there is a button to export the Antigen table into CSV format.
+					        </p>
+					      </div>
+					  </div>
+					</div>
+				</div>
                 <p>
-                When search is done by <b>Organism</b> you can specify either its ID or name.
-                If the search is done by its <b>Organism ID</b>. QVVP will redirect you into its Organism page. Here is an example of the Organism page by 11520 ID:
-                <img class="img-responsive" src="png/organism.png" width="700" height="500" alt="output-example">
-                On the upper left of the page it shows information regarding the ID of that Organism and it's name. The organism ID act's as a link to the NCBI Taxonomy Browser<br>
-                The second half of the page shows an Antigens table. It shows information about the Antigen ID, Antigen name, and Protein ID. Each ID acts as a link to the corresponding QVVP page.Finally there is a button to export the Antigen table into CSV format.<br>
-                If the search is done by its <b>Organism name</b>. QVVP will redirect you into an intermediate page where a result list of all organisms with that name, and the corresponding organism ID. the ID acts as a link into the organism page previously explained (<b>Figure XXXX</b>). Here is an example of the Organism name by vaccinia virus:
-                <img class="img-responsive" src="png/organism2.png" width="700" height="500" alt="output-example">
-                </p>
+                If the search is done by its <b>Organism name</b>. QVVP will redirect you into an intermediate page where a result list of all organisms with that name, and its organims ID. The ID acts as a link into the organism page previously explained (<b>Figure C</b>).</p>
+                <div class="row">
+					    <div class="col-md-6">
+					      <div class="thumbnail">
+                          <img src="png/organism2.png" alt="data model" style="width:450px;height:150px">
+					          <div class="caption">
+					            <h5><b>Figure D</b>. Organism intermediate page where the name searched is vaccinia virus.</h5>
+					            <p> 
+                               
+					            </p>
+					          </div>
+					      </div>
+					    </div>
+				</div>
+                <br>
+                <h5><b>Protein</b></h5>
+                <p>When search is done by <b>Protein</b> you can specify either its ID or name.If the search is done by its <b>Protein ID</b>. QVVP will redirect you into its Protein page.</p>                
+                <div class="row">
+				    <div class="col-md-12">
+				      <div class="thumbnail">
+                      <img src="png/epitope.png" alt="data model" style="width:600px;height:500px">
+				          <div class="caption">
+				            <h5><b>Figure A</b>.Epitope page where the Epitope ID is 24</h5>
+				            <p> 
+                           
+				            </p>
+				          </div>
+				      </div>
+				    </div>
+				</div>
+                <br>
                 <p>
                 When search is done by <b>Protein</b> you can specify either its ID or name.
                 If the search is done by its <b>Protein ID</b>. QVVP will redirect you into its Protein page. Here is an example of the Protein page 22164631 ID:
@@ -292,10 +351,20 @@ print navbar('About');
                 the history will be merged together. This will not happen if the logins are done in different browsers.
                 If a new search is the same as a previous search, QVVP will create a new record in the search database with different   date time. Here is an image of a history example:
                 </p>
-                <img class="img-responsive" src="png/history.png" width="700" height="500" alt="output-example">
+                <div class="row">
 
-
-
+					      <div class="thumbnail">
+					        <img src="png/history.png" alt="epitope_table" style="width:1000px;height:300px">
+					          <div class="caption">
+					            <h4><b>Figure 5</b>History:</h4>
+					            <p>                
+                                For each search done in QVVP, in the history you will see its type ( epitope, hla, antigen, protein, organism,), it's id that will redirect to the page looked previously, and the date time
+                                when the page was looked. 
+					            </p>
+					          </div>
+					      </div>
+					    
+					</div>
 	</div>
 
 
