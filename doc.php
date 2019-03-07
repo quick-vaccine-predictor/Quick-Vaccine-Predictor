@@ -11,17 +11,15 @@ print navbar('About');
 <div class="container">
 	<h2>Documentation</h2>
 		<h3><b>Introduction</b></h3>
-		<p>
-			A brief introduction??
-		</p>
-			<h4><b> Scope </b></h4> 
+	
+			<h4><b> App Scope </b></h4> 
 			<p>
 			The main scope oh this web application is to develope a viral vaccine generator based in the 
 			viral epitope data extracted from the IEDB (Immune Epitope Database And Analysis Resuource). 
 			Taking advantage from the NetMHCcons peptide-binding predictor to MHC-I molecules we create a
 			database of more than 41.000 viral epitopes and the binding affinity prediction to each of the 
 			HLA (Human Leukocyte Antigen) alelles present in the IEDB database, allowing to researchers who
-			wants to build a vaccine *de novo* to check which epitope could bind with more affinity to a given 
+			wants to build a vaccine <i>de novo</i> to check which epitope could bind with more affinity to a given 
 			HLA alelle.
 
 			On the following documentation we briefly explain how our website works.
@@ -62,32 +60,127 @@ print navbar('About');
 				following:
 			</p>
 				<br><br><br>
-				
-					<img class="img-responsive" src="png/out_HLA_example.png" width="700" height="500" alt="output-example">
-					<h4><b>Figure 1</b></h4> <h4>MHC-I Binding Prediction Results:</h4><p>Each row corresponds to one epitope binding prediction. The columns contain the <b>allele</b> the prediction was made for, the <b>epitope sequence</b>, the identity number for this sequence, two columns refered to the <b>affinity</b>(Prediction score called 1-log50k and IC50 value in nM), the <b>percentile rank of prediction score</b> and the <b>Binding Level(SB=> Strong Binder / WB=> Weak Binder</b> for each interactions. The epitope will be identified as a SB or WB if the % Rank OR binding affinity (IC50) is above or below the specified threshold for the strong binders and weak binders based in the IC50 and %Rank. </p>
-
+					
+					<div class="row">
+					    <div class="col-md-12">
+					      <div class="thumbnail">
+					        <img src="png/out_HLA_example.png" alt="output-example" style="width:600px;height:500px">
+					          <div class="caption">
+					            <h4><b>Figure 1</b>.MHC-I Binding Prediction Results:</h4>
+					            <p>
+					            	Each row corresponds to one epitope binding prediction. The columns contain the <b>allele</b> the prediction was made for, the <b>epitope sequence</b>, the identity number for this sequence, two columns refered to the <b>affinity</b>(Prediction score called 1-log50k and IC50 value in nM), the <b>percentile rank of prediction score</b> and the <b>Binding Level(SB=> Strong Binder / WB=> Weak Binder</b> for each interactions. The epitope will be identified as a SB or WB if the % Rank OR binding affinity (IC50) is above or below the specified threshold for the strong binders and weak binders based in the IC50 and %Rank. 
+					            </p>
+					          </div>
+					      </div>
+					    </div>
+				</div>
+					
 				<br><br>
 
 			<h4><b> Process & Filter Result Data</b></h4>	
 
 			<p>
-				Once the data was obtained in the output showed above, we proceed to filter only those details of the binding 
-				we were interested in. In the following image it can be seen the final data that compose our database:
+				Once the data was obtained in the output shown above, we proceed to filter only those characteristics of the binding 
+				we were interested in. In the following image it can be seen the final data that compose the <b>Affinity table</b> of our database:
 
 			</p>
 				<br><br>
-					<img class="img-responsive" src="png/filter_data.png" width="300" height="200" alt="output-example">
-					<h4><b>Figure 2</b></h4><h4>MHC-I Binding Prediction Filtered Results:</h4><p> In this case the output results are organized in four columns. As before, each row corresponds to one epitope binding prediction. The columns contain the <b>Epitope Id from the IEDB</b>, the <b>HLA type molecule</b>, the <b>Prediction Score</b> in a logarithmic scale and the <b>Affinity</b>, that represents the IC50 value in nM.</p>
+					<div class="row">
+					    <div class="col-md-6">
+					      <div class="thumbnail">
+					        <img src="png/filter_data.png" alt="filtered_data_affinity" style="width:320px;height:300px">
+					          <div class="caption">
+					            <h4><b>Figure 2</b></h4><h4>MHC-I Binding Prediction Filtered Results:</h4>
+					            <p> In this case the output results are organized in four columns. As before, each row corresponds to one epitope binding prediction. The columns contain the <b>Epitope Id from the IEDB</b>, the <b>HLA type molecule</b>, the <b>Prediction Score</b> in a logarithmic scale and the <b>Affinity</b>, that represents the IC50 value in nM.
+					            </p>
+					          </div>
+					      </div>
+					    </div>
+					<div class="row">
+					    <div class="col-md-6">
+					      <div class="thumbnail">
+					        <img src="png/affinity_sql.png" alt="affinity_table" style="width:400px;height:300px">
+					          <div class="caption">
+					            <h4><b>Figure 3</b></h4><h4>Affinity Table in Database(MySQL)</h4>
+					            <p> This is the final table of the Affinity table in the Database. It can be seen that it follows the
+					            	same structure as the filtered output shown in the <b>Figure 2</b>. 
+					            </p>
+					            <br><br>
+					          </div>
+					      </div>
+					    </div>
+					</div>
+				</div>
+			<p>
+				In the same way we filtered the data related to the <b>Antigen</b> and <b>Epitope </b> that was also
+				extracted from the IEDB. 
 
 				<br><br>
+					<div class="row">
+					    <div class="col-md-6">
+					      <div class="thumbnail">
+					        <img src="png/antigen_db.png" alt="antigen_table" style="width:700px;height:300px">
+					          <div class="caption">
+					            <h4><b>Figure 4</b>.Antigen table in Database(MySQL)</h4>
+					            <p> 				            	
+					            </p>
+					          </div>
+					      </div>
+					    </div>
+					<div class="row">
+					    <div class="col-md-6">
+					      <div class="thumbnail">
+					        <img src="png/epitope_db.png" alt="epitope_table" style="width:600px;height:300px">
+					          <div class="caption">
+					            <h4><b>Figure 5</b>.Epitope Table in Database(MySQL)</h4>
+					            <p> 
+					            </p>
+					          </div>
+					      </div>
+					    </div>
+					</div>
+				</div>
+
 			<p>
-				
 
+				Once the data was correctly filtered we proceed to build the data model of our database, that whould allow us 
+				build a broad set of query searches with tha last scope of build a vaccine.
+			</p>
 
+				<br><br>
+
+			<h4><b> Database and Data Model</b></h4>
+			<br>	
+			<p>
+				We used MySQL Workbench in order to build our <b>Data Model</b>, it is, the structure of our database organized 
+				in tables.
+
+				<div class="row">
+					    <div class="col-md-12">
+					      <div class="thumbnail">
+					        <img src="png/data_model.png" alt="data model" style="width:600px;height:500px">
+					          <div class="caption">
+					            <h4><b>Figure 6</b>.Data Model(MySQL WorkBench)</h4>
+					            <p> 
+					            	As it can be seen in this data model, the main tables are situated in the middle (<b>Antigen</b>, <b>Epitope</b>, <b>Affinity</b> and <b>HLA</b>). All the data downloaded from IEDB and filtered was uploaded to this database with SQL queries.
+					            </p>
+					          </div>
+					      </div>
+					    </div>
+				</div>
 			</p>
 			
+			<p>
+				Finally, we checked that all these tables were correctly linked with the correct foreign keys.
+			</p>
+		
+		<h3><b>QVVP In Action</b></h3>	
+		<br>
+		<p>
+			This web site is designed in order to be intuitive and self-guied
 
-			<br><br><br>
+		</p>
+
 		<h4><b>Queries</b></h4>
             <p>
             From here, users can perform three different queries: <br>
