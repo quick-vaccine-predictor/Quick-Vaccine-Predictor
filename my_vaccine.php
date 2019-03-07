@@ -29,7 +29,7 @@ print navbar('MyVaccine');
         ?>
         <h3>Name: <?php echo $nVac ?></h3>
         <form method="POST" action="my_vaccine.php" >
-          <button type="button" class="btn btn-info btn-sm pull-left" data-toggle="modal" data-target="#myModalrename<?php echo $idVac ?>">Rename</button>
+          <button type="button" class="btn btn-info btn-sm pull-left" data-toggle="modal" data-target="#myModalrename<?php echo $idVaccine ?>">Rename</button>
         </form>
         <form method="POST" action="my_vaccine.php" >
           <input type="hidden" name="removeVac" value="<?php echo $idVaccine ?>">
@@ -38,7 +38,7 @@ print navbar('MyVaccine');
         <br>
         <br>
         <!-- Modal -->
-        <div class="modal fade" id="myModalrename<?php echo $idVac ?>" role="dialog">
+        <div class="modal fade" id="myModalrename<?php echo $idVaccine ?>" role="dialog">
           <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
