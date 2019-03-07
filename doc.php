@@ -13,6 +13,7 @@ print navbar('About');
 		<br>
 	<div class="container text-justify">
 		<h3><b>Index</b></h3>
+		<br><br>
 		<ul style="list-style-type:none;">
 			<li><h4><a href="#C1"><b>1. Introduction</b></a></h4></li>
 			<ul style="list-style-type:none;">
@@ -41,7 +42,7 @@ print navbar('About');
                     <li><h5><a href="#C324"><b>Protein</b></a></h5></li>
 				    <li><h5><a href="#C325"><b>Antigen</b></a></h5></li>
 			    </ul>
-				<li><h4><a href="#C23"><b>3.3. Proteosome</b></a></h4></li>
+				<li><h4><a href="#C33"><b>3.3. Proteosome</b></a></h4></li>
 			</ul>
             <li><h4><a href="#C4"><b>4. History</b></a></h4></li>
 		</ul>
@@ -156,7 +157,7 @@ print navbar('About');
 					    </div>
 					</div>
 				</div>
-			<p>
+			<p id="Fig5">
 				In the same way we filtered the data related to the <b>Antigen</b> and <b>Epitope </b> that was also
 				extracted from the IEDB. 
 			</p>
@@ -240,7 +241,7 @@ print navbar('About');
                 <h5 id="C311"><b>Epitope sequence or ID.</b></h5>
                 Whether the search is done using the Epitope sequence or its ID, the results will lead into the same results page.
                 <div class="row">
-					    <div class="col-md-6">
+					    <div class="col-md-12">
 					      <div class="thumbnail">
                           <img src="png/sequence.png" alt="data model" style="width:400px;height:150px">
 					          <div class="caption">
@@ -269,7 +270,7 @@ print navbar('About');
 					      </div>
 					    </div>
 				</div>
-                <h5 id="C312"><b>HLA selection</b></h5>
+                <h4 id="C312"><b>HLA selection</b></h4>
                 Whether the search is done using the Epitope sequence or its ID, you can choose which alleles the query will target. More than one is allowed. By default all HLAs are selected. There is also the option of only doing the epitope search chosing the alleles and the threshold paramenters.
                 <div class="row">
 					    <div class="col-md-6">
@@ -284,7 +285,7 @@ print navbar('About');
 					    </div>
 				</div>
             </div>
-            <h5 id="C313"><b>Threshold parameters</b></h5>
+            <h4 id="C313"><b>Threshold parameters</b></h4>
             <p>
             The prediction values are given in nM IC50 values and as logarithmic affinity. The user has a choice of setting the threshold for defining strong and weak binders based on predicted affinity (nMAff) or logarithmic affinity (logAff). Strong and weak binding peptides will be indicated in the output. The output can also be sorted based on predicted binding affinity as well as filtered on the user-specified thresholds. 
             </p>
@@ -315,7 +316,7 @@ print navbar('About');
 				      </div>
 				    </div>
 				</div>
-                <h5 id="C323"><b>Organism</b></h5>
+                <h4 id="C323"><b>Organism</b></h4>
                 <p>When search is done by <b>Organism</b> you can specify either its ID or name.If the search is done by its <b>Organism ID</b>. QVVP will redirect you into its Organism page. If the search is done by its <b>Organism name</b>. QVVP will redirect you into an intermediate page where a result list of all organisms with that name, and its organims ID.</p>
                 <div class="row">
 					<div class="col-md-6">
@@ -344,7 +345,7 @@ print navbar('About');
 					</div>
 				</div>
                 <br>
-                <h5 id="C324"><b>Protein</b></h5>
+                <h4 id="C324"><b>Protein</b></h4>
                 <p>When search is done by <b>Protein</b> you can specify either its ID or name.If the search is done by its <b>Protein ID</b>. QVVP will redirect you into its Protein page.</p>                
                 <div class="row">
 				    <div class="col-md-12">
@@ -366,7 +367,7 @@ print navbar('About');
                           <img src="png/blast1.png" alt="data model" style="width:500px;height:250px">
                           <img src="png/blast2.png" alt="data model" style="width:500px;height:250px">
 					          <div class="caption">
-					            <h4><b>Figure 14</b>. <b>Swissprot</b> homolog search is done by Protein ID 22164631.</h4>
+					            <h4 id="Fig14"><b>Figure 14</b>. <b>Swissprot</b> homolog search is done by Protein ID 22164631.</h4>
 					            <p> 
                                 It follows the results of a blastp query. There are three main parts in this page. The first is one is a general view of the alignment scores with the query and the matches founded by BLAST. The scoring can be seen depending of the Maximum score or by the E-values. Each bar respresents a match and if you move the mouse over, it will show defline and scores. If you click them, it will show the alignments. You can download it as PNG or JPEG image.<br>
                                 The second part is a table with a ranked list of matches starting from the closest to the farthest. For each match it gives a brief description of the viruses, the maximum score, the total score, the query coverage, the E-value, and finally the % of identity. The table can be downloaded as CSV, PNG or JPEG. <br>
@@ -380,7 +381,7 @@ print navbar('About');
 					      <div class="thumbnail">
                           <img src="png/moreepitopes.png" alt="data model" style="width:500px;height:200px">
 					          <div class="caption">
-					            <h4><b>Figure 15</b>.Epitope length 9 and 10 search page is done by Protein ID 22164631.</h4>
+					            <h4 id="Fig15"><b>Figure 15</b>.Epitope length 9 and 10 search page is done by Protein ID 22164631.</h4>
 					            <p> 
                                 As in the protein page you can also make an homology search, either by Swissprot or PDB, and it will give the same result format as <b>Figure F</b>. It also give you a table with a list of all epitopes founded in that sequence. It describes it's epitope ID, epitope sequence, HLA, logarithmic and nM affinities and an option to add this epitope into My Vaccine User page. The epitope ID acts as a link to its QVVP epitope page. Finally you can download the sequence into FASTA format.
 					            </p>
@@ -402,7 +403,7 @@ print navbar('About');
 					    </div>
 				</div>
                 <br>
-                <h5 id="C325"><b>Antigen</b></h5>
+                <h4 id="C325"><b>Antigen</b></h4>
                 <p>When search is done by <b>Antigen</b> you can specify either its ID or name.If the search is done by its <b>Antigen ID</b>. QVVP will redirect you into its Antigen page.If the search is done by its <b>Antigen name</b>. QVVP will redirect you into an intermediate page where a result list of all antigens with that name, and the corresponding antigen ID. The ID acts as a link into the antigen page</p>                
                 <div class="row">
 				    <div class="col-md-6">
@@ -428,7 +429,118 @@ print navbar('About');
 					    </div>
 				</div>
             </div>
-			<h5 id="C33"><b>3.3. Proteosome</b></h5>
+			<h4 id="C33"><b>3.3. Proteosome</b></h4>
+			<div class="container text-justify">
+				<p>
+					The <b>Proteosome</b> is one of the most powerful tools of QVVP App, allowing the User to search epitopes in large DNA, RNA and Protein sequences. This supporting feature simulates the biological process once the virus has entered inside the cell. The MCH class I molecules, in order to present the diferent antigens to the extracellular environment, needs the cleavage of the viral proteins by the <b>Cellular Proteasome</b>. 
+				</p>
+				<p>
+					To make functional this application we develope some Python scripts that could take as input:
+				</p>
+					<ol>
+						<li>A <b>DNA</b> sequence, translate to protein (aminoacids) and generate k-mers of 9 and 10 aminoacid
+						of length.</li>
+						<li>A <b>RNA</b> sequence, translate to protein (aminoacids) and generate k-mers of 9 and 10 aminoacid of length.</li>
+						<li>A <b>Protein</b> sequence and generate k-mers of 9 and 10 aminoacids in length.</li>
+					</ol>
+
+					<div class="row">
+					    <div class="col-md-12">
+					      <div class="thumbnail">
+                          <img src="png/proteosome1.png" alt="Proteosome" style="width:700px;height:300px">
+					          <div class="caption">
+					            <h4><b>Figure 18</b>. Proteosome Query: Input</h4>
+                                <p> The Proteosome simulator allows to put as input a DNA/RNA or Protein sequence, as well as a file upload by the user in FASTA format. 
+                                </p>
+					          </div>
+					      </div>
+					  	</div>
+					</div>
+					<div class="row">
+					    <div class="row">
+					    	<div class="col-md-12">
+						      <div class="thumbnail">
+	                          <img src="png/proteosome2.png" alt="Proteosome" style="width:700px;height:300px">
+						        <div class="caption">
+						            <h4><b>Figure 19</b>. Proteosome Query: Settings</h4>
+	                                <p> This figure shows the settings that has to be filled before run the Proteosome simulator: frist one has to select if the input sequence is <b>DNA/RNA</b> or <b>Protein</b>. In case the input is DNA/RNA, it must be selected the <b>Minimal ORF length</b> desired to filter out the search. Finally, the resulted epitopes can be for 9 or 10 residues long. For that option the User can select only <b>Epitopes</b> of <b>9</b> or <b>10</b> aminoacids. Otherwise both options can be merged in the <i>both</i> ratio.
+	                                </p>
+						        </div>
+						      </div>
+					    	</div>
+						</div>
+					</div>
+					<p>
+					Not only the translational part for DNA and RNA sequences retrieve a protein sequence, but the Proteasome also
+					gives the option to choose for which frame the User wants to run the query. It is, if the START codon is <i>ATG</i> or <i>AUG</i>, then there can be 6 possibles translations for DNA sequence (<i>Forward and Reverse strands</i>) and 3 for RNA nucleotides (<i>only the forward sense</i>). This is because, as it is well known, viruses can contain ORF coded in both forward and reverse sequences. For instance, the <a href="https://www.viprbrc.org/brc/home.spg?decorator=arena_lassa" target="_blank"><i>Lassa Virus</i></a> is a single-strand, bisegmented, ambisense RNA genome virus that retrotranscribes its genome in order to replicate and infect the cell.
+					</p>
+					<br>
+					<div class="row">
+					    <div class="row">
+					    	<div class="col-md-12">
+						      <div class="thumbnail">
+	                          <img src="png/proteosome_orf1.png" alt="ORF" style="width:700px;height:300px">
+						        <div class="caption">
+						            <h4><b>Figure 20</b>. ORF Frames: +</h4>
+	                                <p> The ORF Results page comes up only when the user wants to search for epitopes contained in DNA/RNA sequences. Thus, different frames can be run as query. The <b>frames</b> are: <b>0+</b> for position 0, <b>1+</b> for position 1 and <b>2+</b> for position 2 in the START codon ATG. The same for the reverse sequence (in case of DNA as input, <b>Figure 21</b>). Before running, the user can check if the sequence is good enough dowloading it as FASTA. Also the sequence range (Start/End) is given in the table.
+	                                </p>
+						        </div>
+						      </div>
+					    	</div>
+						</div>
+					</div>
+					<div class="row">
+					    <div class="row">
+					    	<div class="col-md-12">
+						      <div class="thumbnail">
+	                          <img src="png/proteosome_orf2.png" alt="ORF" style="width:700px;height:300px">
+						        <div class="caption">
+						            <h4><b>Figure 21</b>. ORF Frames: -</h4>
+						        </div>
+						      </div>
+					    	</div>
+						</div>
+					</div>
+				<br>
+				<p>
+					When the ORF is select (in case of DNA/RNA), then the k-mers are generated and compared to those in the <a href="#Fig5">Database</a>. 
+				</p>
+				<p>
+					Then the following page comes out:
+				</p>
+				<div class="row">
+					<div class="row">
+					    <div class="col-md-12">
+						    <div class="thumbnail">
+	                         <img src="png/proteosome_runq3.png" alt="Proteins&Epitopes" style="width:700px;height:400px">
+						      	<div class="caption">
+						            <h4><b>Figure 22</b>. Proteins & Epitopes</h4>
+						            <p>
+						            	All those epitopes found in the database of QVVP and with a clear match will apear in the table shown in this figure. As it is seen, the same table as in <a href="#Fig15"><b>Figure 15</b></a> with the same results. From that table one can be redirected to the <b>Epitope page</b> to see more about the epitope, or retrive information about the protein, antigen, organism or binding affinities with each HLA.             	
+						            </p>
+						      	</div>
+						    </div>
+					    </div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="row">
+					    <div class="col-md-12">
+						    <div class="thumbnail">
+	                          <img src="png/proteosome_runq1.png" alt="Proteins&Epitopes" style="width:700px;height:400px">
+						        <div class="caption">
+						            <h4><b>Figure 23</b>. Proteins & Epitopes</h4>
+						            <p>
+						            	In case there is no result shown in the Protein page for the search, the user can find at the top left, either in the SwissProt or in the PDB database. Thus, the user will be redirected to the BLAST output shown in <a href="#Fig14"><b>Figure 14</b></a>. 
+
+						            </p>
+						        </div>
+						    </div>
+					   	</div>
+					</div>
+				</div>
+				
 		    <br><br>
             <h4 id="C4"><b>4. History</b></h4>
             <div class="container text-justify">
@@ -445,7 +557,7 @@ print navbar('About');
 					      <div class="thumbnail">
 					        <img src="png/history.png" alt="epitope_table" style="width:450px;height:150px">
 					          <div class="caption">
-					            <h4><b>Figure 19 </b>History:</h4>
+					            <h4><b>Figure 24</b>. History:</h4>
 					            <p>                
                                 For each search done in QVVP, in the history you will see its type ( epitope, hla, antigen, protein, organism,), it's id that will redirect to the page looked previously, and the date time
                                 when the page was looked. 
