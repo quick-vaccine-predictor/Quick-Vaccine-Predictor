@@ -51,7 +51,5 @@ $conn->close();
     } else {
         $('#existingVacc').show();
     }
-
-
 </script>
 <?php print footerDBW();?>
