@@ -8,11 +8,30 @@ print headerDBW($title);
 print navbar('About');
 ?>
 
-<div class="container">
+<div class="container text-left">
 	<h2>Documentation</h2>
-		<h3><b>Introduction</b></h3>
-	
-			<h4><b> App Scope </b></h4> 
+		<br>
+	<div class="container text-justify">
+		<h3><b>Index</b></h3>
+		<ul style="list-style-type:none;">
+			<li><h4><a href="#C1"><b>1. Introduction</b></a></h4></li>
+			<ul style="list-style-type:none;">
+				<li><h4><a href="#C11"><b> App Scope</b></a></h4></li>
+			</ul>
+			<li><h4><a href="#C2"><b>2. Data</b></a></h4></li>
+			<ul style="list-style-type:none;">
+				<li><h4><a href="#C21"><b>HLA & Epitope aquirement: IEDB</b></a></h4></li>
+				<li><h4><a href="#C22"><b>Prediction: NetMHCcons </b></a></h4></li>
+				<li><h4><a href="#C23"><b>Process & Filter Result Data</b></a></h4></li>
+				<li><h4><a href="#C24"><b>Database and Data Model</b></a></h4></li>
+			</ul>
+			<li><h4><a href="#C3"><b>3. QVVP In Action</b></a></h4></li>
+		</ul>
+	</div>
+	<div class="container text-left">
+		<h3 id="C1"><b>1. Introduction</b></h3>
+		<div class="container text-justify">
+			<h4 id="C11"><b> App Scope </b></h4> 
 			<p>
 			The main scope oh this web application is to develope a viral vaccine generator based in the 
 			viral epitope data extracted from the IEDB (Immune Epitope Database And Analysis Resuource). 
@@ -20,46 +39,53 @@ print navbar('About');
 			database of more than 41.000 viral epitopes and the binding affinity prediction to each of the 
 			HLA (Human Leukocyte Antigen) alelles present in the IEDB database, allowing to researchers who
 			wants to build a vaccine <i>de novo</i> to check which epitope could bind with more affinity to a given 
-			HLA alelle.
-
+			HLA alelle.</p>
+			<p>
 			On the following documentation we briefly explain how our website works.
 			</p>
+		</div>
+		
+		<h3 id="C2"><b>2. Data</b></h3>
+		<div class="container text-justify">
+			<h4 id="C21"><b>HLA & Epitope aquirement: IEDB</b></h4>
 
-		<h3><b>Data</b></h3>
-			<h4><b>HLA & Epitope aquirement: IEDB</b></h4>
-
-			<p> IEDB is the <a href="https://www.iedb.org/" target="_blank">Immune Epitope Database</a> that freely provide information about anitbody and T cell epitopes based in experimental data, as well as immunoassay tools to assist in the prediction 
+			<p> 
+				IEDB is the <a href="https://www.iedb.org/" target="_blank">Immune Epitope Database</a> that freely provide information about anitbody and T cell epitopes based in experimental data, as well as immunoassay tools to assist in the prediction 
 				and analysis of epitopes. Within these tools, the T Cell Epitope - MHC binding prediction can
 				foretell IC50 values for peptides binding to specific MHC molecules. 
-
+			</p>
+			<p>
 				Besides, the predictor can determine, among other options, the ability of an aminoacid subsequence 
 				to bind to a specific MHC class I molecule, using a large collection of the most common human HLA alleles, 
 				specifically 27 HLA alleles (<a href="https://help.iedb.org/hc/en-us/articles/114094151851-HLA-allele-frequencies-and-reference-sets-with-maximal-population-coverage" target="_blank">Click
 				here fore more information</a>). In order to predict these specific interactions, IEDB has different softwares
 				based on Artificial Neural Networks or Stabilized Matrix methods, among others, and a set of libraries that, 
-				based in a very large amount of data produce a very accurate results.  
-
+				based in a very large amount of data produce a very accurate results.
+			</p>
+			<p>
 				However, although predictions can be made in a very easy way, the required time to obtain binding affinities between
 				a large collection of epitopes (as can be all curated viral epitopes) and the most common HLA molecules can take a lot
 				of time. 
-
+			</p>
+			<p>
 				Taking into account this premise, in this project we performed a serie of predictions between a lage set
 				of viral epitopes and HLA molecules with the purpose of generate a useful database that can serve to generate vaccines
 				based in these specific interaction data.   
 			</p>
-
-			<h4><b> Prediction: NetMHCcons </b></h4>
-
+		</div>
+		<div class="container text-justify">
+			<h4 id="C22"><b> Prediction: NetMHCcons </b></h4>
 			<p>
 				Taking advantage of the tools offered by IEDB, we proceed to download a collection of almost 41.300 viral epitopes and the set of 27 HLA allels, with the aim of persue a set of binding predictions between these two molecules. In order to do so, we use the free binding predictor method <a href="http://www.cbs.dtu.dk/services/NetMHCcons/" target="_blank">NetMHCcons</a>. This consensus method for MHC I predictions integrate three softwares to give more accurate predictions:
 				NetMHC and NetMHCpan, that are artificial neural network methods allele-specific and based in more than 115,000 quantitative binding data; and PickPocket method based on receptor-pocket similarities between MHC molecules. Also, NetMHCcons server can produce predictions for peptides of 8-15 aminoacids in length, for which we made predictions 
 				only for epitopes of 9 or 10 aminoacid length.
-
+			</p>
+			<p>
 				Predictions benckmarks were around 180 - 200 minutes for HLA - Epitope interactions with 9 aminoacid of length, and 
 				150 - 180 minutes for epitoes with 10 aminoacid of length. Results where obtained in a prediction output table, as the
 				following:
 			</p>
-				<br><br><br>
+			<br><br><br>
 					
 					<div class="row">
 					    <div class="col-md-12">
@@ -76,15 +102,14 @@ print navbar('About');
 				</div>
 					
 				<br><br>
-
-			<h4><b> Process & Filter Result Data</b></h4>	
-
+		</div>
+		<div class="container text-justify">
+			<h4 id="C23"><b> Process & Filter Result Data</b></h4>	
 			<p>
 				Once the data was obtained in the output shown above, we proceed to filter only those characteristics of the binding 
 				we were interested in. In the following image it can be seen the final data that compose the <b>Affinity table</b> of our database:
-
 			</p>
-				<br><br>
+			<br><br>
 					<div class="row">
 					    <div class="col-md-6">
 					      <div class="thumbnail">
@@ -114,8 +139,8 @@ print navbar('About');
 			<p>
 				In the same way we filtered the data related to the <b>Antigen</b> and <b>Epitope </b> that was also
 				extracted from the IEDB. 
-
-				<br><br>
+			</p>
+			<br>
 					<div class="row">
 					    <div class="col-md-6">
 					      <div class="thumbnail">
@@ -140,21 +165,19 @@ print navbar('About');
 					    </div>
 					</div>
 				</div>
-
 			<p>
 
 				Once the data was correctly filtered we proceed to build the data model of our database, that whould allow us 
 				build a broad set of query searches with tha last scope of build a vaccine.
 			</p>
-
-				<br><br>
-
-			<h4><b> Database and Data Model</b></h4>
+		</div>
+		<div class="container text-justify">
+			<h4 id="C24"><b> Database and Data Model</b></h4>
 			<br>	
 			<p>
 				We used MySQL Workbench in order to build our <b>Data Model</b>, it is, the structure of our database organized 
 				in tables.
-
+			</p>
 				<div class="row">
 					    <div class="col-md-12">
 					      <div class="thumbnail">
@@ -167,18 +190,18 @@ print navbar('About');
 					          </div>
 					      </div>
 					    </div>
-				</div>
-			</p>
-			
+				</div>		
 			<p>
 				Finally, we checked that all these tables were correctly linked with the correct foreign keys.
 			</p>
-		
-		<h3><b>QVVP In Action</b></h3>	
+		</div>
+		<br><br>
+
+		<h3 id="C3"><b>3. QVVP In Action</b></h3>	
 		<br>
 		<p>
-			This web site is designed in order to be intuitive and self-guied
-
+			This website is designed in order to be intuitive and self-guied. This field is dedicated to explain how to 
+			get around in all the different tools.
 		</p>
 
 		<h4><b>Queries</b></h4>
